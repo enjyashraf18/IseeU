@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <div class="form">
+        <form id="form" action='/register'method="post">
+            <label id="nameLabel" for = "nameIn" >Name</label><br>
+            <input type="text" name="name" id="nameIn"><br>
+
+            <label id="picLabel" for = "picIn" >Profile picture</label><br>
+            <input type="file" id="picIn" ><br>
+            <label id="picnote" for = "picIn" >Upload .png or .jpg</label><br>
+
+            <label id="selectGen">Gender</label><br>
+            <label for="male">Male</label>
+            <input type="radio" id="male" name="gender" value="M"> <br>
+            <label for="female">Female</label>
+            <input type="radio" id="female" name="gender" value="F"><br>
+
+            <label id="faceLabel" for = "faceIn" >Facebook link</label><br>
+            <input type="text" id="faceIn"><br>
+
+            <label id="instaLabel" for = "instaIn" >Instagram link</label><br>
+            <input type="text" id="instaIn"><br>
+
+            <label id="emailLabel" for = "emailIn"> Email</label><br>
+            <input type="email" name="email" id="emailIn"><br>
+
+            <label id="passLabel" for="passIn">Password</label><br>
+            <input type="password" name="password" id="passIn"><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

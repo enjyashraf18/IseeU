@@ -1,0 +1,59 @@
+*{
+    font-family: "MADE Future X", serif;
+    font-size: 45px;
+}
+body{
+    display: flex;
+}
+.profilePic{
+    position: relative;
+    width: 244px;
+    height: 244px;
+    background: rgb(167, 88, 88);
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
+    margin-bottom: 5%;
+    overflow: hidden;
+}
+.sidB{
+    position: sticky;
+    width: 30%;
+    height: 100%;
+    background-color: burlywood;
+    overflow: hidden;
+    padding: 1rem 2rem;
+    align-items: center;
+}
+.name{
+    font-size: 66px;
+    font-weight: bold;
+}
+.info{
+    list-style-type: none;
+    position: relative;
+   margin: 20px;
+}
+.infoTitle{
+    font-weight: lighter;
+    font-size: 29px;
+}
+
+.main{
+    width: 100%;
+    margin: 2%;
+}
+
+.post {
+    font-size: 22px;
+    width: 95%;
+    height: 306px;
+    margin: 2%;
+    padding: 1%;
+    position: relative;
+    background: rgb(204, 193, 193);
+    opacity: 1;
+    border: 1px solid rgba(0,0,0,1);
+    border-radius: 50px;
+    overflow: hidden;
+}

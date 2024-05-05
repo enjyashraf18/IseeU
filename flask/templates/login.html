@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <div class="form">
+    <form action="{{ url_for('login')}}" method="post"  id="form">
+        <label id="emailLabel" for = "email"> Email</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label id="passLabel" for="pass">Password</label><br>
+        <input type="password" id="password" name="password"><br>
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+</body>
+</html>
