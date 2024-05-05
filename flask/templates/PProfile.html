@@ -32,8 +32,8 @@
             <li class="info">
                 <!---<span class="infoTitle"> facebook  </span> <br>
                 <span > facebook.com </span> -->
-                {% if face_url %}
-                    <a href="{{ data.face_url }}" target="_blank" name="face_url"> Facebook</a>
+                {% if data.facebook %}
+                    <a href="{{ data.facebook }}" target="_blank" name="face_url"> Facebook</a>
                 {% else %}
                     <p>No Facebook profile available</p>
                 {% endif %}
@@ -41,8 +41,8 @@
             <li class="info">
                 <!---<span class="infoTitle"> facebook  </span> <br>
                 <span > facebook.com </span> -->
-                {% if insta_url %}
-                    <a href="{{ data.insta_url }}" target="_blank" name="insta_url"> Instagram</a>
+                {% if data.instagram %}
+                    <a href="{{ data.instagram }}" target="_blank" name="insta_url"> Instagram</a>
                 {% else %}
                     <p>No Instagram profile available</p>
                 {% endif %}
