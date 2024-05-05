@@ -63,11 +63,16 @@
         <input id="title" name="title"><br>
         <label id="contentLabel" for="content">content</label><br>
         <input id="content" name="content"><br>
-        <button type="submit">Submit</button>
+        <button type="submit"> Submit </button>
     </form>
-    <div class="post"><h5>Post title</h5> Post content</div>
-    <div class="post"></div>
-    <div class="post"></div>
+    <!-- <div class="post"><h5>Post title</h5> Post content</div> -->
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post"><h5>{{post.title}}</h5>{{post.date_posted}}<br> {{post.content}}</div>
+        {% endfor %}    
+    {% endif %}
+    <!-- <div class="post"></div>
+    <div class="post"></div> -->
 </div>
 </body>
 </html>

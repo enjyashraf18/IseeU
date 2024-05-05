@@ -48,7 +48,11 @@ def PProfile():
     data = session.get('data')
     if data is None:
         return redirect(url_for('home'))
-    return render_template('PProfile.html', data=data)
+    user_id = data['id']
+    cursor.execute('SELECT * FROM posts_table WHERE user_id = %s', (user_id,))
+    posts = cursor.fetchall()
+    return render_template('PProfile.html', data=data, posts=posts)
+
 
 @app.route('/create_post', methods=['GET', 'POST'])
 def create_post():
@@ -57,10 +61,11 @@ def create_post():
         content = request.form['content']
         user_id = session.get('data')
         user_id = user_id['id']
-        cursor.execute('INSERT INTO posts_table (title, content, user_id) VALUES (%s, %s, %s)', (title, content, int(user_id)))
-        # cursor.execute('SELECT email FROM users_table WHERE email = %s', (email,))
-        # posts = cursor.fetchall()
+        cursor.execute('INSERT INTO posts_table (title, content, user_id) VALUES (%s, %s, %s)',
+                       (title, content, int(user_id)))
         return redirect(url_for('PProfile'))
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     email = request.form.get('email')
@@ -71,14 +76,15 @@ def login():
     if user and user['password'] == password:
         cursor.execute('SELECT * FROM users_table WHERE email = %s', (email,))
         user = cursor.fetchone()
-        # name = user.get('name')
-        # age = user.get('age')
-        # email = user.get('email')
-        # gender = user.get('gender')
-        # facebook = user.get('facebook')
-        # instagram = user.get('instagram')
-        # user = None  # to clear the login info after logging in
         session['data'] = dict(user)
+
+        # user_id = session.get('data')
+        # user_id = user_id['id']
+
+
+        # if len(posts) != 0:
+        #     session['posts'] = dict(posts)
+
         return redirect(url_for('PProfile'))
     else:
         flash('Login Unsuccessful. Please check email and password', 'danger')
