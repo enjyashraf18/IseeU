@@ -10,16 +10,16 @@
 <div class="sidB">
     <div class="profilePic"> <img src={{profile_pic}} width="300" height="300"> </div>
     <div class="patientInfo">
-        <label class="name" name="name"> {{name}} </label>
+        <label class="name" name="name"> {{data.name}} </label>
         <ul>
             <li class="info">
                 <span class="infoTitle"> email  </span> <br>
-                <span name="email"> {{email}} </span>
+                <span name="email"> {{data.email}} </span>
             </li>
             </li>
             <li class="info">
                 <span class="infoTitle"> Gender  </span> <br>
-                <span name="gender"> {{gender}} </span>
+                <span name="gender"> {{data.gender}} </span>
             </li>
             <!---<li class="info">
                 <span class="infoTitle"> Weight  </span> <br>
@@ -33,7 +33,7 @@
                 <!---<span class="infoTitle"> facebook  </span> <br>
                 <span > facebook.com </span> -->
                 {% if face_url %}
-                    <a href="{{ face_url }}" target="_blank" name="face_url"> Facebook</a>
+                    <a href="{{ data.face_url }}" target="_blank" name="face_url"> Facebook</a>
                 {% else %}
                     <p>No Facebook profile available</p>
                 {% endif %}
@@ -42,7 +42,7 @@
                 <!---<span class="infoTitle"> facebook  </span> <br>
                 <span > facebook.com </span> -->
                 {% if insta_url %}
-                    <a href="{{ insta_url }}" target="_blank" name="insta_url"> Instagram</a>
+                    <a href="{{ data.insta_url }}" target="_blank" name="insta_url"> Instagram</a>
                 {% else %}
                     <p>No Instagram profile available</p>
                 {% endif %}

@@ -39,12 +39,15 @@ def home():
 
 
 @app.route('/PProfile')
-def profile():
-    name = request.args.get('name')
-    age = request.args.get('age')
-    profile_image = request.args.get('profile_pic')
-    gender = request.args.get('gender')
-    return render_template('PProfile.html', age=age, name=name, profile_pic=profile_image, gender=gender)
+def PProfile():
+    # name = request.args.get('name')
+    # age = request.args.get('age')
+    # profile_image = request.args.get('profile_pic')
+    # gender = request.args.get('gender')
+    data = session.get('data')
+    if data is None:
+        return redirect(url_for('home'))
+    return render_template('PProfile.html', data=data)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -57,14 +60,15 @@ def login():
     if user and user['password'] == password:
         cursor.execute('SELECT * FROM users_table WHERE email = %s', (email,))
         user = cursor.fetchone()
-        name = user.get('name')
-        age = user.get('age')
-        email = user.get('email')
-        gender = user.get('gender')
-        facebook = user.get('facebook')
-        instagram = user.get('instagram')
-        user = None  # to clear the login info after logging in
-        return redirect(url_for('PProfile.html', name=name, age=int(age), email=email, gender=gender, face_url=facebook, insta_url=instagram))
+        # name = user.get('name')
+        # age = user.get('age')
+        # email = user.get('email')
+        # gender = user.get('gender')
+        # facebook = user.get('facebook')
+        # instagram = user.get('instagram')
+        # user = None  # to clear the login info after logging in
+        session['data'] = dict(user)
+        return redirect(url_for('PProfile'))
     else:
         flash('Login Unsuccessful. Please check email and password', 'danger')
         return render_template('login.html')
