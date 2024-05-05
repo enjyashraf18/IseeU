@@ -48,9 +48,23 @@
                 {% endif %}
         </ul>
     </div>
-    <button id="Edit"> Edit</button>
+
+    <form action="/edit" method="post">
+        <input type="submit" value="edit">
+    </form>
+
+    <form action="/logout" method="post">
+        <input type="submit" value="Logout">
+    </form>    
 </div>
 <div class="main">
+    <form action="/create_post" method="post"  id="form">
+        <label id="titleLabel" for = "title"> Post Title</label><br>
+        <input id="title" name="title"><br>
+        <label id="contentLabel" for="content">content</label><br>
+        <input id="content" name="content"><br>
+        <button type="submit">Submit</button>
+    </form>
     <div class="post"><h5>Post title</h5> Post content</div>
     <div class="post"></div>
     <div class="post"></div>

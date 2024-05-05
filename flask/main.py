@@ -10,6 +10,7 @@ database_session = psycopg2.connect(
     password="2003"
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
+database_session.set_session(autocommit=True)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -49,7 +50,17 @@ def PProfile():
         return redirect(url_for('home'))
     return render_template('PProfile.html', data=data)
 
-
+@app.route('/create_post', methods=['GET', 'POST'])
+def create_post():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        user_id = session.get('data')
+        user_id = user_id['id']
+        cursor.execute('INSERT INTO posts_table (title, content, user_id) VALUES (%s, %s, %s)', (title, content, int(user_id)))
+        # cursor.execute('SELECT email FROM users_table WHERE email = %s', (email,))
+        # posts = cursor.fetchall()
+        return redirect(url_for('PProfile'))
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     email = request.form.get('email')
@@ -74,9 +85,10 @@ def login():
         return render_template('login.html')
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
+    return redirect(url_for('home'))
 
 
 @app.route("/register", methods=['GET', 'POST'])
