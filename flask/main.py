@@ -38,7 +38,7 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/profile')
+@app.route('/PProfile')
 def profile():
     name = request.args.get('name')
     age = request.args.get('age')
@@ -51,7 +51,7 @@ def profile():
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
-    print(email, password)
+    # print(email, password)
     cursor.execute('SELECT email, password FROM users_table WHERE email = %s', (email,))
     user = cursor.fetchone()
     if user and user['password'] == password:
@@ -63,8 +63,8 @@ def login():
         gender = user.get('gender')
         facebook = user.get('facebook')
         instagram = user.get('instagram')
-        user = None # to clear the login info after logging in
-        return redirect(url_for('PProfile.html', name=name, age=age, email=email, gender=gender, face_url=facebook, insta_url=instagram))
+        user = None  # to clear the login info after logging in
+        return redirect(url_for('PProfile.html', name=name, age=int(age), email=email, gender=gender, face_url=facebook, insta_url=instagram))
     else:
         flash('Login Unsuccessful. Please check email and password', 'danger')
         return render_template('login.html')
@@ -81,11 +81,23 @@ def register():
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
+        facebook = request.form.get('facebook')
+        instagram = request.form.get('instagram')
+        gender = request.form.get('gender')
+        if gender == 'M':
+            gender = 'Male'
+        else:
+            gender = 'Female'
         if validate_email_register(email) and validate_username_register(name):
             cursor.execute(
-                "INSERT INTO users_table (name, email, password) VALUES (%s, %s, %s)", (name, email, password))
+                "INSERT INTO users_table (name, email, password, facebook, instagram, gender) VALUES (%s, %s, %s, %s, "
+                "%s, %s)", (name, email, password, facebook, instagram, gender))
             database_session.commit()
             flash('Your account has been created! You are now able to log in', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash('this account is already registered', 'danger')
+            return render_template('register.html')
     return render_template('register.html')
     #     return redirect(url_for('login'))
     # else:

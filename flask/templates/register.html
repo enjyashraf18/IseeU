@@ -19,12 +19,15 @@
             <input type="radio" id="male" name="gender" value="M"> <br>
             <label for="female">Female</label>
             <input type="radio" id="female" name="gender" value="F"><br>
+            
+            <label id="agelabel" for = "age" >Instagram link</label><br>
+            <input type="text" id="ageIn" name="age"><br>
 
             <label id="faceLabel" for = "faceIn" >Facebook link</label><br>
-            <input type="text" id="faceIn"><br>
+            <input type="text" id="faceIn" name="facebook"><br>
 
             <label id="instaLabel" for = "instaIn" >Instagram link</label><br>
-            <input type="text" id="instaIn"><br>
+            <input type="text" id="instaIn" name="instagram"><br>
 
             <label id="emailLabel" for = "emailIn"> Email</label><br>
             <input type="email" name="email" id="emailIn"><br>
@@ -34,5 +37,6 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    <a href="{{ url_for('login')}}" target="_blank"> Already have account? login</a>
 </body>
 </html>
