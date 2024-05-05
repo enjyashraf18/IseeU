@@ -35,7 +35,7 @@ def validate_email_register(email):
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    return render_template('home.html')
 
 
 @app.route('/profile')
@@ -54,7 +54,7 @@ def login():
     print(email, password)
     cursor.execute('SELECT email, password FROM users_table WHERE email = %s', (email,))
     user = cursor.fetchone()
-    if user and user.get(password) == password:
+    if user and user['password'] == password:
         cursor.execute('SELECT * FROM users_table WHERE email = %s', (email,))
         user = cursor.fetchone()
         name = user.get('name')
@@ -63,11 +63,11 @@ def login():
         gender = user.get('gender')
         facebook = user.get('facebook')
         instagram = user.get('instagram')
-        return redirect(url_for('PProfile.html', name=name, age=age
-                                , email=email, gender=gender, face_url=facebook, insta_url=instagram))
+        user = None # to clear the login info after logging in
+        return redirect(url_for('PProfile.html', name=name, age=age, email=email, gender=gender, face_url=facebook, insta_url=instagram))
     else:
         flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html')
+        return render_template('login.html')
 
 
 @app.route('/logout')
