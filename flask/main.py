@@ -1,13 +1,17 @@
 import psycopg2.extras
 from absl.flags import ValidationError
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from werkzeug.utils import secure_filename
+import urllib.request
+import os
+
 
 database_session = psycopg2.connect(
-    database="social_media",
+    database="social",
     port="5432",
     host="localhost",
     user="postgres",
-    password="2003"
+    password="1881510"
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 database_session.set_session(autocommit=True)
@@ -15,6 +19,17 @@ database_session.set_session(autocommit=True)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
+UPLOAD_FOLDER = 'static/uploads/'
+
+app.secret_key = "secret key"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def validate_username_register(username):
     cursor.execute('SELECT name FROM users_table WHERE name = %s', (username,))
@@ -49,8 +64,10 @@ def PProfile():
     if data is None:
         return redirect(url_for('home'))
     user_id = data['id']
+
     cursor.execute('SELECT * FROM posts_table WHERE user_id = %s', (user_id,))
     posts = cursor.fetchall()
+
     return render_template('PProfile.html', data=data, posts=posts)
 
 
@@ -97,6 +114,37 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/', methods=['POST'])
+def upload_image():
+    cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        data = session.get('data')
+        if data:
+            cursor.execute("UPDATE users_table SET profile_pic = %s", (filename,))
+
+            database_session.commit()
+            flash('Image successfully uploaded and displayed below')
+            return render_template('PProfile.html', data=data, filename=filename)
+
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+@app.route('/display/<filename>')
+def display_image(filename):
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -106,14 +154,28 @@ def register():
         facebook = request.form.get('facebook')
         instagram = request.form.get('instagram')
         gender = request.form.get('gender')
+        age = request.form.get('age')
+
         if gender == 'M':
             gender = 'Male'
         else:
             gender = 'Female'
+
+        # Check if a profile picture is uploaded
+        if 'profile_pic' in request.files:
+            profile_pic = request.files['profile_pic']
+            if profile_pic.filename != '':
+                filename = secure_filename(profile_pic.filename)
+                profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            else:
+                filename = None
+        else:
+            filename = None
+
         if validate_email_register(email) and validate_username_register(name):
             cursor.execute(
-                "INSERT INTO users_table (name, email, password, facebook, instagram, gender) VALUES (%s, %s, %s, %s, "
-                "%s, %s)", (name, email, password, facebook, instagram, gender))
+                "INSERT INTO users_table (name, email, password, facebook, instagram, gender, age, profile_pic) VALUES (%s, %s, %s, %s, "
+                "%s, %s, %s, %s )", (name, email, password, facebook, instagram, gender, age, filename))
             database_session.commit()
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('login'))
@@ -121,6 +183,7 @@ def register():
             flash('this account is already registered', 'danger')
             return render_template('register.html')
     return render_template('register.html')
+
     #     return redirect(url_for('login'))
     # else:
     #     return 'this account is already registered'

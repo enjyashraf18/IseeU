@@ -9,6 +9,8 @@ CREATE TABLE users_table (
     age integer not null
 );
 
+
+
 CREATE TABLE posts_table (
     pid serial primary key ,
     title character varying(100) NOT NULL,
@@ -18,4 +20,13 @@ CREATE TABLE posts_table (
 );
 
 ALTER TABLE posts_table
-ADD FOREIGN KEY (user_id) REFERENCES users_table (uid)
+ADD FOREIGN KEY (user_id) REFERENCES users_table (uid);
+
+ALTER TABLE users_table ADD profile_pic character varying(255);
+
+
+
+
+
+
+

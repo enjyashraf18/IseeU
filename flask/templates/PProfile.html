@@ -12,6 +12,35 @@
     <div class="patientInfo">
         <label class="name" name="name"> {{data.name}} </label>
         <ul>
+
+            <p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+            </p>
+            {% if filename %}
+            <div>
+                <img src="{{ url_for('display_image', filename=filename) }}">
+            </div>
+        {% endif %}
+        
+            <form method="post" action="/" enctype="multipart/form-data">
+                <dl>
+                    <p>
+                        <input type="file" name="file" class="form-control" autocomplete="off" required>
+                    </p>
+                </dl>
+                <p>
+                    <input type="submit" value="Upload" class="btn btn-info">
+                </p>
+            </form>
+
             <li class="info">
                 <span class="infoTitle"> email  </span> <br>
                 <span name="email"> {{data.email}} </span>
@@ -38,6 +67,7 @@
                     <p>No Facebook profile available</p>
                 {% endif %}
             </li>
+
             <li class="info">
                 <!---<span class="infoTitle"> facebook  </span> <br>
                 <span > facebook.com </span> -->
@@ -46,6 +76,7 @@
                 {% else %}
                     <p>No Instagram profile available</p>
                 {% endif %}
+            </li>
         </ul>
     </div>
 
