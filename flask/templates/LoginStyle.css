@@ -1,0 +1,33 @@
+body{
+    background-color: #D9D9D9 !important;
+    font-family: "MADE Future X", serif;!important;
+}
+.form{
+    background-color: #FFFBFB;
+    width: 30%;
+    padding: 2%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-content: center;
+    border: 1px solid rgba(0,0,0,0);
+    border-radius: 30px;
+}
+#loginTitle{
+    font-weight: bolder;
+    font-size: 44px;
+    color: #FE686B;
+
+}
+#regLink{
+    font-weight: bold;
+    font-size: 12px;
+    color: #ef5860;
+}
+#submitBtn{
+    background-color: #FE686B;
+    color: #FFFBFB ;
+    border: 0;
+}

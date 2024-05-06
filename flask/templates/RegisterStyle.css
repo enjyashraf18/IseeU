@@ -1,0 +1,52 @@
+body{
+    background-color: #D9D9D9 !important;
+    font-family: "radio canada", serif;!important;
+}
+.form{
+    background-color: #FFFBFB;
+    width: 30%;
+    padding: 2%;
+    margin: auto; !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-content: center;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,0);
+    border-radius: 30px;
+}
+#submitBtn{
+    background-color: #FE686B;
+    color: #FFFBFB ;
+    border: 0;
+    padding: 15px 100px;
+    display: block;
+    margin: 20px auto auto;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 22px;
+}
+#picnote{
+    display: block;
+    color: #444444;
+    font-weight: normal;
+    font-size: 12px;
+}
+#nameIn{
+    width: 50%;
+}
+#picIn{
+    width: 50%;
+}
+#have-Acc{
+    background-color: #FFFBFB;
+    color: #FE686B ;
+    border: 0;
+    padding: 15px 100px;
+    display: block;
+    border-radius: 10px;
+    font-weight: lighter;
+    font-size: 12px;
+    text-align: center;
+}
