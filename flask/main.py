@@ -5,13 +5,12 @@ from werkzeug.utils import secure_filename
 import urllib.request
 import os
 
-
 database_session = psycopg2.connect(
-    database="social",
+    database="social_media",
     port="5432",
     host="localhost",
     user="postgres",
-    password="1881510"
+    password="2003"
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 database_session.set_session(autocommit=True)
@@ -30,6 +29,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def validate_username_register(username):
     cursor.execute('SELECT name FROM users_table WHERE name = %s', (username,))
@@ -63,11 +63,10 @@ def PProfile():
     data = session.get('data')
     if data is None:
         return redirect(url_for('home'))
-    user_id = data['id']
+    user_id = data['uid']
 
     cursor.execute('SELECT * FROM posts_table WHERE user_id = %s', (user_id,))
     posts = cursor.fetchall()
-
     return render_template('PProfile.html', data=data, posts=posts)
 
 
@@ -77,7 +76,7 @@ def create_post():
         title = request.form['title']
         content = request.form['content']
         user_id = session.get('data')
-        user_id = user_id['id']
+        user_id = user_id['uid']
         cursor.execute('INSERT INTO posts_table (title, content, user_id) VALUES (%s, %s, %s)',
                        (title, content, int(user_id)))
         return redirect(url_for('PProfile'))
@@ -98,7 +97,6 @@ def login():
         # user_id = session.get('data')
         # user_id = user_id['id']
 
-
         # if len(posts) != 0:
         #     session['posts'] = dict(posts)
 
@@ -116,7 +114,7 @@ def logout():
 
 @app.route('/', methods=['POST'])
 def upload_image():
-    cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     if 'file' not in request.files:
         flash('No file part')
@@ -128,17 +126,25 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        data = session.get('data')
-        if data:
-            cursor.execute("UPDATE users_table SET profile_pic = %s", (filename,))
+        # data = session.get('data')
+        # if data:
+        userr_id = session.get('data')['uid']
+        cursor.execute("UPDATE users_table SET profile_pic = %s WHERE uid = %s ", (filename, userr_id))
 
-            database_session.commit()
-            flash('Image successfully uploaded and displayed below')
-            return render_template('PProfile.html', data=data, filename=filename)
+        database_session.commit()
+        cursor.execute('SELECT * FROM users_table WHERE uid = %s', (userr_id,))
+        user_data = cursor.fetchone()
 
+        # Update the session data with the new user data
+        session['data'] = dict(user_data)
+
+        flash('Image successfully uploaded and displayed below')
+        # return render_template('PProfile.html', data=data)
+        return redirect(url_for('PProfile'))
     else:
         flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
+
 
 @app.route('/display/<filename>')
 def display_image(filename):
@@ -156,26 +162,23 @@ def register():
         gender = request.form.get('gender')
         age = request.form.get('age')
 
+        profile_pic = request.files['profile_pic']
+        if profile_pic and allowed_file(profile_pic.filename):
+            filename = secure_filename(profile_pic.filename)
+            profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        else:
+            filename = None
+
         if gender == 'M':
             gender = 'Male'
         else:
             gender = 'Female'
 
-        # Check if a profile picture is uploaded
-        if 'profile_pic' in request.files:
-            profile_pic = request.files['profile_pic']
-            if profile_pic.filename != '':
-                filename = secure_filename(profile_pic.filename)
-                profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            else:
-                filename = None
-        else:
-            filename = None
-
         if validate_email_register(email) and validate_username_register(name):
             cursor.execute(
-                "INSERT INTO users_table (name, email, password, facebook, instagram, gender, age, profile_pic) VALUES (%s, %s, %s, %s, "
-                "%s, %s, %s, %s )", (name, email, password, facebook, instagram, gender, age, filename))
+                "INSERT INTO users_table (name, email, password, facebook, instagram, gender, age, profile_pic) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (name, email, password, facebook, instagram, gender, age, filename))
             database_session.commit()
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('login'))

@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ url_for('static', filename='css/PProfileStyle.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="PProfileStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Profile</title>
 </head>
 <body>
 <div class="sidB">
-    <div class="profilePic"> <img src={{profile_pic}} width="300" height="300"> </div>
+    <script>
+        window.onload = function(){
+            var profile_picture = "{{ data.profile_pic }}";
+            document.getElementById('img').src = "{{ url_for('static', filename='uploads/') }}" + profile_picture;
+        };
+        </script>
+    {% if profile_picture %}
+        <div class="profilePic"> <img id="img" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" width="300" height="300"> </div>
+    {%else%}
+        <div class="profilePic"> <img id="img" width="300" height="300"> </div>
+    {% endif %}
     <div class="patientInfo">
         <label class="name" name="name"> {{data.name}} </label>
         <ul>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="RegisterStyle.css">
+    <link href="{{ url_for('static', filename='css/RegisterStyle.css') }}" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -12,12 +12,13 @@
 </head>
 <body>
     <div class="form">
-        <form id="form" action='/register'method="post">
+        <form id="form" action='/register'method="post" enctype="multipart/form-data" >
             <label id="nameLabel" for = "nameIn" class="form-label">Name</label><br>
             <input type="text" name="name" id="nameIn"class="form-control"><br>
 
-            <label id="picLabel" for = "picIn" class="form-label">Profile picture</label><br>
-            <input type="file" id="picIn" class="form-control"><br>
+            <label id="picLabel" for="picIn" class="form-label">Profile picture</label><br>
+            <input type="file" name="profile_pic" id="picIn" class="form-control" autocomplete="off" required> <br>
+            
             <!---<label id="picnote" for = "picIn" >Upload .png or .jpg</label><br>-->
 
             <label id="selectGen" class="form-label">Gender</label><br>
@@ -41,6 +42,8 @@
             <label id="passLabel" for="passIn" class="form-label">Password</label><br>
             <input type="password" name="password" id="passIn" class="form-control"><br>
             <button type="submit" id="submitBtn">Submit</button>
+
+            
         </form>
     <a id="have-Acc" href="{{ url_for('login')}}" target="_blank"> Already have account? login</a>
     </div>

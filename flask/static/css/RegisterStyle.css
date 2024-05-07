@@ -1,12 +1,12 @@
 body{
     background-color: #D9D9D9 !important;
-    font-family: "radio canada", serif;!important;
+    font-family: "radio canada", serif !important;
 }
 .form{
     background-color: #FFFBFB;
     width: 30%;
     padding: 2%;
-    margin: auto; !important;
+    margin: auto !important;
     position: absolute;
     top: 50%;
     left: 50%;
