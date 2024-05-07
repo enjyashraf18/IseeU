@@ -35,8 +35,8 @@ def validate_username_register(username):
     cursor.execute('SELECT name FROM users_table WHERE name = %s', (username,))
     user = cursor.fetchone()
     if user:
-        raise ValidationError('That username is taken. Please choose a different one.')
-        # return False
+        # raise ValidationError('That username is taken. Please choose a different one.')
+        return False
     return True
 
 
@@ -44,8 +44,8 @@ def validate_email_register(email):
     cursor.execute('SELECT email FROM users_table WHERE email = %s', (email,))
     user = cursor.fetchone()
     if user:
-        raise ValidationError('That email is taken. Please choose a different one.')
-        # return False
+        # raise ValidationError('That email is taken. Please choose a different one.')
+        return False
     return True
 
 
@@ -154,6 +154,7 @@ def display_image(filename):
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        data = session.get('data')
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
@@ -167,7 +168,7 @@ def register():
             filename = secure_filename(profile_pic.filename)
             profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:
-            filename = None
+            filename = data.get('profile_pic')
 
         if gender == 'M':
             gender = 'Male'
@@ -182,6 +183,16 @@ def register():
             database_session.commit()
             flash('Your account has been created! You are now able to log in', 'success')
             return redirect(url_for('login'))
+        elif data:
+            user_id = data['uid']
+            cursor.execute(
+                """UPDATE users_table
+                SET name = %s, email= %s, password = %s, facebook = %s, instagram = %s, gender = %s, age = %s, profile_pic = %s
+                WHERE uid = %s""",
+                (name, email, password, facebook, instagram, gender, age, filename, user_id))
+            database_session.commit()
+            flash('Your account has been modified! You are now able to log in', 'success')
+            return redirect(url_for('login'))
         else:
             flash('this account is already registered', 'danger')
             return render_template('register.html')
@@ -190,6 +201,35 @@ def register():
     #     return redirect(url_for('login'))
     # else:
     #     return 'this account is already registered'
+
+
+@app.route("/edit", methods=['GET', 'POST'])
+def edit():
+    data = session.get('data')
+    # user_id = data['uid']
+    # name = request.form.get('name')
+    # email = request.form.get('email')
+    # password = request.form.get('password')
+    # facebook = request.form.get('facebook')
+    # instagram = request.form.get('instagram')
+    # gender = request.form.get('gender')
+    # age = request.form.get('age')
+
+    # profile_pic = request.files['profile_pic']
+    # if profile_pic and allowed_file(profile_pic.filename):
+    #     filename = secure_filename(profile_pic.filename)
+    #     profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # else:
+    #     filename = None
+
+    # cursor.execute(
+    #     """UPDATE users_table
+    #     SET name = '%s', email= '%s', password = '%s', facebook = '%s', instagram = '%s', gender = '%s', age = '%s'
+    #     WHERE uid = '%s'""",
+    #     (name, email, password, facebook, instagram, gender, age, user_id))
+    # database_session.commit()
+    # flash('Your account has been modified! You are now able to log in', 'success')
+    return render_template('testRegister.html', data=data)
 
 
 if __name__ == '__main__':

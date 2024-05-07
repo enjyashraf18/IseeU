@@ -8,25 +8,30 @@ body{
 }
 .profilePic{
     position: relative;
-    width: 100%;
-    height: 24%;
+    width: 290px;
+    height: 290px;
     background: rgb(167, 88, 88);
-    top: 0px;
-    left: 0px;
+    margin: auto;
     border-radius: 50%;
-    margin-bottom: 5%;
+    margin-bottom: 50px;
     overflow: hidden;
-    padding: .5%;
+    
     border: 10px solid #eb5759;
 }
 .sidB{
     background-color: #FFFBFB;
-    position: relative;
-    width: 30%;
+    position: sticky;
+    width: 700px;
     text-align: center;
     overflow: hidden;
-    padding: 1rem 2rem;
     align-items: center;
+}
+.patientInfo{
+    margin: auto;
+    align-self: center;
+}
+.infoList{
+    margin: auto;
 }
 .name{
     font-size: 66px;
@@ -35,14 +40,17 @@ body{
 }
 .info{
     list-style-type: none;
-    position: relative;
+    font-size: 33px;
     text-align: center;
-    margin: 20px 0;
+    font-weight: bold;
+    margin: 10px 0;
 }
 
 .infoTitle{
     font-weight: lighter;
-    font-size: 35px;
+    font-size: 29px;
+    color: rgb(61, 61, 61);
+    margin: -10px;
 }
 
 
@@ -71,6 +79,16 @@ body{
     background-color: #FFFBFB ;
     color: #FE686B;
     border: 3px #FE686B solid;
+}
+#upload{
+    margin: 10px;
+    background-color: #FFFBFB ;
+    color: #FE686B;
+    border: 3px #FE686B solid;
+}
+#picUp{
+    width: 80%;
+    align-self: center;
 }
 #logout{
     margin: 10px;

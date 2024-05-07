@@ -14,7 +14,7 @@
     <div class="form">
         <form id="form" action='/register'method="post" enctype="multipart/form-data" >
             <label id="nameLabel" for = "nameIn" class="form-label">Name</label><br>
-            <input type="text" name="name" id="nameIn"class="form-control"><br>
+             <input type="text" name="name" id="nameIn"class="form-control"><br>
 
             <label id="picLabel" for="picIn" class="form-label">Profile picture</label><br>
             <input type="file" name="profile_pic" id="picIn" class="form-control" autocomplete="off" required> <br>
@@ -45,7 +45,7 @@
 
             
         </form>
-    <a id="have-Acc" href="{{ url_for('login')}}" target="_blank"> Already have account? login</a>
+    <a id="have-Acc" href="{{ url_for('login')}}"> Already have account? login</a>
     </div>
 </body>
 </html>
