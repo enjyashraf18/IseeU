@@ -1,5 +1,4 @@
 import psycopg2.extras
-from absl.flags import ValidationError
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.utils import secure_filename
 import urllib.request
@@ -56,10 +55,6 @@ def home():
 
 @app.route('/PProfile')
 def PProfile():
-    # name = request.args.get('name')
-    # age = request.args.get('age')
-    # profile_image = request.args.get('profile_pic')
-    # gender = request.args.get('gender')
     data = session.get('data')
     if data is None:
         return redirect(url_for('home'))
@@ -93,13 +88,6 @@ def login():
         cursor.execute('SELECT * FROM users_table WHERE email = %s', (email,))
         user = cursor.fetchone()
         session['data'] = dict(user)
-
-        # user_id = session.get('data')
-        # user_id = user_id['id']
-
-        # if len(posts) != 0:
-        #     session['posts'] = dict(posts)
-
         return redirect(url_for('PProfile'))
     else:
         flash('Login Unsuccessful. Please check email and password', 'danger')
@@ -114,24 +102,26 @@ def logout():
 
 @app.route('/', methods=['POST'])
 def upload_image():
-    # cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
+    #i got request but no attribute of files
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
-    file = request.files['file']
+
+    file = request.files['file']  #store the file (image)
+
     if file.filename == '':
         flash('No image selected for uploading')
         return redirect(request.url)
+
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # data = session.get('data')
-        # if data:
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) #add the file to the upload folder
+        #get the user id to store the image name in it
         userr_id = session.get('data')['uid']
         cursor.execute("UPDATE users_table SET profile_pic = %s WHERE uid = %s ", (filename, userr_id))
 
         database_session.commit()
+        #get the data for this id
         cursor.execute('SELECT * FROM users_table WHERE uid = %s', (userr_id,))
         user_data = cursor.fetchone()
 
@@ -139,7 +129,6 @@ def upload_image():
         session['data'] = dict(user_data)
 
         flash('Image successfully uploaded and displayed below')
-        # return render_template('PProfile.html', data=data)
         return redirect(url_for('PProfile'))
     else:
         flash('Allowed image types are - png, jpg, jpeg, gif')
@@ -154,7 +143,9 @@ def display_image(filename):
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        #get the data if this is editing so there is a session
         data = session.get('data')
+        #get the variables
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
@@ -167,7 +158,7 @@ def register():
         if profile_pic and allowed_file(profile_pic.filename):
             filename = secure_filename(profile_pic.filename)
             profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        else:
+        else: #if the user didn't edit the image so use the previous image (if no user then it's none)
             filename = data.get('profile_pic')
 
         if gender == 'M':
@@ -175,15 +166,7 @@ def register():
         else:
             gender = 'Female'
 
-        if validate_email_register(email) and validate_username_register(name):
-            cursor.execute(
-                "INSERT INTO users_table (name, email, password, facebook, instagram, gender, age, profile_pic) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (name, email, password, facebook, instagram, gender, age, filename))
-            database_session.commit()
-            flash('Your account has been created! You are now able to log in', 'success')
-            return redirect(url_for('login'))
-        elif data:
+        if data: #the user is editing its data
             user_id = data['uid']
             cursor.execute(
                 """UPDATE users_table
@@ -193,43 +176,24 @@ def register():
             database_session.commit()
             flash('Your account has been modified! You are now able to log in', 'success')
             return redirect(url_for('login'))
+        elif validate_email_register(email) and validate_username_register(name):
+            cursor.execute(
+                "INSERT INTO users_table (name, email, password, facebook, instagram, gender, age, profile_pic) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (name, email, password, facebook, instagram, gender, age, filename))
+            database_session.commit()
+            flash('Your account has been created! You are now able to log in', 'success')
+            return redirect(url_for('login'))
         else:
             flash('this account is already registered', 'danger')
             return render_template('register.html')
     return render_template('register.html')
 
-    #     return redirect(url_for('login'))
-    # else:
-    #     return 'this account is already registered'
-
 
 @app.route("/edit", methods=['GET', 'POST'])
 def edit():
     data = session.get('data')
-    # user_id = data['uid']
-    # name = request.form.get('name')
-    # email = request.form.get('email')
-    # password = request.form.get('password')
-    # facebook = request.form.get('facebook')
-    # instagram = request.form.get('instagram')
-    # gender = request.form.get('gender')
-    # age = request.form.get('age')
-
-    # profile_pic = request.files['profile_pic']
-    # if profile_pic and allowed_file(profile_pic.filename):
-    #     filename = secure_filename(profile_pic.filename)
-    #     profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    # else:
-    #     filename = None
-
-    # cursor.execute(
-    #     """UPDATE users_table
-    #     SET name = '%s', email= '%s', password = '%s', facebook = '%s', instagram = '%s', gender = '%s', age = '%s'
-    #     WHERE uid = '%s'""",
-    #     (name, email, password, facebook, instagram, gender, age, user_id))
-    # database_session.commit()
-    # flash('Your account has been modified! You are now able to log in', 'success')
-    return render_template('testRegister.html', data=data)
+    return render_template('register.html', data=data)
 
 
 if __name__ == '__main__':
