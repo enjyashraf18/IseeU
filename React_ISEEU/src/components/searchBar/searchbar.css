@@ -1,0 +1,61 @@
+.bar{
+    justify-content:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 5rem;
+
+}
+.bar-input{
+    width: 450px; ;
+    height:30px ;
+    border-radius:   50px  50px  ; 
+    border: none;
+    color: black;
+    font-family: var(--font-family-button);
+    background-color: #F5F5F5;
+    font-weight:200;
+    outline: none; /*delete the focus boder*/
+    padding-left: 10px
+    
+}
+.search-icon{
+    position: relative;
+    left: 440px;
+    color: #A6A9AB;
+    cursor: pointer;
+    top: 3px;
+}
+.result-button{
+    background-color: #f0f0f0;
+  border: none;
+
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height: 30px;
+  position: relative;
+  left: 8.5px;
+  top: 5px;
+  
+}
+.result-button:hover{
+    background-color: #A6A9AB;
+}
+
+.Notfound{
+background-color: #f0f0f0;
+width:450px;
+height: 30px;
+position: relative;
+  left: 8.5px;
+  top:5px;
+  padding: 4px;
+} 
+/*make the positon of this absolute to appear over the elements not to make shift*/
+.appear-over{ /* dont forget to adjust that when you put it in your page*/
+    position: absolute;
+    top: 284px;
+}

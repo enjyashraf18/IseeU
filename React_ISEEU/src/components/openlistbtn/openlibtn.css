@@ -1,0 +1,37 @@
+.openli{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.option1{
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    width: 224px;
+    height: 51px;
+    border:none;
+    background-color: #258176;
+    color: #D9D9D9;
+    font-family: var(--font-family-button);
+    font-size: 25px;
+    font-weight: 500;
+
+}
+.option2{
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    width: 224px;
+    height: 51px;
+    border:none;
+    background-color: #258176;
+    color: #D9D9D9;
+    font-family: var(--font-family-button);
+    font-size: 25px;
+    font-weight: 500;
+}
+.option1:hover{
+    background-color:var(--color-box);
+}
+.option2:hover{
+    background-color:var(--color-box);
+}

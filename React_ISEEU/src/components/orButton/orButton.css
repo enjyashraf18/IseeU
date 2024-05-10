@@ -1,0 +1,53 @@
+.ORBUt{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 2rem 5rem;
+     
+}
+.F{
+  /*  margin-right: 3px;*/
+    border-radius:   0 50px 50px 0  ; 
+   /* border-radius:  0 50px;*/
+    width:80px;
+    height:35px;
+    background-color: #FE688C;
+    color:#fff;
+    border:none;
+    font-family: var(--font-family-button);
+    font-size:17px;
+    cursor: pointer;
+    
+}
+.M{
+  /*  margin-right: 3px;*/
+  position: relative;
+  left:30px;
+    border-radius:   50px 0 0 50px  ; 
+    /*border-radius:   50px 0;*/
+    width:80px;
+    height:35px;
+    background-color:#4381C1;
+    color:#fff;
+    border:none;
+    font-family: var(--font-family-button);
+    font-size:17px;
+    cursor: pointer;
+
+}
+.ORO{
+    position: relative;
+    top: 0; 
+    left: 15px; /* Adjust left position to eat from the buttons*/
+    padding:  6px; 
+    background-color:#fff; 
+    color : black;
+    font-size: 16px;
+    font-weight:bold;
+    border: none;
+    border-radius: 50%; /* Creates a circular shape */
+    cursor: none; 
+    transition: background-color 0.3s ease; 
+    transform: scaleY(1.05);
+}
