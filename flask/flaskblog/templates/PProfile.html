@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="{{ url_for('static', filename='css/PProfileStyle.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Profile</title>
+</head>
+<body>
+<div class="sidB">
+    <script>
+        window.onload = function(){
+            var profile_picture = "{{ data.profile_pic }}";
+            document.getElementById('img').src = "{{ url_for('static', filename='uploads/') }}" + profile_picture;
+        };
+        </script>
+    {% if profile_picture %}
+        <div class="profilePic"> <img id="img" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" width="300" height="300"> </div>
+    {%else%}
+        <div class="profilePic"> <img id="img" width="300" height="300"> </div>
+    {% endif %}
+    <div class="patientInfo">
+        <ul class="infoList"><!---I put here a class-->
+            <label class="name" name="name"> {{data.name}} </label>
+
+            <p>
+                <!-- {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %} -->
+            </p>
+            {% if filename %}
+            <div>
+                <img src="{{ url_for('display_image', filename=filename) }}">
+            </div>
+        {% endif %}
+        
+            <form method="post" action="/" enctype="multipart/form-data">
+                <dl>
+                    <p>
+                        <input type="file" name="file" class="form-control" autocomplete="off" required id="picUp">
+                    </p>
+                </dl>
+                <p >
+                    <input type="submit" value="Upload" class="btn btn-info" id="upload">
+                </p>
+            </form>  
+
+            <li class="info">
+                <span class="infoTitle"> email  </span> <br>
+                <span name="email"> {{data.email}} </span>
+            </li>
+            </li>
+            <li class="info">
+                <span class="infoTitle"> Gender  </span> <br>
+                <span name="gender"> {{data.gender}} </span>
+            </li>
+            <!---<li class="info">
+                <span class="infoTitle"> Weight  </span> <br>
+                <span > 75 Kg </span>
+            </li> --->
+            <!---<li class="info">
+                <span class="infoTitle"> Admitted  </span> <br>
+                <span > 5 days ago </span>
+            </li>  -->
+            <li class="info">
+                <!---<span class="infoTitle"> facebook  </span> <br>
+                <span > facebook.com </span> -->
+                {% if data.facebook %}
+                    <a href="{{ data.facebook }}" target="_blank" name="face_url"> Facebook</a>
+                {% else %}
+                    <p>No Facebook profile available</p>
+                {% endif %}
+            </li>
+
+            <li class="info">
+                <!---<span class="infoTitle"> facebook  </span> <br>
+                <span > facebook.com </span> -->
+                {% if data.instagram %}
+                    <a href="{{ data.instagram }}" target="_blank" name="insta_url"> Instagram</a>
+                {% else %}
+                    <p>No Instagram profile available</p>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+    <form action="/edit" method="post">
+        <input type="submit" value="edit" id="edit" class="btn btn-primary">
+    </form>
+
+    <form action="/logout" method="post">
+        <input type="submit" value="Logout" id="logout" class="btn btn-primary">
+    </form>    
+</div>
+<div class="main">
+    <form action="/create_post" method="post"  id="form">
+        <label id="titleLabel" for = "title"> Post Title</label><br>
+        <input id="title" name="title"><br>
+        <label id="contentLabel" for="content">content</label><br>
+        <input id="content" name="content"><br>
+        <button type="submit"> Submit </button>
+    </form>
+    <!-- <div class="post"><h5>Post title</h5> Post content</div> -->
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post"><h5>{{post.title}}</h5>{{post.date_posted}}<br> {{post.content}}</div>
+        {% endfor %}    
+    {% endif %}
+    <!-- <div class="post"></div>
+    <div class="post"></div> -->
+</div>
+</body>
+</html>
