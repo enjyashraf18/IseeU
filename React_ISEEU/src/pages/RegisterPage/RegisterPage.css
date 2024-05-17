@@ -1,0 +1,49 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Background for the entire page */
+}
+
+#container{
+    background-color: #258176;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+/* Form container styles */
+/* Form container styles */
+#regForm {
+    background-color: #F5F5F5;
+    border-radius: 20px 20px 0 0;
+    padding: 3vh 8vh;
+    min-height: 10vh; /* Adjust the minimum height as needed */
+    height: 50vh; /* Adjust the height as needed */
+}
+
+#title {
+    text-align: center;
+    color: #F5F5F5 ;
+    margin-bottom: 20px;
+    font-size: 10vw ;
+}
+#secondTitle {
+    text-align: center;
+    color: #258176 ;
+    margin-bottom: 20px;
+    font-size: 2vw ;
+    font-weight: 600;
+}
+input{
+    height: 3vh !important;
+}
+
+/* Logo styles */
+#logoPic {
+    display: block;
+    margin: 20px auto;
+    max-width: 100px; /* Adjust as needed */
+}
