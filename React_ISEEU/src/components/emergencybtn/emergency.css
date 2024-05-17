@@ -8,12 +8,12 @@
 .emerbtn{
     background-color: #FE5755;
     border-radius: 50px 50px;
-    width: 250px;
-    height: 55px;
+    width: 25vw;
+    height: 5vh;
     outline: none;
     border: none;
     color: #F5F5F5;
     font-family: var(--font-family-button);
     font-weight: 500;
-    font-size: 31px;
+    font-size: 3vh;
 }

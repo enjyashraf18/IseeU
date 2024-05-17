@@ -1,10 +1,10 @@
 import React from 'react';
 import "./text1.css";
-const Text1 = () => {
+const Text1 = (props) => {
   return (
     <div className='text1'>
-      <p>username</p>
-      <input type='text' placeholder=''/>
+      <p>{props.label}</p>
+      <input type={props.type} placeholder=''/>
     </div>
   )
 }

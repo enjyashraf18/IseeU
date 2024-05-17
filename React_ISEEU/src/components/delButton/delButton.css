@@ -18,7 +18,7 @@
     border-radius: 100%; /* Creates a circular shape */
     cursor: pointer; 
     transition: background-color 0.3s ease; 
-    transform: scaleX(1.);
+    transform: scaleX(1);
     width: 55pX;
     height: 55px;
     justify-content: center; /* Center horizontally */

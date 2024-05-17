@@ -1,9 +1,9 @@
 import React from 'react';
 import "./btn.css";
-const Btn = () => {
+const Btn = (props) => {
   return (
     <div className='btn'>
-      <button> Update </button>
+      <button> {props.label} </button>
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import "./textnumber.css";
-const TextNumber = () => {
+const TextNumber = (props) => {
   return (
     <div className='text-num'>
-      <p>Age</p>
-      <input type='text' placeholder=''/>
+      <p>{props.label}</p>
+      <input type='number' placeholder=''/>
     </div>
   )
 }

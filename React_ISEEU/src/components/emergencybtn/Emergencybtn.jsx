@@ -1,10 +1,10 @@
 import React from 'react';
 import "./emergency.css";
-const Emergencybtn = () => {
+const Emergencybtn = (props) => {
   return (
     <div className='emergency'>
       <button className='emerbtn'>
-      Piege
+          {props.label}
       </button>
     </div>
   )
