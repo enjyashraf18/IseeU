@@ -39,3 +39,13 @@
     left: 0; /* Align left edge with container */
     right: 0; /* Align right edge with container */
 }
+#inputs{
+    height: 600px;
+    overflow-y: scroll;
+    padding: 3vw;
+}
+img{
+    width: 100%;
+    max-height: 30vh;
+    margin: 3vh 0;
+}
