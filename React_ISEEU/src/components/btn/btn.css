@@ -8,8 +8,9 @@
 .btn button{
     background-color: #258176;
     border-radius: 50px 50px;
-    width: 25vw;
-    height: 5vh;
+    width: 100%;
+    min-width: 12vw;
+    height: 100%;
     outline: none;
     border: none;
     color: #F5F5F5;
