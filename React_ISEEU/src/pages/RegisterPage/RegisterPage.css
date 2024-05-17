@@ -24,7 +24,7 @@
     min-height: 50vh; /* Adjust the minimum height as needed */
     height: 50%; /* Adjust the height as needed */
     max-width: 80%; /* Set maximum width */
-    margin: 2vh auto; /* Center horizontally */
+    margin: 2vh auto 0 auto; /* Center horizontally */
 }
 
 #title {
@@ -42,7 +42,6 @@
     font-size: 5vh;
     font-weight: 600;
 }
-
 /* Logo styles */
 #logoPic {
     display: block;

@@ -1,0 +1,41 @@
+/* Global styles */
+* {
+    font-family: "radio canada", serif;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    background-color: #258176;
+    align-items: center; /* Align items vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+#profilePreview {
+    background-color: #9c5555;
+    min-height: 50vh; /* Adjust the minimum height as needed */
+    height: 89vh; /* Set height to auto */
+    max-width: 100%; /* Set maximum width */
+}
+
+#inputs {
+    background-color: #9c55a4;
+    min-height: 89vh;
+}
+
+#regForm {
+    background-color: #F5F5F5;
+    border-radius: 20px 20px 0 0;
+    padding: 3vh 4vh;
+    min-height: 50vh; /* Adjust the minimum height as needed */
+    height: 92vh; /* Set height to auto */
+    max-width: 80%; /* Set maximum width */
+    margin: auto; /* Center horizontally */
+    position: absolute; /* Position at the bottom */
+    bottom: 0; /* Stick to the bottom */
+    left: 0; /* Align left edge with container */
+    right: 0; /* Align right edge with container */
+}
