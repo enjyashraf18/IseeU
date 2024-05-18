@@ -3,11 +3,11 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 
 database_session = psycopg2.connect(
-    database="social_media",
+    database="IseeUDB",
     port="5432",
-    host="localhost",
-    user="postgres",
-    password="2003"
+    host="ep-still-truth-a21z0m3n.eu-central-1.aws.neon.tech",
+    user="IseeUDB_owner",
+    password="o70CUtSaXsJK"
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 database_session.set_session(autocommit=True)
