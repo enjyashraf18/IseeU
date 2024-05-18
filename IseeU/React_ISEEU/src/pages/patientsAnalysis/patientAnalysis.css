@@ -1,0 +1,19 @@
+
+.patientanalysis table tr{
+    border:#A6A9AB;
+}
+.patientanalysis.Table_patients{
+    background-color: gray;
+}
+.patientanalysis table{
+    margin:40px ;
+}
+.addbtn{
+    position: relative;
+    left: 1200px;
+    margin-top: 20px;
+}
+.bar-input{
+    position: relative;
+    left: 200px;
+}

@@ -1,0 +1,30 @@
+.del{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 2rem 5rem;
+}
+.delbtn{
+    position: relative;
+  
+ 
+    padding:  10px; 
+    background-color: #258176; 
+    color : #Fff;
+    font-size: 25px;
+    font-weight:bold;
+    border: none;
+    border-radius: 100%; /* Creates a circular shape */
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    transform: scaleX(1);
+    width: 55pX;
+    height: 55px;
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    
+}
+.delbtn:hover{
+    background-color: var(--color-box);
+}

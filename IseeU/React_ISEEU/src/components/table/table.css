@@ -1,0 +1,114 @@
+
+  .table-responsive {
+   max-height: 1100px;
+    overflow-y: auto;
+    scrollbar-width: none; /*fire fox*/
+    -ms-overflow-style: none;/* internet explorer*/
+  }
+  .table-container::-webkit-scrollbar { /* Chrome, Safari and Opera */
+    display: none;
+  }
+  .rounded{
+    border-radius: 50%;
+
+  }
+  .table-header{
+    position: sticky!important;
+    justify-content: space-between;
+    z-index: 100;
+    
+  }
+ /* .table-header th {
+    padding: 0px 50px; /* Adjust as needed */
+  /*} */
+  
+  .thead-fixed th {
+    position: -webkit-sticky;
+    position: sticky !important;
+    justify-content: space-between;
+    
+    z-index: 1000; 
+    font-size:23px;
+    top: 0;
+    background-color:#F5F5F5;
+    z-index: 100;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    font-family: var(--font-family-button);
+    color: #258176;
+
+  }
+  .custom-table tbody {
+    background-color: #F5F5F5 !important;
+    background-color: rebeccapurple;
+    font-family: var(--font-family-button);
+    font-size:19px;
+    
+  }
+  .fasearch{
+    position:sticky;
+    left: 1550px;
+    top:30px;
+    cursor: pointer;
+    z-index: 2000; 
+    color: gray;
+  }
+  .input{
+    position:absolute;
+    right: 300px;
+    z-index: 1000; 
+   
+  }
+  .input form{
+   width: 500px;
+  
+  }
+.tableComponent{
+    justify-content:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ 
+}
+.role_action_component{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+.editbtn{
+    background-color:var(--color-main);
+    border-radius: 50px 50px;
+    width: 80px;
+    height: 20px;
+    outline: none;
+    border: none;
+    color: #F5F5F5;
+    font-family: var(--font-family-button);
+    font-weight: 500;
+    font-size:medium;
+}
+.del{
+   
+    margin: 0;
+    margin-left: 4px;
+    background-color: var(--color-emergency); 
+    color : #Fff;
+    font-size: 13px;
+    font-weight:bold;
+    border: none;
+    border-radius: 20%; /* Creates a circular shape */
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    transform: scaleX(1);
+    width: 20pX;
+    height: 20px;
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+     
+}
+.del:hover{
+    background-color:pink;
+}
+.editbtn:hover{
+    background-color: var(--color-mainLight);
+}

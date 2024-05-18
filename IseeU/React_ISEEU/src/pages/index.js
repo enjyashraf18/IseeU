@@ -1,0 +1,1 @@
+export {default as Patient_Analysis} from "./patientsAnalysis/PatientAnalysis"

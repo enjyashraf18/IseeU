@@ -1,0 +1,19 @@
+.emergency{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin:4px;
+}
+.emerbtn{
+    background-color: #FE5755;
+    border-radius: 50px 50px;
+    width: 25vw;
+    height: 5vh;
+    outline: none;
+    border: none;
+    color: #F5F5F5;
+    font-family: var(--font-family-button);
+    font-weight: 500;
+    font-size: 3vh;
+}

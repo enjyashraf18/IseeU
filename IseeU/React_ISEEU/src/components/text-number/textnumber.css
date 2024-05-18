@@ -1,0 +1,29 @@
+.text-num{
+    justify-content:flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center ;
+
+}
+.text-num p{
+    color:var(--color-box);
+    margin: auto;
+    font-weight:500;
+    font-size: 2vh;
+
+}
+.text-num input{
+    width: 7vh;
+    height:3vh;
+    /*border-color: #549991;*/
+    border: 3px solid var(--color-box);
+    background-color: #F5F5F5;
+    border-radius:50px 50px  ;
+    padding:10px;
+    color:var(--color-box);
+    font-weight: 500;
+    font-size: 26px;
+    outline: #549991;
+    font-family: var(--font-family-button);
+}

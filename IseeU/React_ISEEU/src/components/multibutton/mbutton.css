@@ -1,0 +1,65 @@
+.Mbuttons{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 2rem 5rem;
+    
+}
+.radio1{
+    margin-right: 3px;
+    border-radius:  50px 0 0 50px ; 
+    width:80px;
+    height:35px;
+    background-color: var(--color-box);
+    color:#fff;
+    border:none;
+    font-family: var(--font-family-button);
+    font-size:17px;
+    cursor: pointer;
+}
+.radio4{
+    margin-left: 3px;
+    border-radius: 0 50px 50px 0;
+    width:80px;
+    height:35px;
+    background-color: var(--color-box);
+    color:#fff;
+    border:none;
+    font-family: var(--font-family-button);
+    font-size:17px;
+    cursor: pointer;
+}
+.radio2{
+    margin-right: 3px;
+    width:80px;
+    height:35px;
+    background-color: var(--color-box);
+    color:#fff;
+    border:none;
+    font-family: var(--font-family-button);
+    font-size:17px;
+    cursor: pointer;
+}
+.radio3{
+    width:80px;
+    height:35px;
+    background-color: var(--color-box);
+    color:#fff;
+    border:none;
+    font-family: var(--font-family-button);
+    font-size:17px;
+    cursor: pointer;
+}
+.radio1:hover{
+    background-color:#258176;
+}
+.radio2:hover{
+    background-color:#258176;
+}
+.radio3:hover{
+    background-color:#258176;
+}
+.radio4:hover{
+    background-color:#258176;
+}
