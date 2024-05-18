@@ -19,21 +19,19 @@ def PProfile():
         return redirect(url_for('home'))
     user_id = data['uid']
 
-    cursor.execute('SELECT * FROM posts_table WHERE user_id = %s', (user_id,))
-    posts = cursor.fetchall()
-    return render_template('PProfile.html', data=data, posts=posts)
+    return {"data": data}
 
 
-@app.route('/create_post', methods=['GET', 'POST'])
-def create_post():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-        user_id = session.get('data')
-        user_id = user_id['uid']
-        cursor.execute('INSERT INTO posts_table (title, content, user_id) VALUES (%s, %s, %s)',
-                       (title, content, int(user_id)))
-        return redirect(url_for('PProfile'))
+# @app.route('/create_post', methods=['GET', 'POST'])
+# def create_post():
+#     if request.method == 'POST':
+#         title = request.form['title']
+#         content = request.form['content']
+#         user_id = session.get('data')
+#         user_id = user_id['uid']
+#         cursor.execute('INSERT INTO posts_table (title, content, user_id) VALUES (%s, %s, %s)',
+#                        (title, content, int(user_id)))
+#         return redirect(url_for('PProfile'))
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -41,10 +39,10 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
     # print(email, password)
-    cursor.execute('SELECT email, password FROM users_table WHERE email = %s', (email,))
+    cursor.execute('SELECT emailaddress, password FROM employee WHERE emailaddress = %s', (email,))
     user = cursor.fetchone()
     if user and user['password'] == password:
-        cursor.execute('SELECT * FROM users_table WHERE email = %s', (email,))
+        cursor.execute('SELECT * FROM employee WHERE emailaddress = %s', (email,))
         user = cursor.fetchone()
         session['data'] = dict(user)
         return redirect(url_for('PProfile'))
@@ -56,7 +54,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
-    return redirect(url_for('home'))
+    # return redirect(url_for('home'))
 
 
 @app.route('/', methods=['POST'])
@@ -76,12 +74,12 @@ def upload_image():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  #add the file to the upload folder
         #get the user id to store the image name in it
-        userr_id = session.get('data')['uid']
-        cursor.execute("UPDATE users_table SET profile_pic = %s WHERE uid = %s ", (filename, userr_id))
+        userr_id = session.get('data')['nid']
+        cursor.execute("UPDATE employee SET profilepic = %s WHERE nid = %s ", (filename, userr_id))
 
         database_session.commit()
         #get the data for this id
-        cursor.execute('SELECT * FROM users_table WHERE uid = %s', (userr_id,))
+        cursor.execute('SELECT * FROM employee WHERE nid = %s', (userr_id,))
         user_data = cursor.fetchone()
 
         # Update the session data with the new user data
