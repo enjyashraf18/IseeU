@@ -1,45 +1,109 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./RegisterPage2.css";
 import { OR, MBut, DEL, Search, UserText1, UserText2, UserAge, CheckBox, OpenLi, EmerBtn, Btn, LiBTN } from '../../components';
+import { useNavigate } from 'react-router-dom';
 
 const Register2 = () => {
+    const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        dob: '',
+        address: '',
+        email: '',
+        phone: '',
+        NID: '',
+        username: '',
+        password: '',
+        passwordConfirm: ''
+    });
 
-    const [profileImg,  setProfileImg] = useState("https://placehold.co/320x320")
-    function  handleImgupload(e){
-        setProfileImg(e.target.value);
-        console.log(profileImg);
+    const navigate = useNavigate();
+
+    function handleImgupload(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setProfileImg(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
 
-    return (<div id="container">
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (formData.password !== formData.passwordConfirm) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        fetch('/Register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                navigate('/success'); // navigate to a success page or another route
+            });
+    };
+
+    return (
+        <div id="container">
             <div className="container-fluid">
                 <div className="row">
-                    <div id={"regForm"} className={"col-10 mx-auto"}>
-                        <form>
-                            <div className={"row"}>
-                                <div id={"profilePreview"} className={"col-3"}>
-                                    <img src={profileImg} alt={"Preview"}/>
-                                    <input onChange={handleImgupload} type = "file"/>
-                                    <p id={"imgSpecs"}>snsna<br/>sfasfsaa<br/>ssads</p>
+                    <div id="regForm2" className="col-10 mx-auto">
+                        <form onSubmit={handleSubmit}>
+                            <div className="row">
+                                <div id="profilePreview" className="col-3">
+                                    <img src={profileImg} alt="Preview" />
+                                    <input onChange={handleImgupload} type="file" />
+                                    <p id="imgSpecs">snsna<br />sfasfsaa<br />ssads</p>
                                 </div>
-                                <div id={"inputs"} className={"col-9"}>
-                                    <p id={"scndTitle"}>Personal Info</p>
-                                    <div className={"row"}>
-                                        <div className={"col-6"}><UserText1 label="First name" type={"text"}/></div>
-                                        <div className={"col-6"}><UserText1 label="First name" type={"text"}/></div>
+                                <div id="inputs" className="col-9">
+                                    <p id="scndTitle">Personal Info</p>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <UserText1 label="First name" type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
+                                        </div>
+                                        <div className="col-6">
+                                            <UserText1 label="Last name" type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+                                        </div>
                                     </div>
-                                    <UserText1 label="Date of birth" type={"date"}/>
-                                    <OR/>
-                                    <UserText1 label="Address" type={"text"}/>
-                                    <UserText1 label="Email" type={"email"}/>
-                                    <UserText1 label="Phone" type={"number"}/>
+                                    <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob} onChange={handleInputChange} />
+                                    <OR />
+                                    <UserText1 label="Address" type="text" name="address" value={formData.address} onChange={handleInputChange} />
+                                    <UserText1 label="Email" type="email" name="email" value={formData.email} onChange={handleInputChange} />
+                                    <UserText1 label="Phone" type="number" name="phone" value={formData.phone} onChange={handleInputChange} />
 
+                                    <UserText1 label="National ID" type="text" name="NID" value={formData.NID} onChange={handleInputChange} />
+                                    <UserText1 label="Username" type="text" name="username" value={formData.username} onChange={handleInputChange} />
+                                    <UserText1 label="Password" type="password" name="password" value={formData.password} onChange={handleInputChange} />
+                                    <UserText1 label="Password Confirm" type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleInputChange} />
 
-                            <div className={"row"}>
-                                <div className={"col-1"}><Btn label="Back" type={"submit"}/></div>
-                                <div className={"col-1 offset-8"}> <Btn id = "nxtBtn" label = "Next" type={"submit"}/> </div>
-                            </div>
+                                    <div className="row">
+                                        <div className="col-1">
+                                            <Btn label="Back" />
+                                        </div>
+                                        <div className="col-1 offset-8">
+                                            <Btn id="nxtBtn" label="Next" type="submit" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
