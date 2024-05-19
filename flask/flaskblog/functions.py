@@ -13,7 +13,7 @@ def allowed_file(filename):
 
 
 def validate_username_register(username):
-    cursor.execute('SELECT name FROM users_table WHERE name = %s', (username,))
+    cursor.execute('SELECT username FROM employee WHERE username = %s', (username,))
     user = cursor.fetchone()
     if user:
         # raise ValidationError('That username is taken. Please choose a different one.')
