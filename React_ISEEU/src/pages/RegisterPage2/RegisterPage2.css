@@ -15,14 +15,12 @@
 }
 
 #profilePreview {
-    background-color: #9c5555;
     min-height: 50vh; /* Adjust the minimum height as needed */
     height: 89vh; /* Set height to auto */
     max-width: 100%; /* Set maximum width */
 }
 
 #inputs {
-    background-color: #9c55a4;
     min-height: 89vh;
 }
 
@@ -48,4 +46,23 @@ img{
     width: 100%;
     max-height: 30vh;
     margin: 3vh 0;
+}
+#scndTitle{
+    text-align: center;
+    color: #258176;
+    margin-bottom: 20px;
+    font-size: 5vh;
+    font-weight: 600;
+}
+#imgSpecs{
+    text-align: left;
+    color: #000000;
+    font-size: 2vh;
+    font-weight: 300;
+}
+.scroller {
+    --scrollbar-color-thumb: hotpink;
+    --scrollbar-color-track: blue;
+    --scrollbar-width: thin;
+    --scrollbar-width-legacy: 0.5rem;
 }
