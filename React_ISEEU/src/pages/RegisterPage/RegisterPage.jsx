@@ -1,64 +1,61 @@
 import React, { useState } from 'react';
 import "./RegisterPage.css";
-import { OR, MBut, DEL, Search, UserText1, UserText2, UserAge, CheckBox, OpenLi, EmerBtn, Btn, LiBTN } from '../../components';
-import { Form } from "react-router-dom";
+import { UserText1, Btn } from '../../components';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        NID: '',
-        username: '',
-        password: '',
-        confirmPassword: ''
+  const [formData, setFormData] = useState({
+    NID: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
     });
+  };
 
-    const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    try {
+      console.log(formData);
+      const response = await axios.post('http://localhost:5000/register', formData);
+      alert(response.data.message);
+      navigate('/RegisterPage2'); // Assuming you have a route for success
+    } catch (error) {
+      console.error('Error during registration:', error);
+      alert('Registration failed: ' + (error.response?.data?.error || error.message));
+    }
+  };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fetch('/Register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                // Uncomment the following line to navigate to another route upon success
-                navigate('/success');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    };
-
-    return (
-        <div id="container">
-            <p id="title">New Admin</p>
-            <div id="regForm" className="col-7 mx-auto">
-                <Form onSubmit={handleSubmit}>
-                    <p id="secondTitle">Access Info</p>
-                    <UserText1 label="National ID" name="NID" type="text" onChange={handleInputChange} />
-                    <UserText1 label="Username" name="username" type="text" onChange={handleInputChange} />
-                    <UserText1 label="Password" name="password" type="password" onChange={handleInputChange} />
-                    <UserText1 label="Confirm Password" name="confirmPassword" type="password" onChange={handleInputChange} />
-                    <div id="btnDiv" className="offset-9">
-                        <Btn id="nxtBtn" label="Next" type="submit" />
-                    </div>
-                </Form>
-            </div>
-        </div>
-    );
-}
+  return (
+    <div id="container">
+      <p id="title">New Admin</p>
+      <div id="regForm" className="col-7 mx-auto">
+        <form onSubmit={handleSubmit}>
+          <p id="secondTitle">Access Info</p>
+          <input label="National ID" name="NID" type="text" onChange={handleChange} />
+          <input label="Username" name="username" type="text" onChange={handleChange} />
+          <UserText1 label="Password" name="password" type="password" onChange={handleChange} />
+          <UserText1 label="Confirm Password" name="confirmPassword" type="password" onChange={handleChange} />
+          <div id="btnDiv" className="offset-9">
+            <Btn id="nxtBtn" label="Next" type="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default Register;

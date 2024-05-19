@@ -4,7 +4,7 @@ const Text1 = (props) => {
   return (
     <div className='text1'>
       <p>{props.label}</p>
-      <input type={props.type} placeholder=''/>
+      <input type={props.type} placeholder='' onChange={props.onChange}/>
     </div>
   )
 }
