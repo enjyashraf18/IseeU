@@ -35,7 +35,7 @@ const Register = () => {
             .then(data => {
                 console.log(data);
                 // Uncomment the following line to navigate to another route upon success
-                // navigate('/success');
+                navigate('/success');
             })
             .catch(error => {
                 console.error('Error:', error);
