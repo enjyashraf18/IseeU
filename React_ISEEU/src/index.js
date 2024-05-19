@@ -9,11 +9,16 @@ import {
     createBrowserRouter,
     RouterProvider,
   } from "react-router-dom";
+import { Register2 } from "./pages";
   const router = createBrowserRouter([
     {
       path: "/",
       element: <App/>
     },
+    {
+      path: "/RegisterPage2",
+      element: <Register2/>
+    }
    /**  {
         path: "",
         element: <ICU/>
