@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
+import { Login, Register } from './pages';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -14,14 +16,14 @@ import {
       path: "/",
       element: <App/>
     },
-   /**  {
-        path: "",
-        element: <ICU/>
+     {
+        path: "/login",
+        element: <Login/>
       },
       {
-        path: "Sign",
-        element: <Sign/>
-      },*/
+        path: "register",
+        element: <Register/>
+      }
   ]);
 // ReactDOM.render(<App/>,document.getElementById("root"));
 const root=ReactDOM.createRoot(document.getElementById("root"));

@@ -1,0 +1,17 @@
+#fullPage{
+    background-color: #258176;
+    align-items: center; /* Align items vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+#rightCol{
+    background-color: #bf4442;
+    align-items: center; /* Align items vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
