@@ -48,6 +48,7 @@ const Register2 = () => {
             alert("Passwords do not match");
             return;
         }
+                console.log(formData);
 
         fetch('/Register', {
             method: 'POST',
@@ -58,7 +59,6 @@ const Register2 = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 navigate('/success'); // navigate to a success page or another route
             });
     };
