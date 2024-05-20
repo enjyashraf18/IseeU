@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./RegisterPage2.css";
-import { OR, MBut, DEL, Search, UserText1, UserText2, UserAge, CheckBox, OpenLi, EmerBtn, Btn, LiBTN } from '../../components';
-import { useNavigate } from 'react-router-dom';
+import { OR, Btn, UserText1 } from '../../components';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Register2 = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
@@ -20,6 +20,17 @@ const Register2 = () => {
     });
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        console.log("Location state:", location.state);  // Debug statement
+        if (location.state && location.state.NID) {
+            setFormData((prevData) => ({
+                ...prevData,
+                NID: location.state.NID
+            }));
+        }
+    }, [location.state]); // Set NID from location state
 
     function handleImgupload(e) {
         const file = e.target.files[0];
@@ -48,7 +59,7 @@ const Register2 = () => {
             alert("Passwords do not match");
             return;
         }
-                console.log(formData);
+        console.log("FormData to be sent:", formData);  // Debug statement
 
         fetch('/Register', {
             method: 'POST',
@@ -60,6 +71,10 @@ const Register2 = () => {
             .then(res => res.json())
             .then(data => {
                 navigate('/success'); // navigate to a success page or another route
+            })
+            .catch(error => {
+                console.error('Error during registration:', error);
+                alert('Registration failed: ' + error.message);
             });
     };
 
@@ -78,12 +93,12 @@ const Register2 = () => {
                                 <div id="inputs" className="col-9">
                                     <p id="scndTitle">Personal Info</p>
                                     <div className="row">
-                                        <div className="col-6">
-                                            <UserText1 label="First name" type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
-                                        </div>
-                                        <div className="col-6">
-                                            <UserText1 label="Last name" type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
-                                        </div>
+                                            <div className="col-6">
+                                                <UserText1 label="First name" type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
+                                            </div>
+                                            <div className="col-6">
+                                                <UserText1 label="Last name" type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+                                            </div>
                                     </div>
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob} onChange={handleInputChange} />
                                     <OR />
