@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./RegisterPage2.css";
 import { OR, Btn, UserText1 } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Register2 = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
@@ -53,29 +54,24 @@ const Register2 = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.password !== formData.passwordConfirm) {
             alert("Passwords do not match");
             return;
         }
         console.log("FormData to be sent:", formData);  // Debug statement
-
-        fetch('/Register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                navigate('/success'); // navigate to a success page or another route
-            })
-            .catch(error => {
+        try{
+        const response = await axios.post('http://localhost:5000/Register', formData);
+      alert(response.data.message);
+            // .then(res => res.json())
+            // .then(data => {
+            //     navigate('/success'); // navigate to a success page or another route
+            // })
+    }catch(error){
                 console.error('Error during registration:', error);
                 alert('Registration failed: ' + error.message);
-            });
+            };
     };
 
     return (
