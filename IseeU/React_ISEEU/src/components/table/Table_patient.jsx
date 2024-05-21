@@ -7,10 +7,14 @@ import { useState,useMemo } from 'react';
 import { Table, Form, InputGroup, Button,Border } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 const Table_Patient = (props) => {
-  const  data  = props.data;
+  //const  data  = props.data;
+  const { data, headers,flag } = props
   console.log(data[0])
-  let role= props.anotherProp;
+  console.log(Object.values(data[0])) /*it's an array*/
+  let role= props.anotherProp||"user";
   console.log(role)
+  //const flag=true;
+  
 
   // Get the keys from the first object in the data array to generate the table headers 
   const columns = Object.keys(data[0]);
@@ -50,10 +54,10 @@ function toggle_search(){
 // creating the table
   return (
     <div  className='tableComponent'>
-      <div className="container ">
+      <div className="container-fluid">
       <FaSearch className="fasearch" onClick={toggle_search}/>
       {searchInput?(
-
+    
       <div className='input'>
      {/* <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">
@@ -75,37 +79,69 @@ function toggle_search(){
       />
         </div>):null}
 
-
+           
         <div className="table-responsive">
         <div rounded border>
           <Table className="table-rounded"   >
              <thead className="thead-fixed">
               <tr className='table-header'>
-                {columns.map((col) => (// as it js code i put it in { }
-                  <th key={col} >  
-                    {col}
-                  </th>// must have a key to make any changes  in the columns the original data make effect in the copy one "col"
-                  //
-                ))}
-                {role==="Admin"?(<th>Actions</th>):(null)}
+              {headers.map((header, index) => (
+                    <th key={index}>{header}</th>
+                  ))}
+                {role==="Admin"?(<th className='lastchild'>Actions</th>):(null)}
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((row, rowIndex) => (// take every one in the data that will fill the row take the column of each one
-                <tr key={rowIndex}>
-                  {Object.values(row).map((val, index) => (
-                    <td key={`${rowIndex}-${index}`}>{val}</td>
-        
-                    // make the key unique string mix of both  as it depend on the row and the column
-                  ))}
-                  {role==="Admin"?(<td> <div className='role_action_component'><button className='editbtn'>Edit</button> <button className='del'>
-                                              <FontAwesomeIcon icon={faTrash} />
-                                                 </button></div></td>):(null)}
-                </tr>
-              ))}
+
+              
+            
+
+            {filteredData.map((row, rowIndex) => (
+    <tr key={rowIndex}>
+        {flag === true ? (
+            <>
+                <td key={`${rowIndex}`}>
+                    <img src={row[0]} alt="Image" />{" "}
+                    {row[1]}
+                </td>
+                {row.slice(2).map((val, index) => (
+                    <td key={`${rowIndex}-${index}`}>
+                        {val}
+                    </td>
+                ))}
+            </>
+        ) : (
+            <>
+                {row.map((val, index) => (
+                    <td key={`${rowIndex}-${index}`}>
+                        {val}
+                    </td>
+                ))}
+            </>
+        )}
+        {role === "Admin" ? (
+            <td className='lastchild'>
+                <div className='role_action_component'>
+                    <button className='editbtn'>Edit</button>
+                    <button className='del'>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                </div>
+            </td>
+        ) : (null)}
+    </tr>
+))}
+
             </tbody>
-             
           </Table>
+            
+
+
+
+
+
+
+
         </div>
       </div>
     </div>

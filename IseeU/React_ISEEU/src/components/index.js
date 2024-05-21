@@ -11,4 +11,3 @@ export{default as  EmerBtn} from "./emergencybtn/Emergencybtn";
 export{default as Btn} from"./btn/Btn";
 export{default as LiBTN} from"./libtn/Libtn";
 export{default as Table_patients} from "./table/Table_patient";
-export{default as Form } from "./form/Form";

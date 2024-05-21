@@ -1,92 +1,55 @@
 import React, { useState } from 'react';
 import "./patientAnalysis.css";
 import styles from './patientAnalysis.css';
-import { Table_patients,Btn,Form } from '../../components';
+import { Table_patients,Btn } from '../../components';
 const PatientAnalysis = () => {
   const patient_Analysis_data = [
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'Miguel O’Hara', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
-    { Name: 'shahd ahmed', Bed_NO: "15A", Status: "Coma", Gender: "Male", Age: 15, Admitted: "5 days" },
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
+    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago "],
 
+   
+   
 
-
-  ];
+];
   
- let role="Admin";
- let label="Add";
- const dataForm = ["Name", "Bed_No", "Status", "Gender", "Age", "Admitted"]; 
+ const role="Admin";
+const label="Add";
+ const flag=true;
+ const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
+
   return (
   
-    <div className="patientanalysis">
-      <Table_patients data={patient_Analysis_data} anotherProp={role}  />
-    {role==="Admin"?(<div className='addbtn'><Btn data={label}/> </div>):(null)}
-    {/*<Btn/>*/}
-    <Form data={dataForm}/>
+    <div className="container-fluid ">
+      <div className="row ">
+        <div className="col-10 col-md-4 ">
+          <div className="patientanalysis-table">
+            <Table_patients data={patient_Analysis_data} anotherProp={role} headers={columns} flag={flag} />
+          </div>
+        </div>
+        {role === "Admin" && (
+          <div className="col-10 text-end">
+            <div className="addbtn">
+              <Btn data={label} />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

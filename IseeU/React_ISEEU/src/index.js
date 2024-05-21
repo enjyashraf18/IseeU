@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Patient_Analysis} from "./pages";
+import {Patient_Analysis,Doctor_View} from "./pages";
 
 import{
     createBrowserRouter,
@@ -18,11 +18,11 @@ import{
       path: "/patient_table",
         element:<Patient_Analysis />      
       },
-      /** ,
+       
       {
-        path: "Sign",
-        element: <Sign/>
-      },*/
+        path: "/Doctor_View",
+        element: <Doctor_View/>
+      },
   ]);
 // ReactDOM.render(<App/>,document.getElementById("root"));
 const root=ReactDOM.createRoot(document.getElementById("root"));
