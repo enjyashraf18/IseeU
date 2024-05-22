@@ -6,16 +6,22 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState,useMemo } from 'react';
 import { Table, Form, InputGroup, Button,Border } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
+import Checkbox from "../checkbox/Checkbox"; // if you use component in component you must import the full path not what the export only in index js
 const Table_Patient = (props) => {
   //const  data  = props.data;
-  const { data, headers,flag } = props
+  const { data, headers,flag,onDataChange,ischecktable } = props
   console.log(data[0])
-  console.log(Object.values(data[0])) /*it's an array*/
   let role= props.anotherProp||"user";
   console.log(role)
   //const flag=true;
   
-
+// for check box tables:
+//here i change the data if i check on the box to determine if the box is checked or not.
+const handleCheckboxChange = (index) => {
+  const newData = [...data];
+  newData[index][3] = newData[index][3] === 'checked' ? 'unchecked' : 'checked';// here if box is checked and you click toggle the state and change the data
+  onDataChange(newData);
+}; 
   // Get the keys from the first object in the data array to generate the table headers 
   const columns = Object.keys(data[0]);
   // to undertsand what i will do 
@@ -26,6 +32,7 @@ const Table_Patient = (props) => {
   console.log(data[0]["id"])// like ths in js will be in mapping each row in data and mapping each column in it 
 // here is the search and filter 
 const [searchTerm, setSearchTerm] = useState('');
+
 
 const handleSearch = (event) => {
   setSearchTerm(event.target.value.toLowerCase());
@@ -59,17 +66,7 @@ function toggle_search(){
       {searchInput?(
     
       <div className='input'>
-     {/* <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">
-     
-          </InputGroup.Text>
-          <Form.Control 
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-      </InputGroup> */}
+    
       <input  className='bar-input'
         type="text" 
         placeholder='Search...'
@@ -96,8 +93,21 @@ function toggle_search(){
               
             
 
-            {filteredData.map((row, rowIndex) => (
+            {filteredData.map((row, rowIndex) => ( //if it contain image it mix the first and second values and slice them and doing the filter as usual else do the usual
     <tr key={rowIndex}>
+      {ischecktable?(// here i checked if this table is check table i write it in the map function to be repeatable for all 
+ <td>
+ <Checkbox
+   checked={row[3] === 'checked'}
+   onChange={() => handleCheckboxChange(rowIndex)}
+ />
+</td>
+
+
+      )
+      :(null) 
+
+      }
         {flag === true ? (
             <>
                 <td key={`${rowIndex}`}>
@@ -105,9 +115,10 @@ function toggle_search(){
                     {row[1]}
                 </td>
                 {row.slice(2).map((val, index) => (
-                    <td key={`${rowIndex}-${index}`}>
+                  val==="checked"||val==="unchecked"?(null):
+                  (  <td key={`${rowIndex}-${index}`}>
                         {val}
-                    </td>
+                    </td>)
                 ))}
             </>
         ) : (
@@ -119,7 +130,7 @@ function toggle_search(){
                 ))}
             </>
         )}
-        {role === "Admin" ? (
+        {role === "Admin" ? (// if role is admin i increase the column of action
             <td className='lastchild'>
                 <div className='role_action_component'>
                     <button className='editbtn'>Edit</button>
