@@ -1,0 +1,119 @@
+.DoctorView{
+    background-color: var(--color-background-table);
+    justify-content: center;
+    height:703px;
+  /*  display: flex;
+    flex-direction: column;*/
+
+}
+.Doctor_table_patients{
+    
+    width: 1100px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 200px;
+    z-index: 3000;
+    height: 300px;
+    margin-top: 5px;
+    background-color:white;
+}
+.Doctor_table_patients .table-responsive{
+    max-height: 200px;
+    
+}
+
+.Doctor_table_patients .table-responsive .thead-fixed th{
+    background-color: white !important;
+    box-shadow: none;
+    border: none;
+    
+}
+.Doctor_table_patients .input{
+left: 1170px;
+top:40px;
+
+}
+.DoctorView .container-fluid{
+    scrollbar-width: none;
+}
+.DoctorView h2{
+    font-family: var(--font-family-button);
+    color: #258176;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.Doctor_table_notes{
+    background-color: #fff;
+    width:550px;
+    height: 260px;
+    margin-right: 10px;
+}
+.flex_rotation{
+    display: flex;
+    flex-direction: row;
+}
+.Doctor_table_staff{
+    background-color: #fff;
+    width:500px;
+    height: 260px;
+    margin-left: 50px;
+}
+#staff-h2{
+    margin-left: 265px;
+ }
+ .Doctor_staff_ava,
+ .Doctor_staff_unava {
+   max-height: 90px; /* Set max height to prevent overlap and exceed */
+  
+ }
+ .Doctor_table_staff .table-responsive{
+  height: 100px;
+  }
+  .Doctor_table_staff .table-responsive .thead-fixed th{
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    border: none;
+    font-size: small;
+    font-weight: 100;
+    color: gray;
+  }
+  .available_doctors .input{
+top:402px;
+left:1170px;
+  }
+  .unavailable_doctors .input{
+    top:525px;
+    left:1170px;
+      }
+ 
+.Number {
+    border-radius: 100%;
+    background-color: var(--color-mainLight);
+    color: #fff;
+    width:15px;
+    height:15px;
+    font-size: x-small;
+    justify-content: center;
+    align-items:flex-start;
+    margin-top: -30px;
+    margin-left: 330px;
+    font-weight: bolder;
+}
+
+
+
+
+
+
+body {
+    overflow: auto;
+
+  }
+
+
+@media (max-width: 767px) { /* if it small devices overwrite the auto hidden i make*/
+    body {
+      overflow: auto;
+    }
+  }

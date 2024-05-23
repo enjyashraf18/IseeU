@@ -9,38 +9,83 @@ import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,
 function Login() {
   const { register, handleSubmit,reset ,formState: { errors } } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
-    reset()
+      const body = {
+        email: data.email,
+        password: data.password
+    }
+
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }
+
+    fetch('http://localhost:5000/auth/login', requestOptions)
+    .then(res => res.json())
+    .then(data =>{
+        console.log(data)
+        // setServerResponse(data.message)
+        // setShow(true)
+    })
+    .catch(err => console.log(err))
+
+  reset()
   };
 
 
-const submitForm = (data) => {
-      const body = {
-          email: data.email,
-          password: data.password
-      }
-
-      const requestOptions = {
-          method: "POST",
-          headers: {
-              'content-type': 'application/json'
-          },
-          body: JSON.stringify(body)
-      }
-
-      fetch('/auth/login', requestOptions)
-      .then(res => res.json())
-      .then(data =>{
-          console.log(data)
-          // setServerResponse(data.message)
-          // setShow(true)
-      })
-      .catch(err => console.log(err))
-
-  reset()
-    }
-
-
+// {message: 'Login successful', user: {…}}
+// message
+// : 
+// "Login successful"
+// user
+// : 
+// address
+// : 
+// null
+// datehired
+// : 
+// null
+// dateleft
+// : 
+// null
+// dateofbirth
+// : 
+// null
+// emailaddress
+// : 
+// "user1@example.com"
+// employeeid
+// : 
+// 25
+// firstname
+// : 
+// "John"
+// gender
+// : 
+// "Male"
+// lastname
+// : 
+// null
+// nid
+// : 
+// "123456789"
+// password
+// : 
+// "password123"
+// phonenumber
+// : 
+// null
+// profilepic
+// : 
+// null
+// role
+// : 
+// "Doctor"
+// username
+// : 
+// "user1"
 
 
   return (
