@@ -1,0 +1,24 @@
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin:4px;
+}
+#sidebarHeadr{
+    background-color: #258176;
+    width: 100%;
+    min-width: 12vw;
+    height: 100%;
+    outline: none;
+    border: none;
+    font-family: var(--font-family-button);
+    font-weight: 500;
+    font-size: 3vh;
+}
+#iseeu{
+
+}
+#heaerTitle{
+    
+}
