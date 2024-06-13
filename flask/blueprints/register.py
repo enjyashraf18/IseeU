@@ -3,8 +3,8 @@ from flask_cors import CORS
 from database import cursor, database_session as conn, execute_query
 
 register = Blueprint("register", __name__, static_folder="static", template_folder="templates")
-CORS(register, resources={r"/*": {"origins": "http://localhost:3000"}})  # Allow CORS for the login blueprint (Cross-Origin Resource Sharing
-
+CORS(register, resources={
+    r"/*": {"origins": "http://localhost:3000"}})  # Allow CORS for the login blueprint (Cross-Origin Resource Sharing
 
 
 @register.route('/register', methods=['POST'])

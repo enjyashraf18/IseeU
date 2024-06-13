@@ -11,6 +11,7 @@ database_session = psycopg2.connect(
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
+
 def execute_query(query, params):
     try:
         cursor.execute(query, params)
