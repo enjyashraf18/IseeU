@@ -3,36 +3,45 @@ import './Login.css'; // Assuming you have some custom CSS here
 import { useForm } from 'react-hook-form';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,Btn,LiBTN } from '../../components';
-
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { register, handleSubmit,reset ,formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
-      const body = {
-        email: data.email,
-        password: data.password
-    }
+    const body = {
+      email: data.email,
+      password: data.password
+    };
 
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    }
-
-    fetch('http://localhost:5000/auth/login', requestOptions)
-    .then(res => res.json())
-    .then(data =>{
-        console.log(data)
-        // setServerResponse(data.message)
-        // setShow(true)
+    axios.post('http://localhost:5000/login', body, {
+      headers: {      
+        'Content-Type': 'application/json'
+      }
     })
-    .catch(err => console.log(err))
 
-  reset()
+    .then(response => {
+      console.log(response.data);
+      if (response.data.message === "Login successful") {
+        // Redirect to another route, e.g., /dashboard
+        navigate('/register');
+      } else {
+        // Handle login failure, show error message etc.
+        console.log('Login failed');
+      }
+      // setServerResponse(response.data.message);
+      // setShow(true);
+    })
+    
+    .catch(error => {
+      console.log(error);
+    });
+
+    reset();
   };
+
 
 
 // {message: 'Login successful', user: {…}}

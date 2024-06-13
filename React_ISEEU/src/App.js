@@ -1,9 +1,12 @@
 import React from 'react';
 import "./App.css";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,Btn,LiBTN,Table_patients } from './components';
 import { useNavigate } from 'react-router-dom';
-import LayoutComponent from "./pages"
+import { Login} from "./pages"
+
+const queryClient = new QueryClient();
+
 const App = (props) => {
   const navigate = useNavigate();
   const handleButton1 = () => {
@@ -16,9 +19,11 @@ const App = (props) => {
   };
 
   return (
-    <LayoutComponent/>
+    <QueryClientProvider client= {queryClient}>
 
-  )
+    <Login/>
+    </QueryClientProvider>
+    )
 }
 
 export default App
