@@ -11,7 +11,7 @@ const ProSide = ({ onSidebarItemClick }) => {
   const sidebarItems = [
     { id: 1, label: 'Login' },
     { id: 2, label: 'Register' },
-    { id: 3, label: 'Services' },
+    { id: 3, label: 'Patient_Analysis' },
     { id: 4, label: 'Contact' },
   ];
 

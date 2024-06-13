@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { CDBSidebar,CDBSidebarMenu, CDBSidebarMenuItem,CDBSidebarContent, CDBSidebarFooter, CDBSidebarHeader } from 'cdbreact';
 import { ProSide } from '../../components';
+import Patient_Analysis from '../patientsAnalysis/PatientAnalysis'
 import Login from '../LoginPage/Login';
 import Register  from '../RegisterPage/RegisterPage';
 
@@ -24,7 +25,8 @@ const LayoutComponent = ({ children }) => {
         </Col>
 
         <Col md={10} className="ml-sm-auto col-lg-10 px-4">
-         
+          {activeContent === 'Patient_Analysis' ? <Patient_Analysis /> : null} 
+
           {activeContent === 'Login' ? <Login /> : null} 
           {activeContent === 'Register' ? <Register /> : null}
         </Col>
