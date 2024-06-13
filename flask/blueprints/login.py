@@ -1,22 +1,11 @@
-from flask import Blueprint, request, jsonify, session
-import psycopg2.extras
+from flask import Blueprint, request, jsonify
 from flask_cors import CORS
+from database import cursor
 
 login = Blueprint("login", __name__, static_folder="static", template_folder="templates")
 CORS(login)
 
 
-database_session = psycopg2.connect(
-    database="IseeUDB",
-    port="5432",
-    host="ep-still-truth-a21z0m3n.eu-central-1.aws.neon.tech",
-    user="IseeUDB_owner",
-    password="o70CUtSaXsJK"
-)
-cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
-database_session.set_session(autocommit=True)
-
-SECRET_KEY = "IseeU is the best"
 @login.route('/login', methods=['POST'])
 def login_route():
     data = request.get_json()
