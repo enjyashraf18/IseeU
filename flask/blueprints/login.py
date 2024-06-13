@@ -16,7 +16,8 @@ database_session = psycopg2.connect(
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 database_session.set_session(autocommit=True)
 
-@login.route('/', methods=['POST'])
+SECRET_KEY = "IseeU is the best"
+@login.route('/login', methods=['POST'])
 def login_route():
     data = request.get_json()
     email = data.get('email')
@@ -29,8 +30,8 @@ def login_route():
     user = cursor.fetchone()
     if user and user['password'] == password:
         #Successful login
-        session['user'] = dict(user)
-        return jsonify({"message": "Login successful", "user": session['user']}), 200
+        sessionn = dict(user)
+        return jsonify({"message": "Login successful", "user": sessionn}), 200
     else:
         #unsuccessful login
         return jsonify({"error": "Login unsuccessful. Please check email and password"}), 401

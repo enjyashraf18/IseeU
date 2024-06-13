@@ -3,6 +3,7 @@ from login import login
 
 app = Flask(__name__)
 app.register_blueprint(login)
+SECRET_KEY = "IseeU is the best"
 
 @app.route("/")
 def welcome_page():
