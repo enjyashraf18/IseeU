@@ -13,7 +13,7 @@
 
 
 #bedCap {
-    background: linear-gradient(to right, #258176, #549991);
+    background: linear-gradient(to right, var(--color-main), var(--color-mainLight));
     height: 30vh;
     padding: 2vh;
     border-radius: 3vh;
@@ -46,7 +46,7 @@
     border-radius: 3vh;
     overflow: hidden;
     height: 30vh;
-    background: linear-gradient(to right, #258176, #549991);
+    background: linear-gradient(to right, var(--color-main), var(--color-mainLight));
 }
 
 #patientStats {
@@ -76,7 +76,7 @@
 }
 
 button#admitButton {
-    background-color: #549991; /* Green color for admit button */
+    background-color: var(--color-mainLight); /* Green color for admit button */
     color: #F5F5F5;
     border: none;
     padding: 10px 20px;
@@ -86,11 +86,11 @@ button#admitButton {
 }
 
 button#admitButton:hover {
-    background-color: #258176; /* Darker green on hover */
+    background-color: var(--color-main); /* Darker green on hover */
 }
 
 button#dischargeButton {
-    background-color: #549991; /* Green color for admit button */
+    background-color: var(--color-mainLight); /* Green color for admit button */
     color: #F5F5F5;
     border: none;
     padding: 10px 20px;
@@ -100,11 +100,11 @@ button#dischargeButton {
 }
 
 button#dischargeButton:hover {
-    background-color: #258176; /* Darker green on hover */
+    background-color: var(--color-main); /* Darker green on hover */
 }
 
 #doctorsPanelTitle {
-    color: #258176;
+    color: var(--color-main);
     text-align: left;
     font-size: 3vh;
     font-weight: 600;
@@ -113,7 +113,7 @@ button#dischargeButton:hover {
 #doctorsNo {
     font-size: 2vh;
     color: #F5F5F5;
-    background-color: #258176;
+    background-color: var(--color-main);
     padding: .5vh;
     border-radius: 3vh;
 }

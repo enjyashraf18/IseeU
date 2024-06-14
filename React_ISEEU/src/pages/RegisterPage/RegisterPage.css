@@ -7,7 +7,7 @@
 }
 
 .reg1Cont {
-    background-color: #258176;
+    background-color: var(--color-main);
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@
 
 #secondTitle {
     text-align: center;
-    color: #258176;
+    color: var(--color-main);
     margin-bottom: 20px;
     font-size: 5vh;
     font-weight: 600;
