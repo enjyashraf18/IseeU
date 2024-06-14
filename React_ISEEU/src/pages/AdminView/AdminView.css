@@ -1,0 +1,154 @@
+#adminCont {
+    background-color: #EAEAEA;
+    min-height: 100vh; /* Ensures minimum height is 100% of the viewport */
+    height: 100vh; /* Ensures height is 100% of the viewport */
+    position: absolute; /* Makes it fill the viewport */
+    padding: 2vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto; /* Ensure any overflow content is scrollable */
+}
+
+
+#bedCap {
+    background: linear-gradient(to right, #258176, #549991);
+    height: 30vh;
+    padding: 2vh;
+    border-radius: 3vh;
+    overflow: hidden;
+}
+
+.bedCapP {
+    color: #F5F5F5;
+    font-size: 2.5vh;
+    margin-left: 5vw;
+}
+
+#bedCapTitle {
+    margin-left: 0;
+    margin-bottom: 5vh;
+    text-align: left;
+    font-size: 3vh;
+    font-weight: 600;
+}
+
+#bedCapChart {
+}
+
+#chartDiv {
+    align-self: center;
+}
+
+#patientNo {
+
+    border-radius: 3vh;
+    overflow: hidden;
+    height: 30vh;
+    background: linear-gradient(to right, #258176, #549991);
+}
+
+#patientStats {
+    text-align: center;
+    align-self: center;
+}
+
+#patientTitle {
+    color: #F5F5F5;
+    font-size: 5vh;
+    font-weight: 600;
+}
+
+#patientNumber {
+    color: #F5F5F5;
+    margin-bottom: -1vh;
+    font-size: 10vh;
+    font-weight: 600;
+}
+
+#admit {
+    height: 50%;
+}
+
+#discharge {
+    height: 50%;
+}
+
+button#admitButton {
+    background-color: #549991; /* Green color for admit button */
+    color: #F5F5F5;
+    border: none;
+    padding: 10px 20px;
+    font-size: 4vh;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+button#admitButton:hover {
+    background-color: #258176; /* Darker green on hover */
+}
+
+button#dischargeButton {
+    background-color: #549991; /* Green color for admit button */
+    color: #F5F5F5;
+    border: none;
+    padding: 10px 20px;
+    font-size: 4vh;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button#dischargeButton:hover {
+    background-color: #258176; /* Darker green on hover */
+}
+
+#doctorsPanelTitle {
+    color: #258176;
+    text-align: left;
+    font-size: 3vh;
+    font-weight: 600;
+}
+
+#doctorsNo {
+    font-size: 2vh;
+    color: #F5F5F5;
+    background-color: #258176;
+    padding: .5vh;
+    border-radius: 3vh;
+}
+
+#doctorsPanel {
+
+    border-radius: 3vh;
+    overflow: hidden;
+    max-width: 100%; /* Set the maximum width for the panel */
+    margin-top: 20px; /* Add some spacing at the top */
+    padding: 10px; /* Optional padding for better appearance */
+    white-space: nowrap; /* Prevent line breaks to keep items in a row */
+}
+
+#doctorCards {
+    overflow-x: auto;
+    gap: 10px; /* Space between the cards */
+}
+
+#doctorCards::-webkit-scrollbar {
+    height: 8px;
+}
+
+#doctorCards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#doctorCards::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+#doctorCards::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#statsPanel {
+    background-color: #040C18;
+}

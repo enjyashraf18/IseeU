@@ -3,8 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./RegisterPage2.css";
 import { OR, Btn, UserText1 } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { Button } from "react-bootstrap";
 
 const Register2 = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
@@ -25,13 +23,14 @@ const Register2 = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const savedData = localStorage.getItem('formData');
-        if (savedData) {
-          setFormData(JSON.parse(savedData));
+        console.log("Location state:", location.state);  // Debug statement
+        if (location.state && location.state.NID) {
+            setFormData((prevData) => ({
+                ...prevData,
+                NID: location.state.NID
+            }));
         }
-      }, []);
-
-    
+    }, [location.state]); // Set NID from location state
 
     function handleImgupload(e) {
         const file = e.target.files[0];
@@ -54,33 +53,37 @@ const Register2 = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.password !== formData.passwordConfirm) {
             alert("Passwords do not match");
             return;
         }
         console.log("FormData to be sent:", formData);  // Debug statement
-        try{
-         const response = await axios.post('http://localhost:5000/Register', formData);
-        alert(response.data.message);
-        console.log('succed')
-            // .then(res => res.json())
-            // .then(data => {
-            //     navigate('/success'); // navigate to a success page or another route
-            // })
-    }catch(error){
+
+        fetch('/Register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                navigate('/success'); // navigate to a success page or another route
+            })
+            .catch(error => {
                 console.error('Error during registration:', error);
                 alert('Registration failed: ' + error.message);
-            };
+            });
     };
 
     return (
-        <div id="container">
+            <div className={"reg2Cont"}>
             <div className="container-fluid">
                 <div className="row">
                     <div id="regForm2" className="col-10 mx-auto">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="row">
                                 <div id="profilePreview" className="col-3">
                                     <img src={profileImg} alt="Preview" />
@@ -110,10 +113,10 @@ const Register2 = () => {
 
                                     <div className="row">
                                         <div className="col-1">
-                                            <Btn label= "Back" onclick = {()=>{ navigate('/register');}}></Btn>
+                                            <Btn label="Back" />
                                         </div>
                                         <div className="col-1 offset-8">
-                                        <Btn label= "Submit" onclick = {handleSubmit}></Btn>
+                                            <Btn id="nxtBtn" label="Next" type="submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -122,6 +125,7 @@ const Register2 = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
