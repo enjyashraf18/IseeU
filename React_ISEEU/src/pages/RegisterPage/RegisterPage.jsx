@@ -30,13 +30,15 @@ const Register = () => {
     }
     try {
       console.log("FormData before sending:", formData);
-      const response = await axios.post('http://localhost:5000/register', formData);
-      alert(response.data.message);
+      // const response = await axios.post('http://localhost:5000/register', formData);
+      // alert(response.data.message);
       console.log("Navigating with NID:", formData.NID);
-      navigate('/RegisterPage2', { state: { NID: formData.NID } }); // Passing NID
+      localStorage.setItem('formData', JSON.stringify(formData));
+      navigate('/RegisterPage2');
+      // navigate('/RegisterPage2', { state: { NID: formData.NID } }); // Passing NID
     } catch (error) {
       console.error('Error during registration:', error);
-      alert('Registration failed: ' + (error.response?.data?.error || error.message));
+      // alert('Registration failed: ' + (error.response?.data?.error || error.message));
     }
   };
 
@@ -44,16 +46,18 @@ const Register = () => {
       <div id="container">
         <p id="title">New Admin</p>
         <div id="regForm" className="col-7 mx-auto">
-          <form onSubmit={handleSubmit}>
+          <form>
             <p id="secondTitle">Access Info</p>
             <UserText1 label="National ID" name="NID" type="text" onChange={handleChange} />
             <UserText1 label="Username" name="username" type="text" onChange={handleChange} />
             <UserText1 label="Password" name="password" type="password" onChange={handleChange} />
             <UserText1 label="Confirm Password" name="confirmPassword" type="password" onChange={handleChange} />
-            <div id="btnDiv" className="offset-9">
-              <Btn id="nxtBtn" label="Next" type="submit" />
-            </div>
+
           </form>
+          <div id="btnDiv" className="offset-9">
+            <Btn label="Next" type="submit" onClick = {handleSubmit} />
+         
+            </div>
         </div>
       </div>
   );

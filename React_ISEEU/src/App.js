@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.css";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
+import {QueryClient, QueryClientProvider} from "react-query"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { Login} from "./pages"

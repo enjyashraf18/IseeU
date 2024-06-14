@@ -1,11 +1,14 @@
 import React from 'react';
 import "./btn.css";
-import { Table, Form, InputGroup, Button,Border } from 'react-bootstrap';
+import { Table, Form, InputGroup, Border } from 'react-bootstrap';
+import { text } from '@fortawesome/fontawesome-svg-core';
 const Btn = (props) => {
-  const label =props.data
+  const handleClick = props.onclick
   return (
     <div className='btn'>
-      <Button>{label}</Button>
+      <button label= {props.label} type={props.type} onClick={handleClick}>
+        {props.label}
+      </button>
    
     </div>
   )

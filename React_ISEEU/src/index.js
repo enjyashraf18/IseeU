@@ -20,9 +20,9 @@ import { Register2 } from "./pages";
     {
       path: "/RegisterPage2",
       element: <Register2/>
-    }
+    },
 
-
+      {
       path: "/patient_table",
         element:<Patient_Analysis />      
       },

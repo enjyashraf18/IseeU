@@ -4,6 +4,7 @@ import "./RegisterPage2.css";
 import { OR, Btn, UserText1 } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { Button } from "react-bootstrap";
 
 const Register2 = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
@@ -24,14 +25,13 @@ const Register2 = () => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log("Location state:", location.state);  // Debug statement
-        if (location.state && location.state.NID) {
-            setFormData((prevData) => ({
-                ...prevData,
-                NID: location.state.NID
-            }));
+        const savedData = localStorage.getItem('formData');
+        if (savedData) {
+          setFormData(JSON.parse(savedData));
         }
-    }, [location.state]); // Set NID from location state
+      }, []);
+
+    
 
     function handleImgupload(e) {
         const file = e.target.files[0];
@@ -62,8 +62,9 @@ const Register2 = () => {
         }
         console.log("FormData to be sent:", formData);  // Debug statement
         try{
-        const response = await axios.post('http://localhost:5000/Register', formData);
-      alert(response.data.message);
+         const response = await axios.post('http://localhost:5000/Register', formData);
+        alert(response.data.message);
+        console.log('succed')
             // .then(res => res.json())
             // .then(data => {
             //     navigate('/success'); // navigate to a success page or another route
@@ -79,7 +80,7 @@ const Register2 = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div id="regForm2" className="col-10 mx-auto">
-                        <form onSubmit={handleSubmit}>
+                        <form>
                             <div className="row">
                                 <div id="profilePreview" className="col-3">
                                     <img src={profileImg} alt="Preview" />
@@ -109,10 +110,10 @@ const Register2 = () => {
 
                                     <div className="row">
                                         <div className="col-1">
-                                            <Btn label="Back" />
+                                            <Btn label= "Back" onclick = {()=>{ navigate('/register');}}></Btn>
                                         </div>
                                         <div className="col-1 offset-8">
-                                            <Btn id="nxtBtn" label="Next" type="submit" />
+                                        <Btn label= "Submit" onclick = {handleSubmit}></Btn>
                                         </div>
                                     </div>
                                 </div>
