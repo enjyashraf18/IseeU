@@ -32,7 +32,7 @@ def patient():
 
 @patient_profile.route('/patient/update', methods=['GET'])
 def update():
-    cursor.execute("SELECT * FROM patient")
+    cursor.execute("SELECT * FROM patients")
     patients = cursor.fetchall()
     return jsonify({"patients": patients})
 
