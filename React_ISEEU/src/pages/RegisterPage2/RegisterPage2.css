@@ -1,12 +1,7 @@
-/* Global styles */
-* {
-    font-family: "radio canada", serif;
-    margin: 0;
-    padding: 0;
-}
 
-#container {
-    background-color: #258176;
+
+.reg2Cont {
+    background-color: var(--color-main);
     align-items: center; /* Align items vertically */
     display: flex;
     flex-direction: column;
@@ -49,7 +44,7 @@ img{
 }
 #scndTitle{
     text-align: center;
-    color: #258176;
+    color: var(--color-main);
     margin-bottom: 20px;
     font-size: 5vh;
     font-weight: 600;
