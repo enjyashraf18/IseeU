@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./RegisterPage2.css";
 import { OR, Btn, UserText1 } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios'
 
 const Register2 = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
@@ -20,17 +21,7 @@ const Register2 = () => {
     });
 
     const navigate = useNavigate();
-    const location = useLocation();
-
-    useEffect(() => {
-        console.log("Location state:", location.state);  // Debug statement
-        if (location.state && location.state.NID) {
-            setFormData((prevData) => ({
-                ...prevData,
-                NID: location.state.NID
-            }));
-        }
-    }, [location.state]); // Set NID from location state
+    // const location = useLocation();
 
     function handleImgupload(e) {
         const file = e.target.files[0];
@@ -52,38 +43,67 @@ const Register2 = () => {
             [name]: value
         });
     };
+    const testFrom  = {
+        firstName: 'ahmed',
+        lastName: 'deeb',
+        dob: '',
+        address: 'hhahs',
+        email: 'ahmed@gmail.coom',
+        phone: '01154118292',
+        NID: '30305142103532',
+        username: 'ahmed',
+        password: '123456789',
+        passwordConfirm: '123456789',
+        gender: 'male',
+        dateHired: ''
+    }
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+
+      }, []);
+
+      const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.password !== formData.passwordConfirm) {
             alert("Passwords do not match");
             return;
-        }
-        console.log("FormData to be sent:", formData);  // Debug statement
+        }            
+       
+        // if (localStorage.getItem('formData')) {
+        //   data = JSON.parse(localStorage.getItem('formData'));
 
-        fetch('/Register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                navigate('/success'); // navigate to a success page or another route
+        //   console.log(formData)
+        // }
+
+        console.log("FormData to be sent:", testFrom);  // Debug statement
+  
+        axios.post('http://localhost:5000/Register', testFrom, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(error => {
-                console.error('Error during registration:', error);
-                alert('Registration failed: ' + error.message);
-            });
+        .then(response => {
+            console.log(response.data);
+
+            // setServerResponse(response.data.message);
+            // setShow(true);
+            })
+        // Save form data to localStorage
+        // navigate('/success'); // navigate to a success page or another route if needed
+                
+    .catch(error => {
+        console.log(error);
+      });
     };
+  
+
 
     return (
             <div className={"reg2Cont"}>
             <div className="container-fluid">
                 <div className="row">
                     <div id="regForm2" className="col-10 mx-auto">
-                        <form onSubmit={handleSubmit}>
+                        <form>
                             <div className="row">
                                 <div id="profilePreview" className="col-3">
                                     <img src={profileImg} alt="Preview" />
@@ -116,7 +136,7 @@ const Register2 = () => {
                                             <Btn label="Back" />
                                         </div>
                                         <div className="col-1 offset-8">
-                                            <Btn id="nxtBtn" label="Next" type="submit" />
+                                            <button id="nxtBtn" label="Next" type = "submit" onClick={handleSubmit} />
                                         </div>
                                     </div>
                                 </div>
