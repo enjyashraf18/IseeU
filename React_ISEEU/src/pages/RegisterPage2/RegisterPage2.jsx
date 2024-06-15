@@ -15,6 +15,7 @@ const Register2 = () => {
         email: '',
         phone: '',
         NID: '',
+        dateHired: '',
         username: '',
         password: '',
         passwordConfirm: ''
@@ -127,6 +128,8 @@ const Register2 = () => {
                                     <UserText1 label="Phone" type="number" name="phone" value={formData.phone} onChange={handleInputChange} />
 
                                     <UserText1 label="National ID" type="text" name="NID" value={formData.NID} onChange={handleInputChange} />
+                                    <UserText1 label="Hired since" type="date" name="dateHired" value={formData.dateHired} onChange={handleInputChange} />
+
                                     <UserText1 label="Username" type="text" name="username" value={formData.username} onChange={handleInputChange} />
                                     <UserText1 label="Password" type="password" name="password" value={formData.password} onChange={handleInputChange} />
                                     <UserText1 label="Password Confirm" type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleInputChange} />
