@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const [role, setRole] = useState("Admin")
 
   const onSubmit = (data) => {
     const body = {
@@ -26,7 +27,8 @@ function Login() {
       console.log(response.data);
       if (response.data.message === "Login successful") {
         // Redirect to another route, e.g., /dashboard
-        navigate('/register');
+        setRole(data.role)
+        navigate('/');
       } else {
         // Handle login failure, show error message etc.
         console.log('Login failed');
