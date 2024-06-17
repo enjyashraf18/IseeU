@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ProSide = (props) => {
-    const role = props.role
+    const navigate = useNavigate();
+
+    const role = "admin"
     const [activeItem, setActiveItem] = useState(null);
-    const onSidebarItemClick = props.handleSidebarItemClick
+    // const onSidebarItemClick = props.handleSidebarItemClick
     const handleItemClick = (item) => {
       setActiveItem(item);
-      onSidebarItemClick(item.label); // Call the prop function with content label
+      // onSidebarItemClick(item.label); // Call the prop function with content label
+      console.log(item.label)
+      // navigate(item.label);
+
     };
   
   const adminSidebarItems = [
@@ -52,7 +59,7 @@ const ProSide = (props) => {
               className={activeItem === item ? 'active' : ''}
               onClick={() => handleItemClick(item)}
             >
-              {item.label}
+              <Link to={`http://localhost:3000/${item.label}`}>{item.label}</Link>
             </li>
           ))}
         </ul>

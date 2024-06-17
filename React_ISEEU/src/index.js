@@ -40,11 +40,11 @@ import { Register2 } from "./pages";
           element: <Login/>
         },
         {
-          path: "register",
+          path: "/register",
           element: <Register/>
         },
         {
-          path: "layout",
+          path: "/layout",
           element: <LayoutComponent/>
         }
   ]);

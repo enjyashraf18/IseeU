@@ -32,7 +32,7 @@ def nurse(): #view all employees and beds and patients for the nurse
 
 @nurse_view.route('/nurse/patients', methods=['GET'])
 def nurse_patients(): #view all patients for the nurse from the side bar
-    cursor.execute("SELECT * FROM patient")
+    cursor.execute("SELECT * FROM patients")
     patients = cursor.fetchall()
     return jsonify({"patients": patients})
 
@@ -42,6 +42,6 @@ def nurse_investigations(): #add investigation for the patient from the nurse si
     print(data)
     patient_id = data.get('patient_id')
     investigation = data.get('investigation')
-    cursor.execute("UPDATE patient SET investigation = %s WHERE patient_id = %s", (investigation, patient_id))
+   #cursor.execute("UPDATE patients SET investigation = %s WHERE nid = %s", (investigation, patient_id))
     database_session.commit()
     return jsonify({"message": "Investigation added successfully"}), 200

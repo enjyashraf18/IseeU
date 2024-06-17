@@ -3,6 +3,9 @@ import "./RegisterPage.css";
 import { UserText1, Btn } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { ProSide } from '../../components';
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -41,7 +44,14 @@ const Register = () => {
   };
 
   return (
-      <div id="container">
+    <Container fluid id="container">
+      <Row>
+        <Col md={2} className="d-none d-md-block bg-light sidebar">
+          <ProSide /> {/* Pass callback prop */}
+        </Col>
+        <div>
+        <Col  xl={6}>
+
         <p id="title">New Admin</p>
         <div id="regForm" className="col-7 mx-auto">
           <form>
@@ -57,7 +67,10 @@ const Register = () => {
          
             </div>
         </div>
-      </div>
+        </Col>
+        </div>
+        </Row>
+        </Container>
   );
 };
 

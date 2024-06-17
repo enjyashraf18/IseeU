@@ -11,11 +11,7 @@ import Register  from '../RegisterPage/RegisterPage';
 // import './LayoutComponent.css';
 
 const LayoutComponent = ({ children }) => {
-  const [activeContent, setActiveContent] = useState('Home'); // Default content
 
-  const handleSidebarItemClick = (content) => {
-    setActiveContent(content);
-  };
 
   return (
     <Container fluid>

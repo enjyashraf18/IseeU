@@ -28,11 +28,11 @@ def Register_2():
     email = data.get('email')
     phone = data.get('phone')
     datehired = data.get('dateHired')
+    role = "Admin"
 
-
-    query = """INSERT INTO employee (nid, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    params = (NID, username, password, firstname, lastname, dateofbirth, address, gender, email, phone, datehired)
+    query = """INSERT INTO employee (nid, role, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired)
+               VALUES (%s,%s , %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    params = (NID, role ,username, password, firstname, lastname, dateofbirth, address, gender, email, phone, datehired)
 
     return execute_query(query, params)
 
