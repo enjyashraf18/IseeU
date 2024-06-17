@@ -5,7 +5,16 @@ import { OR, Btn, UserText1 } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios'
 
+
+
+    const form1data = JSON.parse(localStorage.getItem('formData'));
+
+    console.log(form1data)
+
 const Register2 = () => {
+
+    const [firstForm , setFirstForm] = useState(form1data)
+
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");
     const [formData, setFormData] = useState({
         firstName: '',
@@ -13,13 +22,18 @@ const Register2 = () => {
         dob: '',
         address: '',
         email: '',
+        gender: 'male',
         phone: '',
-        NID: '',
+        NID: firstForm.NID,
         dateHired: '',
-        username: '',
-        password: '',
-        passwordConfirm: ''
+        username: firstForm.username,
+        password: firstForm.password,
+        passwordConfirm: firstForm.passwordConfirm
     });
+
+
+
+    
 
     const navigate = useNavigate();
     // const location = useLocation();
@@ -59,9 +73,7 @@ const Register2 = () => {
         dateHired: ''
     }
 
-    useEffect(() => {
 
-      }, []);
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -69,16 +81,12 @@ const Register2 = () => {
             alert("Passwords do not match");
             return;
         }            
-       
-        // if (localStorage.getItem('formData')) {
-        //   data = JSON.parse(localStorage.getItem('formData'));
+ 
 
-        //   console.log(formData)
-        // }
 
-        console.log("FormData to be sent:", testFrom);  // Debug statement
+        console.log("FormData to be sent:", formData);  // Debug statement
   
-        axios.post('http://localhost:5000/Register', testFrom, {
+        axios.post('http://localhost:5000/Register', formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -100,6 +108,7 @@ const Register2 = () => {
 
 
     return (
+        
             <div className={"reg2Cont"}>
             <div className="container-fluid">
                 <div className="row">
@@ -127,12 +136,12 @@ const Register2 = () => {
                                     <UserText1 label="Email" type="email" name="email" value={formData.email} onChange={handleInputChange} />
                                     <UserText1 label="Phone" type="number" name="phone" value={formData.phone} onChange={handleInputChange} />
 
-                                    <UserText1 label="National ID" type="text" name="NID" value={formData.NID} onChange={handleInputChange} />
+                                    <UserText1 label="National ID" type="text" name="NID" value={firstForm.NID} onChange={handleInputChange} />
                                     <UserText1 label="Hired since" type="date" name="dateHired" value={formData.dateHired} onChange={handleInputChange} />
 
-                                    <UserText1 label="Username" type="text" name="username" value={formData.username} onChange={handleInputChange} />
-                                    <UserText1 label="Password" type="password" name="password" value={formData.password} onChange={handleInputChange} />
-                                    <UserText1 label="Password Confirm" type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleInputChange} />
+                                    <UserText1 label="Username" type="text" name="username" value={firstForm.username} onChange={handleInputChange} />
+                                    <UserText1 label="Password" type="password" name="password" value= {firstForm.password} onChange={handleInputChange} />
+                                    <UserText1 label="Password Confirm" type="password" name="passwordConfirm" value={firstForm.passwordConfirm} onChange={handleInputChange} />
 
                                     <div className="row">
                                         <div className="col-1">

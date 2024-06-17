@@ -5,6 +5,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { ProSide } from '../../components';
 
 function Login() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -43,7 +44,13 @@ function Login() {
 
     reset();
   };
+  const [activeContent, setActiveContent] = useState('Home'); // Default content
 
+  // const handleSidebarItemClick = (content) => {
+  //   setActiveContent(content);
+  //   navigate(activeContent);
+
+  // };
 
 
 // {message: 'Login successful', user: {…}}
@@ -102,6 +109,9 @@ function Login() {
   return (
     <Container fluid id='fullPage'>
       <Row>
+      <Col md={2} className="d-none d-md-block bg-light sidebar">
+          <ProSide /> {/* Pass callback prop */}
+        </Col>
         <div id="left">
         <Col  xl={6}>
         <div 

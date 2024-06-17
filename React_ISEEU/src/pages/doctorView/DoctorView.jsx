@@ -2,6 +2,8 @@ import React from 'react';
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table_patients } from '../../components';
+import axios from 'axios'
+
 const flag_patient=true;
 const data_patient_table=[
     ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago","surgery"],
@@ -23,6 +25,11 @@ const data_doctor_unAvailable=[
     ["download.jfif","DR. Otto Octavius","morning shift"],
     ]
 
+/**
+ * Here we want all the patients of the department from the encounter 
+ * Doctors Data needed
+ */
+
 const flag_Doctors=true;
 const column__doctor_av=["Available"," "];
 const column_doctor_un=["unAvailable"," "];
@@ -30,6 +37,8 @@ const columns_patient=["Name","Bed_No","Statue","Gender","Age","Admitted","Refel
 const role="user";
 const num=data_patient_table.length;
 const DoctorView = () => {
+
+
   return (
     <div className='DoctorView'>
   <div className='container-fluid'>
