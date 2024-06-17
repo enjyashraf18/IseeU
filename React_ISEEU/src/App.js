@@ -1,18 +1,36 @@
 import React from 'react';
 import "./App.css";
-import { BrowserRouter as Router, Route,Switch, Routes, Link } from 'react-router-dom';
-import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,Btn,LiBTN } from './components';
-import { Login, Register } from './pages';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,Btn,LiBTN,Table_patients } from './components';
+import { useNavigate } from 'react-router-dom';
+const App = (props) => {
+  const navigate = useNavigate();
+  const handleButton1 = () => {
+    // Navigate to the desired page
+    navigate('/patient_table');
+  };
+  const handleButton2 = () => {
+    // Navigate to the desired page
+    navigate('/Doctor_View');
+  };
+  const handleButton3 = () => {
+    // Navigate to the desired page
+    navigate('/Add_Report');
+  };
 
-const App = () => {
   return (
-      <div>
-    <Routes>
-
-
-    </Routes>
+    <div className='App'>
+    <button onClick={handleButton1} >go to patient analysis page</button>
+    <button onClick={handleButton2} >go to Doctor View page</button>
+    <button onClick={handleButton3} >go to ADD report page</button>
+                                 
+    
     </div>
   )
 }
 
 export default App
+
+
+
+
