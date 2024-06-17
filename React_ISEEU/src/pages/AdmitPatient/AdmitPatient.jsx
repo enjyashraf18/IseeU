@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./AdmitPatient.css";
-import {OR, Btn, UserText1, UserAge, List} from '../../components';
+import { OR, Btn, UserText1, UserAge, List } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const AdmitPatient = () => {
@@ -18,15 +18,18 @@ const AdmitPatient = () => {
         password: '',
         passwordConfirm: ''
     });
+    const [isPatientFound, setIsPatientFound] = useState(false); // New state for button status
 
-    const doctors = ["A", "B"] //should get all available doctors
-    const nurses = ["A", "B"] //should get all available nurses
+    const refDepart = ["Aaaa", "Baaaa"]; // should get all available depart
+    const doctors = ["A", "B"]; // should get all available doctors
+    const nurses = ["A", "B"]; // should get all available nurses
+    const bedIDs = ["1A", "3A"]; // should get all available beds
 
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        console.log("Location state:", location.state);  // Debug statement
+        console.log("Location state:", location.state); // Debug statement
         if (location.state && location.state.NID) {
             setFormData((prevData) => ({
                 ...prevData,
@@ -62,7 +65,7 @@ const AdmitPatient = () => {
             alert("Passwords do not match");
             return;
         }
-        console.log("FormData to be sent:", formData);  // Debug statement
+        console.log("FormData to be sent:", formData); // Debug statement
 
         fetch('/Register', {
             method: 'POST',
@@ -81,62 +84,84 @@ const AdmitPatient = () => {
             });
     };
 
+    const handleCheckClick = () => {
+        setIsPatientFound(true);
+    };
+
     return (
-            <div className={"AdmitPatientCont"}>
+        <div className="AdmitPatientCont">
             <div className="container-fluid">
                 <div className="row">
                     <div id="AdmitForm" className="col-10 mx-auto">
                         <form onSubmit={handleSubmit}>
                             <div className="row">
                                 <div id="profilePreview" className="col-3">
-                                    <img src={profileImg} alt="Preview" />
+                                    <img id="profileImg" src={profileImg} alt="Preview" />
                                     <input onChange={handleImgupload} type="file" />
                                     <p id="imgSpecs">snsna<br />sfasfsaa<br />ssads</p>
                                 </div>
                                 <div id="inputs" className="col-9">
                                     <p id="scndTitle">Personal Info</p>
+
+                                    <div className="row">
+                                        <div className="col-10 gx-1">
+                                            <UserText1 label="National ID" type="text" name="NID" value={formData.NID}
+                                                       onChange={handleInputChange} />
+                                        </div>
+                                        <div className="col-2">
+                                            {isPatientFound ? (
+                                                <span id="label">Patient found</span>
+                                            ) : (
+                                                <Btn id="checkBtn" label="Check" onClick={handleCheckClick} />
+                                            )}
+                                        </div>
+                                    </div>
+
                                     <div className="row">
                                         <div className="col-6">
                                             <UserText1 label="First name" type="text" name="firstName"
-                                                       value={formData.firstName} onChange={handleInputChange}/>
+                                                       value={formData.firstName} onChange={handleInputChange} />
                                         </div>
                                         <div className="col-6">
                                             <UserText1 label="Last name" type="text" name="lastName"
-                                                       value={formData.lastName} onChange={handleInputChange}/>
+                                                       value={formData.lastName} onChange={handleInputChange} />
                                         </div>
                                     </div>
+
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob}
-                                               onChange={handleInputChange}/>
-                                    <OR/>
+                                               onChange={handleInputChange} />
+                                    <OR />
                                     <UserText1 label="Address" type="text" name="address" value={formData.address}
-                                               onChange={handleInputChange}/>
+                                               onChange={handleInputChange} />
                                     <UserText1 label="Email" type="email" name="email" value={formData.email}
-                                               onChange={handleInputChange}/>
-                                    <UserText1 label="Phone" type="number" name="phone" value={formData.phone}
-                                               onChange={handleInputChange}/>
+                                               onChange={handleInputChange} />
+                                    <UserText1 label="Phone" type="tel" name="phone" value={formData.phone}
+                                               onChange={handleInputChange} />
 
-                                    <UserText1 label="National ID" type="text" name="NID" value={formData.NID}
-                                               onChange={handleInputChange}/>
+                                    <p id="stayTitle">Stay Details</p>
 
+                                    <UserText1 label="Admitting Time" type="datetime-local" name="admittingTIme" value={formData.phone}
+                                               onChange={handleInputChange} />
+
+                                    <List label="Referral Department" options={refDepart} />
+                                    <List label="Admitting doctor" options={doctors} />
+                                    <List label="Bed ID" options={bedIDs} />
 
                                     <div className="row">
                                         <div className="col-6">
-                                            <List label="Admitted doctor" options={doctors}/>
+                                            <List label="Morning nurse" disabled="true" options={nurses} />
                                         </div>
                                         <div className="col-6">
-                                            <List label="Admitted Nurse" options={nurses}/>
+                                            <List label="Evening Nurse" disabled="true" options={nurses} />
                                         </div>
                                     </div>
-
-
-                                    <UserAge label="BedID"/>
 
                                     <div className="row">
                                         <div className="col-3">
-                                            <Btn label="Back"/>
+                                            <Btn label="Back" />
                                         </div>
                                         <div className="col-3 offset-6">
-                                            <Btn id="nxtBtn" label="Next" type="submit"/>
+                                            <Btn label="Next" />
                                         </div>
                                     </div>
                                 </div>
@@ -145,8 +170,7 @@ const AdmitPatient = () => {
                     </div>
                 </div>
             </div>
-
-            </div>
+        </div>
     );
 }
 

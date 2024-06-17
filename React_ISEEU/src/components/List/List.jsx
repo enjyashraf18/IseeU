@@ -5,7 +5,7 @@ const List = ( props ) => {
     return (
         <div className='List'>
             <p>{props.label}</p>
-            <select name = {props.label}>
+            <select disabled={props.disabled} name = {props.label}>
                 {props.options.map((option, index) => (
                     <option key={index} value={option}>
                         {option}
