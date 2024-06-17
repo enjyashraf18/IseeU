@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Patient_Analysis,Doctor_View} from "./pages";
+import {Patient_Analysis,Doctor_View,Report} from "./pages";
 
 import{
     createBrowserRouter,
@@ -22,6 +22,10 @@ import{
       {
         path: "/Doctor_View",
         element: <Doctor_View/>
+      },
+      {
+        path: "/Add_Report",
+        element: <Report/>
       },
   ]);
 // ReactDOM.render(<App/>,document.getElementById("root"));

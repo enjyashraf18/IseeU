@@ -13,11 +13,16 @@ const App = (props) => {
     // Navigate to the desired page
     navigate('/Doctor_View');
   };
+  const handleButton3 = () => {
+    // Navigate to the desired page
+    navigate('/Add_Report');
+  };
 
   return (
     <div className='App'>
     <button onClick={handleButton1} >go to patient analysis page</button>
     <button onClick={handleButton2} >go to Doctor View page</button>
+    <button onClick={handleButton3} >go to ADD report page</button>
                                  
     
     </div>
