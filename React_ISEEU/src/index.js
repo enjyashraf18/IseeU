@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Patient_Analysis,Doctor_View,Login,Register,LayoutComponent } from "./pages";
+import {Patient_Analysis,Doctor_View,Login,Register,LayoutComponent, TestComponent } from "./pages";
 
 import{
     createBrowserRouter,
@@ -26,7 +26,11 @@ import { Register2 } from "./pages";
       path: "/patient_table",
         element:<Patient_Analysis />      
       },
-       
+      {
+        path: "/test",
+          element:<TestComponent />      
+        },
+         
       {
         path: "/Doctor_View",
         element: <Doctor_View/>
