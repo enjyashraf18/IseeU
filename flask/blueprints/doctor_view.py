@@ -32,7 +32,7 @@ def doctor(): #view all employees and beds and patients for the doctor
 
 @doctor_view.route('/doctor/patients', methods=['GET'])
 def doc_patients(): #view all patients for the doctor from the side bar
-    cursor.execute("SELECT * FROM patient")
+    cursor.execute("SELECT * FROM patients")
     patients = cursor.fetchall()
     return jsonify({"patients": patients})
 
@@ -42,9 +42,10 @@ def doc_report(): #add report for the patient from the doctor side bar (after th
     print(data)
     patient_id = data.get('patient_id')
     report = data.get('report')
-    cursor.execute("UPDATE patient SET report = %s WHERE patient_id = %s", (report, patient_id))
+    #cursor.execute("UPDATE patients SET report = %s WHERE patient_id = %s", (report, patient_id))
     database_session.commit()
     return jsonify({"message": "Report added successfully"}), 200
+
 
 @doctor_view.route('/doctor/medications', methods=['POST'])
 def doc_medications(): #add medication for the patient from the doctor
@@ -52,9 +53,30 @@ def doc_medications(): #add medication for the patient from the doctor
     print(data)
     patient_id = data.get('patient_id')
     medication = data.get('medication')
-    cursor.execute("UPDATE patient SET medication = %s WHERE patient_id = %s", (medication, patient_id))
+    #cursor.execute("UPDATE patients SET medication = %s WHERE patient_id = %s", (medication, patient_id))
     database_session.commit()
     return jsonify({"message": "Medication added successfully"}), 200
+
+@doctor_view.route('/doctor/current_encounters', methods=['GET'])
+def current_encounters(): #view all active patients ( dischargedatetime in encounters is NULL)
+    cursor.execute("""
+        SELECT *
+        FROM encounters JOIN patients ON encounters.patientid = patients.nid
+        WHERE encounters.dischargedatetime IS NULL
+    """)
+    active_encounters = cursor.fetchall()
+    return jsonify({"active_encounters": active_encounters})
+
+@doctor_view.route('/doctor/current_employees', methods=['GET'])
+def current_employees(): # View all active employees (role should be either doctor or nurse)
+    cursor.execute("""
+        SELECT * FROM employee
+        WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' OR employee.role = 'Nurse')
+    """)
+    active_employees = cursor.fetchall()
+    return jsonify({"current_employees": active_employees})
+
+
 
 
 
