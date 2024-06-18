@@ -1,0 +1,30 @@
+
+#SidebarMenuElement{
+    background-color: #258176;
+    border-radius: 50px 50px;
+    width: 100%;
+    min-width: 12vw;
+    height: 100%;
+    outline: none;
+    border: none;
+    color: #F5F5F5;
+    font-family: var(--font-family-button);
+    font-weight: 500;
+    font-size: 3vh;
+}
+
+/* SidebarMenuElement.css */
+.menu-item {
+    color: #fff; /* Default text color */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .menu-item:hover {
+    color: #aaa; /* Change color on hover */
+  }
+  
+  .activeClicked {
+    color: #ff0000 !important; /* Active link color */
+    background-color: #333; /* Optional: Background color for active link */
+  }
+  

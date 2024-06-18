@@ -1,12 +1,19 @@
 import React from 'react';
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+<<<<<<< HEAD
 import { useState } from 'react';
 import { Table_patients} from '../../components';
 
 
 const DoctorView = () => {
   const flag_patient=true;
+=======
+import { Table_patients } from '../../components';
+import axios from 'axios'
+
+const flag_patient=true;
+>>>>>>> main
 const data_patient_table=[
     ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago","surgery"],
     ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago ","surgery"],
@@ -27,6 +34,7 @@ const data_doctor_unAvailable=[
     ["download.jfif","DR. Otto Octavius","morning shift"],
     ["download.jfif","DR. Otto Octavius","morning shift"],
     ]
+<<<<<<< HEAD
     const initialDataCheckups=[
       ["download (2).jfif","Enjy Ashraf","15A","checked"],
       ["download (3).jfif","Talal emara","16A","unchecked"],
@@ -38,16 +46,32 @@ const data_doctor_unAvailable=[
       ["download (3).jfif","Talal emara","16A","unchecked"],
     ]
 const flag_Doctors=true; /**flag means the table has an image */
+=======
+
+/**
+ * Here we want all the patients of the department from the encounter 
+ * Doctors Data needed
+ */
+
+const flag_Doctors=true;
+>>>>>>> main
 const column__doctor_av=["Available"," "];
 const column_doctor_un=["unAvailable"," "];
 const columns_patient=["Name","Bed_No","Statue","Gender","Age","Admitted","Refell Department"];
 const columns_checkups=[" ","Name","Bed_No"," "];
 const role="user";
+<<<<<<< HEAD
   const [dataCheckups, setDataCheckups] = useState(initialDataCheckups);
 
   const handleDataChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setDataCheckups(newData);
   };
+=======
+const num=data_patient_table.length;
+const DoctorView = () => {
+
+
+>>>>>>> main
   return (
     <div className='DoctorView'>
   <div className='container-fluid'>
