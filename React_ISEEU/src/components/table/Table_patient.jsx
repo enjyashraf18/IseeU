@@ -13,6 +13,7 @@ const Table_Patient = (props) => {
   //idx checked is the index of the word checked in the table 
   
   console.log(data[0])
+
   let role= props.anotherProp||"user";
   console.log(role)
   //const flag=true;
@@ -24,6 +25,7 @@ const handleCheckboxChange = (index) => {
   newData[index][idx_checked] = newData[index][idx_checked] === 'checked' ? 'unchecked' : 'checked';// here if box is checked and you click toggle the state and change the data
   onDataChange(newData);
 }; 
+
   // Get the keys from the first object in the data array to generate the table headers 
   const columns = Object.keys(data[0]);
   // to undertsand what i will do 
@@ -34,7 +36,6 @@ const handleCheckboxChange = (index) => {
   console.log(data[0]["id"])// like ths in js will be in mapping each row in data and mapping each column in it 
 // here is the search and filter 
 const [searchTerm, setSearchTerm] = useState('');
-
 
 const handleSearch = (event) => {
   setSearchTerm(event.target.value.toLowerCase());
@@ -84,6 +85,8 @@ function toggle_search(){
 
            
         <div className="table-responsive ">
+
+          
         <div rounded border>
           <Table className="table-rounded"   >
              <thead className="thead-fixed">
@@ -115,6 +118,7 @@ function toggle_search(){
 
       }
         {flag === true ? (/**means it contains image */
+
             <>
                 <td key={`${rowIndex}`}>
                     <img src={row[0]} alt="Image" />{" "}
@@ -140,6 +144,7 @@ function toggle_search(){
             </>
         )}
         {role === "Admin" ? (// if role is admin i increase the column of action
+
             <td className='lastchild'>
                 <div className='role_action_component'>
                     <button className='editbtn'>Edit</button>

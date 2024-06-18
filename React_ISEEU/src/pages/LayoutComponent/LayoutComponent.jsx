@@ -26,9 +26,22 @@ const LayoutComponent = ({ children }) => {
           {activeContent === 'Login' ? <Login /> : null} 
           {activeContent === 'Register' ? <Register /> : null}
         </Col>
+
       </Row>
     </Container>
   );
 };
 
 export default LayoutComponent;
+
+// {/* <Col md={2} className="d-none d-md-block bg-light sidebar">
+// <ProSide onSidebarItemClick={handleSidebarItemClick} /> {/* Pass callback prop */}
+// </Col>
+
+// <Col md={10} className="ml-sm-auto col-lg-10 px-4">
+// {activeContent === 'Patient_Analysis' ? <Patient_Analysis /> : null} 
+
+// {activeContent === 'Login' ? <Login /> : null} 
+// {activeContent === 'Register' ? <Register /> : null}
+// </Col> */}
+

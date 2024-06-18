@@ -31,7 +31,7 @@ max-width: 100%;;
   margin: 0;
   border-top: 0;
   border-bottom: 0;
- 
+
 }
 
 /* Ensure no additional styling conflicts */
@@ -46,7 +46,6 @@ max-width: 100%;;
   font-family: var(--font-family-button);
   color: #258176;
   border-top: none;
- 
 
 }
 

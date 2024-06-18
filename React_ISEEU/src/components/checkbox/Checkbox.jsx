@@ -1,19 +1,8 @@
 import React from 'react';
 import "./checkbox.css";
 import { useState } from 'react';
-<<<<<<< HEAD
 
-const Checkbox = ({ checked, onChange }) => (
-  <div className='check'>
-    <input
-      type='checkbox'
-      className='checkbox'
-      checked={checked}
-      onChange={onChange}
-    />
-  </div>
-);
-=======
+
 const Checkbox = () => {
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -45,6 +34,6 @@ const Checkbox = () => {
     </div>
   )
 }
->>>>>>> main
+
 
 export default Checkbox

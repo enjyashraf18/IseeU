@@ -40,6 +40,7 @@ const label="Add";
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
             <Table_patients data={patient_Analysis_data} anotherProp={role} headers={columns} flag={flag}  showSearch={true} />
+
           </div>
         </div>
         {role === "Admin" && (
