@@ -66,7 +66,6 @@ const role="user";
 
 
 const num=data_patient_table.length;
-const DoctorView = () => {
 
 
   return (

@@ -5,7 +5,7 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-import {Patient_Analysis,Doctor_View,Login,Register,LayoutComponent, TestComponent } from "./pages";
+import {Patient_Analysis,Doctor_View,Login,Register,Report, TestComponent } from "./pages";
 
 import{
     createBrowserRouter,
@@ -58,11 +58,8 @@ import { Register2 } from "./pages";
         {
           path: "/register",
           element: <Register/>
-        },
-        {
-          path: "/layout",
-          element: <LayoutComponent/>
         }
+
 
   ]);
 // ReactDOM.render(<App/>,document.getElementById("root"));

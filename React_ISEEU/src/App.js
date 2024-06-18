@@ -6,7 +6,7 @@ import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,
 import {QueryClient, QueryClientProvider} from "react-query"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { LayoutComponent, Login} from "./pages"
+import { Login} from "./pages"
 import { ProSide } from './components';
 
 const queryClient = new QueryClient();
@@ -36,7 +36,6 @@ const App = (props) => {
     <button onClick={handleButton2} >go to Doctor View page</button>
     <button onClick={handleButton3} >go to ADD report page</button>
      <QueryClientProvider client= {queryClient}>
-      <LayoutComponent/>
   
     </QueryClientProvider>                            
     
