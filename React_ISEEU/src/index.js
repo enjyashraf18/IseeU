@@ -30,7 +30,10 @@ import { Register2 } from "./pages";
         path: "/test",
           element:<TestComponent />      
         },
-         
+        {
+          path: "/test",
+            element:<TestComponent />      
+          }, 
       {
         path: "/Doctor_View",
         element: <Doctor_View/>
