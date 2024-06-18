@@ -1,6 +1,8 @@
 import React from 'react';
 import "./checkbox.css";
 import { useState } from 'react';
+
+
 const Checkbox = () => {
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -32,5 +34,6 @@ const Checkbox = () => {
     </div>
   )
 }
+
 
 export default Checkbox

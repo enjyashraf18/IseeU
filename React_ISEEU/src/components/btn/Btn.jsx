@@ -1,5 +1,6 @@
 import React from 'react';
 import "./btn.css";
+
 import { Table, Form, InputGroup, Border } from 'react-bootstrap';
 import { text } from '@fortawesome/fontawesome-svg-core';
 const Btn = (props) => {
@@ -9,7 +10,7 @@ const Btn = (props) => {
       <button label= {props.label} type={props.type} onClick={handleClick}>
         {props.label}
       </button>
-   
+  
     </div>
   )
 }

@@ -7,7 +7,10 @@
   }
   
   .checkbox {
+    /* Hide the default appearance of the checkbox  to put mine*/ 
+
     /* Hide the default appearance of the checkbox */
+
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;

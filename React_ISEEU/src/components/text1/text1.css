@@ -15,7 +15,7 @@
 }
 .text1 input{
     width:100%;
-    height:3vh;
+    height:2vh;
     margin-top: -2vh;
     /*border-color: #549991;*/
     border: 3px solid var(--color-box);
