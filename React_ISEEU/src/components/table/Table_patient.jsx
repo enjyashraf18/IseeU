@@ -21,7 +21,7 @@ const Table_Patient = (props) => {
     
   };
   let role= props.anotherProp||"user";
-  console.log(role)
+  // console.log(role)
   //const flag=true;
  
   const highlightText = (text) => { /**function to highlight words that i specify */
@@ -49,10 +49,10 @@ const handleCheckboxChange = (index) => {
   const columns = Object.keys(data[0]);
   // to undertsand what i will do 
   let row1=(data[0]);
-  console.log(columns)
-  console.log(row1)
-  console.log(row1["id"])// as it was an two dimensional array
-  console.log(data[0]["id"])// like ths in js will be in mapping each row in data and mapping each column in it 
+  // console.log(columns)
+  // console.log(row1)
+  // console.log(row1["id"])// as it was an two dimensional array
+  // console.log(data[0]["id"])// like ths in js will be in mapping each row in data and mapping each column in it 
 // here is the search and filter 
 const [searchTerm, setSearchTerm] = useState('');
 
@@ -120,9 +120,7 @@ const handleDelete = (rowIndex) => {
         )}
 
            
-        <div className="table-responsive ">
-
-          
+        <div className="table-responsive ">  
         <div rounded border>
           <Table className="table-rounded"   >
              <thead className="thead-fixed">
@@ -138,10 +136,7 @@ const handleDelete = (rowIndex) => {
                     )}
               </tr>
             </thead>
-            <tbody>
-
-              
-            
+            <tbody>           
 
             {filteredData.map((row, rowIndex) => ( //if it contain image it mix the first and second values and slice them and doing the filter as usual else do the usual
     <tr key={rowIndex}>

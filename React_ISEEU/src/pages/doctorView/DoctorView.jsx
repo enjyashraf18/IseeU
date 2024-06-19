@@ -1,7 +1,6 @@
-import React from 'react';
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table_patients} from '../../components';
 import axios from 'axios'
 
@@ -51,6 +50,13 @@ const data_doctor_unAvailable=[
  * Here we want all the patients of the department from the encounter 
  * Doctors Data needed
  */
+/**
+ * Employees dict shape :(  NID VARCHAR(15) UNIQUE, EmployeeID SERIAL UNIQUE PRIMARY KEY, UserName VARCHAR(20) NOT NULL , Password VARCHAR(20) NOT NULL ,
+    FirstName VARCHAR(20) NOT NULL, LastName VARCHAR(20), Gender VARCHAR(20) NOT NULL, EmailAddress VARCHAR(100) NOT NULL,
+    ProfilePic VARCHAR(100), DateOfBirth DATE, PhoneNumber VARCHAR(20), Address VARCHAR(200), Role ROLE NOT NULL, DateHired DATE,
+    DateLeft DATE, shift   VARCHAR(20),)
+ * 
+ */
 
 const flag_Doctors=true;
 const column__doctor_av=["Available"," "];
@@ -60,6 +66,64 @@ const columns_checkups=[" ","Name","Bed_No"," "];
 const role="user";
 
   const [dataCheckups, setDataCheckups] = useState(initialDataCheckups);
+  const [error, setError] = useState(null);
+  const [staff , setDoctors] = useState({
+    data: [],
+    headers_av: ["Available",""],
+    headers_unav:["unAvailable", ""]
+
+  })
+
+  useEffect(() => {
+    // Define an async function inside the useEffect
+    const fetchstaff = async () => {
+        // Perform the axios GET request
+        const response = await axios.get('http://localhost:5000/doctor/current_employees', {
+          headers: {      
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log("starttttttt",response.data);
+
+
+        // Update the state with the fetched data
+        const employee = response.data.current_employees.map(employee => ({
+          ProfilePic: employee[8],
+          NID: employee[1],
+          EmployeeID: employee[0],
+          UserName: employee[2],
+          Password: employee[3],
+          FirstName: employee[4],
+          LastName: employee[5],
+          Gender: employee[6],
+          EmailAddress: employee[7],
+          DateOfBirth: employee[9],
+          PhoneNumber: employee[10],
+          Address: employee[11],
+          Role: employee[12],
+          DateHired: employee[13],
+          DateLeft: employee[14],
+          Shift: employee[15]
+        }))
+
+        const headers = Object.keys(employee[0])
+        console.log(headers)
+        
+           
+        // Update the state with the error
+        setDoctors( employee,        )
+
+        console.log("fetched ....", staff)
+
+        // console.log("keys",Object.keys(doctors))
+
+  }
+    const fetchEncounters = async() => {
+      
+    }
+    // Call the async function to fetch data
+    fetchstaff();
+  }, []);
 
   const handleDataChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setDataCheckups(newData);
