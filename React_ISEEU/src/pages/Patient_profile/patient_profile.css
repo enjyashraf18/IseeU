@@ -1,0 +1,164 @@
+.pprofile{
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 30px;
+    background-color: #EAEAEA;
+}
+.left_pside{
+ display: flex;
+ flex-direction: column;
+  
+    align-items: center;
+   
+    
+}
+.left_pside a{
+color:#1A5952;
+}
+.left_pside a:hover{
+    color: var(--color-mainLight);
+}
+.left_pside img{
+    width:145px;
+    height:145px;
+    border-radius: 100%;
+}
+.left_pside h5{
+    color: #404040;
+    font-family: var(--font-family);
+    font-weight: 400;
+}
+.left_pside h2{
+    color: var(--color-main);
+    font-family: var(--font-family);
+    font-weight:500;
+}
+.left_pside h1{
+    
+    font-family: var(--font-family);
+    font-weight:700;
+}
+.piegebtn{
+    position: relative;
+    top:-5000px;
+    width: 50%;
+}
+ .pright {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+       align-items: center;
+       background-color: white!important;
+       border-radius: 50px 50px;
+    width: 100%;
+    height: 80%;
+   overflow-y: auto; /* Enables vertical scrolling */
+   scrollbar-width: none;
+
+}
+.pright  h4{
+    color: var(--color-main);
+    font-weight: 600;
+    text-align: center;
+}
+.pright .no_bullet_staff h8{
+    color:#404040;
+    font-weight: 300;
+    font-size: small;
+
+}
+
+.pright .no_bullet_staff  li{
+    font-weight: 500;
+    list-style-type: none;
+
+
+
+}
+.no_bullet_staff .prev_staff{
+    color: #A6A9AB;
+}
+.prev_img{
+    filter: grayscale(80%);
+}
+.pprofile_list{
+    margin-bottom: 15px;
+    text-align: left;
+    align-self:flex-start;
+}
+.pprofile_medication{
+    background-color: white;
+    border-radius: 50px 50px;
+    height: 250px;
+   
+ 
+}
+.pprofile_medication h5,.pprofile_tests h5,.pprofile_scans h5,.pprofile_Report h5{
+    color: var(--color-main);
+    position: relative;
+    left: 20px;
+    top:20px;
+    z-index: 1500;
+    
+}
+.pprofile_medication .table-responsive{
+    height: 200px;
+    
+}
+.pprofile_medication .table-responsive thead th,.pprofile_tests .table-responsive thead th,.pprofile_scans .table-responsive thead th,
+.pprofile_Report .table-responsive thead th{
+
+    background-color:white;
+    border: #EAEAEA;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 0;
+}
+.pprofile_tests,.pprofile_scans{
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 50px 50px;
+    height: 200px;
+    width: 48%;
+    margin-left: 15px;
+
+}
+
+.pprofile_tests .table-responsive,.pprofile_scans .table-responsive{
+height: 140px;
+position: relative;
+top: -20px;
+}
+.flow_row{
+    display: flex;
+
+}
+.pprofile_tests .bar-input{
+    top:270px;
+    left: -430px;
+}
+.pprofile_scans .bar-input{
+    top:270px;
+    left: -3px;
+}
+.pprofile_Report{
+    background-color: white;
+    border-radius: 50px 50px;
+    height: 190px;
+    margin-top: 10px;
+}
+.pprofile_Report .table-responsive{
+    height: 120px;
+position: relative;
+top: -20px;
+}
+.pprofile_Report .table-responsive thead th{
+    width: 70%;
+}
+.pprofile_Report .bar-input{
+    top:480px;
+    left: -3px;
+}
+.piegebtn{
+    width: 10% !important;
+}

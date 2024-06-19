@@ -5,7 +5,7 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-import {Patient_Analysis,Doctor_View,Login,Register,Report, TestComponent } from "./pages";
+import {Patient_Analysis,Doctor_View,Login,Register,Report, TestComponent,PatientProfile } from "./pages";
 
 import{
     createBrowserRouter,
@@ -38,6 +38,11 @@ import { Register2 } from "./pages";
 
         path: "/Add_Report",
         element: <Report/>
+      },
+      {
+
+        path: "/PatientProfile",
+        element: <PatientProfile/>
       },
 
 

@@ -14,9 +14,10 @@ const DoctorView = () => {
 const flag_patient=true;
 
 const data_patient_table=[
-    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago","surgery"],
-    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago ","surgery"],
-    ["download (2).jfif","shahd","15A","Coma","Female",20,"5 days ago ","surgery"],
+    ["Icons-Land-Medical-People-Patient-Female.ico","shahd","15A","Coma","Female",20,"5 days ago","surgery"],
+    ["Icons-Land-Medical-People-Patient-Female.ico","shahd","15A","Coma","Female",20,"5 days ago ","surgery"],
+    ["Icons-Land-Medical-People-Patient-Female.ico","shahd","15A","Coma","Female",20,"5 days ago ","surgery"],
+    ["download_(4).jfif","Mohamed","15A","Coma","male",20,"5 days ago ","surgery"],
 
 ];
 const data_doctor_Available=[
@@ -35,14 +36,14 @@ const data_doctor_unAvailable=[
     ]
 
     const initialDataCheckups=[
-      ["download (2).jfif","Enjy Ashraf","15A","checked"],
-      ["download (3).jfif","Talal emara","16A","unchecked"],
-      ["download (2).jfif","Enjy Ashraf","15A","checked"],
-      ["download (3).jfif","Talal emara","16A","unchecked"],
-      ["download (2).jfif","Enjy Ashraf","15A","checked"],
-      ["download (3).jfif","Talal emara","16A","unchecked"],
-      ["download (2).jfif","Enjy Ashraf","15A","checked"],
-      ["download (3).jfif","Talal emara","16A","unchecked"],
+      ["Icons-Land-Medical-People-Patient-Female.ico","Enjy Ashraf","15A","checked"],
+      ["download.png","Talal emara","16A","unchecked"],
+      ["Icons-Land-Medical-People-Patient-Female.ico","Enjy Ashraf","15A","checked"],
+      ["download.png","Talal emara","16A","unchecked"],
+      ["Icons-Land-Medical-People-Patient-Female.ico","Enjy Ashraf","15A","checked"],
+      ["download.png","Talal emara","16A","unchecked"],
+      ["Icons-Land-Medical-People-Patient-Female.ico","Enjy Ashraf","15A","checked"],
+      ["download.png","Talal emara","16A","unchecked"],
     ]
 
 

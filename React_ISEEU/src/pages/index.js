@@ -8,3 +8,4 @@ export{default as Register2} from"./RegisterPage2/RegisterPage2";
 export{default as Login} from"./LoginPage/Login";
 
 export{default as TestComponent} from"./test";
+export{default as PatientProfile} from "./Patient_profile/Patient_profile";

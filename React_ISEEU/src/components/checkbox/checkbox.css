@@ -23,13 +23,13 @@
 
 /* Handle the checked state */
 .checkbox:checked {
-  background-color: #A3CCC7; /* Change background color when checked */
+  background-color: #549991; /* Change background color when checked */
 }
 
 .checkbox:checked::after {
   content: "\2714"; /* Unicode character for checkmark */
-  font-size: 13px;
-  color: var(--color-box); /* Color of the checkmark */
+  font-size: 15px;
+  color: white; /* Color of the checkmark */
   position: relative;
   
   left: 1px;

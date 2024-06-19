@@ -15,6 +15,7 @@
     font-weight: 500;
     font-size: 3vh;
     justify-content: center;
+    content-visibility:visible;
 }
 .btn button:hover{
     background-color:var(--color-mainLight);
