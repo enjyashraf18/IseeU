@@ -31,6 +31,8 @@ max-width: 100%;;
   margin: 0;
   border-top: 0;
   border-bottom: 0;
+
+
 }
 
 /* Ensure no additional styling conflicts */
@@ -45,6 +47,7 @@ max-width: 100%;;
   font-family: var(--font-family-button);
   color: #258176;
   border-top: none;
+
 }
 
 .custom-table tbody {
@@ -59,7 +62,7 @@ max-width: 100%;;
 .custom-table {
   border-collapse: collapse;
 }
-img{
+.table_img{
   width:30px;
   height:30px;
   border-radius: 100%;
@@ -68,7 +71,7 @@ img{
 
 .fasearch {
   position: sticky;
- 
+  top: 5px !important ;
   cursor: pointer;
   z-index: 2000;
   color: gray;
@@ -119,27 +122,28 @@ img{
   font-family: var(--font-family-button);
   font-weight: 500;
   font-size: medium;
-}
-
-.del {
-  margin: 0;
-  margin-left: 4px;
-  background-color: var(--color-emergency); 
-  color: #fff;
-  font-size: 13px;
-  font-weight: bold;
-  border: none;
-  border-radius: 20%; /* Creates a circular shape */
-  cursor: pointer; 
-  transition: background-color 0.3s ease; 
-  transform: scaleX(1);
-  width: 20px;
-  height: 20px;
   justify-content: center; /* Center horizontally */
   align-items: center;
 }
 
-.del:hover {
+.delete {
+ width:20px ;
+ height: 20px;
+ border: none;
+ border-radius: 30%;
+ background-color: red;
+ 
+}
+.delete .fa-trash{
+color: #F5F5F5;
+font-size: 15px;
+}
+
+
+
+  
+
+.delete:hover {
   background-color: pink;
 }
 

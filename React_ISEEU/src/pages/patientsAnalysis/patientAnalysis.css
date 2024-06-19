@@ -8,13 +8,13 @@ body, html {
 .container-fluid {
     width: 100%; /* Ensure container does not exceed viewport width */
   }
-
+  .panalysis{
+    background-color: var(--color-background-table);
+}
 .patientanalysis table tr{
     border:#A6A9AB;
 }
-.patientanalysis.Table_patients{
-    background-color: gray;
-}
+
 .patientanalysis table{
     margin:40px ;
 }
@@ -30,7 +30,7 @@ body, html {
     background-color:#f0eded;
 }
 .patientanalysis-table{
-    background-color: var(--color-background-table);
+    background-color: white;
     width: 1100px;
     justify-content: center;
     align-items: center;
@@ -38,8 +38,15 @@ body, html {
     z-index: 3000;
     height: 600px;
     margin-top: 30px;
+    border-radius: 50px 50px;
 }
-
+.patientanalysis-table .table-responsive thead th{
+    background-color:white;
+    border: #EAEAEA;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 0;
+}
 .table-responsive {
  max-height: 550px !important;
 }

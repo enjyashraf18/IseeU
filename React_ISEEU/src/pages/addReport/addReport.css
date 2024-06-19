@@ -1,0 +1,322 @@
+   
+* {
+    box-sizing: border-box;
+  }
+.btn-modal {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  /* Styles for dialog modal */
+  .dialog-modal {
+    border: none;
+    border-radius: 30px;
+
+    padding: 20px;
+    padding-top: 23px;
+    padding-left: 35px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */ /*Adds a shadow effect around the modal with a blur radius of 10 pixels, using a semi-transparent black color (rgba(0, 0, 0, 0.3)).*/
+    position: relative;
+    z-index: 1001; /*appear on the top of everything*/
+  width: 865px;
+    height: 600px;
+    align-self: center;
+    left:310px;
+
+   
+  }
+  
+  .dialog-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .dialog-modal h1{
+color: var(--color-main);
+font-family:var(--font-family);
+font-weight:2px;
+font-size:xx-large;
+  }
+  .dialog-modal h3{
+    color: #1A5952;
+    font-family: var(--font-family-button);
+    font-weight: bold;
+    font-size:medium;
+    position: relative;
+    top:15px;
+   padding-left:10px;
+   
+      }
+      .dialog_header{
+        display: flex;
+    flex-direction: row;
+      }
+
+  
+  /* Styles for modal overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(10px); 
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Blur background when modal is active */
+  .active-modal {
+    overflow: hidden; /*Prevents scrolling of content behind the modal when it is open*/
+  }
+  
+  .active-modal::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(2px); /*applies the effect to the area behind the element*/
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+
+  .close-modal {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    position: absolute; /*always be in this position for any modal*/
+    top: 10px;
+    right: 10px;
+
+  }
+
+  #content-header{
+    color: var(--color-main);
+    font-family: var(--font-family);
+    font-weight: bold;
+    font-size:100px;
+    position: relative;
+   
+   padding-left:10px;
+   
+  }
+ 
+  .header-content-report h3, .header-content-tests h3{
+    color: var(--color-main);
+    font-family: var(--font-family);
+    font-weight: medium;
+    font-size:20px;
+    z-index: 1200;
+  }
+  .report textarea{
+    position: relative;
+    top: 15px;
+    border-radius: 10px;
+    background-color: #E9F5F4;
+    width: 100%;
+    height: 230px;
+    border:#549991 1px solid;
+    font-family: var(--font-family);
+    font-size: large;
+    text-align: left;
+
+   
+  }
+  .report textarea:focus{   
+    outline: none; /*always write it to remove the default and add yours*/
+    border: 2px solid var(--color-main);
+}
+#felx-row{
+    display: flex;
+    flex-direction: row;
+}
+.tests{
+    flex-direction: row;
+}
+.tests .table-responsive{
+    margin-top: 10px;
+    height: 150px;
+    width: 100%;
+
+    
+}
+.tests .table-responsive .thead-fixed th,.medication .table-responsive .thead-fixed th{
+    background-color: white;
+    
+    box-shadow: none;
+    border: none;
+    font-size:medium;
+    font-weight: bold;
+    color: gray;
+    width:100% !important ;
+    z-index: 1300;
+}
+.tests .checkbox:checked::after, .medication .checkbox:checked::after{
+    top:-6px;
+    left:-2px;
+  }
+  .orderedscans {
+    width: 100%;
+  }
+  .orderedscans ul {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    padding-left: 20px;
+    list-style-type:disc ; /* Adds bullet points */
+    
+}
+
+.orderedscans ul li {
+    flex: 0 0 calc(50% - 40px); /* Two items per line with margin */
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+#submit-btn-report button{
+    width: 100%;
+
+}
+#flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.medication .table-responsive{
+    height: 230px;
+    width: 100%;
+    margin-top: 15px;
+    table-layout:auto;
+    padding: 0;
+    margin: 0;
+    
+}
+.medication .table-responsive tbody tr {
+    border-bottom:#A6A9AB 3px solid ;
+    box-shadow:  0 2px 2px -1px rgba(0, 0, 0, 0.4);;
+}
+.medication .table-responsive thead th{
+border-bottom: 0;
+box-shadow: 0;
+padding: 0;
+margin: 0;
+}
+.medication {
+   
+padding: 0 !important;
+align-content: flex-start;
+
+}
+ .faplus{
+    border-radius: 40%;
+    width: 15px;
+    height: 20px;
+color :var(--color-main);
+margin-top: 13px;
+margin-right: 15px;
+border: none;
+background-color:#E9F5F4 ;
+ }
+.faplus .icon{
+margin-top: -10px;
+margin-left: -8px;
+}
+.faplus:hover{
+    color: #E9F5F4;
+    background-color: #1A5952;
+} 
+/*for child modal for add medication*/
+.dialog-child-modal{
+    border: none;
+    border-radius: 30px;
+
+    padding: 20px;
+    padding-top: 23px;
+    padding-left: 35px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */ /*Adds a shadow effect around the modal with a blur radius of 10 pixels, using a semi-transparent black color (rgba(0, 0, 0, 0.3)).*/
+    position: relative;
+    z-index: 1500; /* Higher z-index to appear above parent modal */
+  width: 350px;
+    height: 335px;
+    align-self: center;
+    left:1100px;
+    top:-550px;
+ 
+}
+.med_name{
+    margin-top: 10px;
+ border: none;
+    width: 75%;
+    height: 50px;
+    margin-left: 20px;
+    color: var(--color-main);
+    font-size: larger;
+    font-weight: 700;
+    
+}
+.med_name::placeholder{
+    color: var(--color-main);
+    font-family: var(--font-family);
+    font-weight: bold;
+    font-size:x-large;
+}
+.med_name:focus{
+    outline: none; /*always write it to remove the default and add yours*/
+    border: 2px solid var(--color-main);
+}
+.input-num{
+    outline: none;
+    border :2px solid var(--color-main)  ;
+    width: 100%;
+    margin-left: 15px;
+    color: var(--color-main);
+      border-radius: 50px 50px;
+      height: 25px;
+      font-weight: 600;
+
+}
+.input-num::placeholder{
+    text-align: center;
+}
+.dialog-child-modal h4{
+    color: var(--color-main);
+    font-family: var(--font-family);
+    font-weight: bold;
+    font-size:large;
+}
+.input-text{
+    outline: none;
+    border :2px solid var(--color-main)  ;
+    width: 100%;
+    border-radius: 50px 50px;
+    color: var(--color-main);
+    font-weight:640;
+    text-align: center;
+}
+.submit-child-modal button{
+    width: 300px;
+}
+.btn-frequency{
+    position: absolute;
+    left:310px;
+    top: 110px;
+    border: none;
+    background-color: white;
+    color: #1A5952;
+    font-size: smaller;
+}
+.btn-duration{
+    position: absolute;
+    left:310px;
+    top: 218px;
+    border: none;
+    background-color: white;
+    color: #1A5952;
+    font-size: smaller;
+}

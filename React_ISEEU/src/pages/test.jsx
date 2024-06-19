@@ -5,40 +5,35 @@ function TestComponent() {
   
 
   const [doctors , setDoctors] = useState()
+  const [error, setError] = useState(null);
 
-
-  useEffect( () => {
-
-    const body = {
-      NID : 'D001',
-      username : 'johnsmith',
-      password : 'pass1234'
-    }
-
-    console.log('start ',body);
-
-    axios.post('http://localhost:5000/doctor', body, {
-      headers: {      
-        'Content-Type': 'application/json'
-      }
-    })
-
-    .then(
-      response => {
+  const [patients , setPatients] = useState()
+  useEffect(() => {
+    // Define an async function inside the useEffect
+    const fetchPatients = async () => {
+      try {
+        // Perform the axios GET request
+        const response = await axios.get('http://localhost:5000/doctor/current_encounters', {
+          headers: {      
+            'Content-Type': 'application/json'
+          }
+        });
         console.log(response.data);
-        setDoctors(response.data);
-        console.log(doctors);
-      }
-    )
 
-    .catch(error => {
-      console.log(error)
-    }, [])
+        // Update the state with the fetched data
+        setPatients(response.data.patients);
+        console.log("fetched",patients)
+            } catch (error) {
+        // Update the state with the error
+        setError(error);
 
-
+    };
   }
 
-  ); // Empty array means this effect runs once when the component mounts
+    // Call the async function to fetch data
+    fetchPatients();
+}, []);
+ // Empty array means this effect runs once when the component mounts
 
   return (
     <div>

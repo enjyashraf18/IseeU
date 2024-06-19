@@ -19,8 +19,8 @@
     cursor: pointer; 
     transition: background-color 0.3s ease; 
     transform: scaleX(1);
-    width: 55pX;
-    height: 55px;
+    width: 20pX;
+    height: 20px;
     justify-content: center; /* Center horizontally */
     align-items: center;
     

@@ -6,24 +6,53 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState,useMemo } from 'react';
 import { Table, Form, InputGroup, Button,Border } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
+import Checkbox from "../checkbox/Checkbox"; // if you use component in component you must import the full path not what the export only in index js
+import DelButton from '../delButton/DelButton';
 const Table_Patient = (props) => {
   //const  data  = props.data;
-  const { data, headers,flag } = props
-  console.log(data[0])
-  console.log(Object.values(data[0])) /*it's an array*/
-  let role= props.anotherProp||"user";
-  console.log(role)
-  //const flag=true;
+  const { data, headers,flag,onDataChange,ischecktable,showSearch,idx_checked } = props
+  //idx checked is the index of the word checked in the table 
   
+  console.log(data[0])
+  const wordsToColor = {
+    "#3D9973": ['done'],
+    "#4381C1": ['male','pending'],
+    "#FE688C": ['female'],
+    
+  };
+  let role= props.anotherProp||"user";
+  // console.log(role)
+  //const flag=true;
+ 
+  const highlightText = (text) => { /**function to highlight words that i specify */
+  
+    if (typeof text !== 'string') return text;
+    return text.split(' ').map((word, index) => {
+      let coloredWord = word;
+      Object.entries(wordsToColor).forEach(([color, words]) => {
+        if (words.includes(word.toLowerCase())) {
+          coloredWord = <span key={index} style={{ color }}>{word}</span>;
+        }
+      });
+      return <>{coloredWord }</>
+    });
+  };
+// for check box tables:
+//here i change the data if i check on the box to determine if the box is checked or not.
+const handleCheckboxChange = (index) => {
+  const newData = [...data];
+  newData[index][idx_checked] = newData[index][idx_checked] === 'checked' ? 'unchecked' : 'checked';// here if box is checked and you click toggle the state and change the data
+  onDataChange(newData);
+}; 
 
   // Get the keys from the first object in the data array to generate the table headers 
   const columns = Object.keys(data[0]);
   // to undertsand what i will do 
   let row1=(data[0]);
-  console.log(columns)
-  console.log(row1)
-  console.log(row1["id"])// as it was an two dimensional array
-  console.log(data[0]["id"])// like ths in js will be in mapping each row in data and mapping each column in it 
+  // console.log(columns)
+  // console.log(row1)
+  // console.log(row1["id"])// as it was an two dimensional array
+  // console.log(data[0]["id"])// like ths in js will be in mapping each row in data and mapping each column in it 
 // here is the search and filter 
 const [searchTerm, setSearchTerm] = useState('');
 
@@ -51,36 +80,47 @@ function toggle_search(){
   setSearchInput(true)
  }
 }
-// creating the table
+const handleEdit = (rowIndex) => { /**here we should go to admit git the patient id snd go  */
+  console.log(`Edit button clicked for row ${rowIndex}`);
+  
+};
+
+const handleDelete = (rowIndex) => {
+  let newData = data.filter((_, index) => index !== rowIndex);
+  
+  if (newData.length === 0){
+    newData = [[],];
+    onDataChange(newData);
+  }
+  else {
+    onDataChange(newData);
+  }
+};
+
+
   return (
     <div  className='tableComponent'>
       <div className="container-fluid">
-      <FaSearch className="fasearch" onClick={toggle_search}/>
-      {searchInput?(
-    
-      <div className='input'>
-     {/* <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">
-     
-          </InputGroup.Text>
-          <Form.Control 
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-      </InputGroup> */}
-      <input  className='bar-input'
-        type="text" 
-        placeholder='Search...'
-        onChange={handleSearch} 
-        value={searchTerm}
-      
-      />
-        </div>):null}
+        
+      {showSearch && (
+          <>
+            <FaSearch className="fasearch" onClick={toggle_search} />
+            {searchInput && (
+              <div className='input'>
+                <input
+                  className='bar-input'
+                  type="text"
+                  placeholder='Search...'
+                  onChange={handleSearch}
+                  value={searchTerm}
+                />
+              </div>
+            )}
+          </>
+        )}
 
            
-        <div className="table-responsive">
+        <div className="table-responsive ">  
         <div rounded border>
           <Table className="table-rounded"   >
              <thead className="thead-fixed">
@@ -88,47 +128,74 @@ function toggle_search(){
               {headers.map((header, index) => (
                     <th key={index}>{header}</th>
                   ))}
-                {role==="Admin"?(<th className='lastchild'>Actions</th>):(null)}
+              {role === "Admin" && (
+                        <>
+                            <th className='lastchild'>Action </th>
+                            <th className='lastchild'>   </th>
+                        </>
+                    )}
               </tr>
             </thead>
-            <tbody>
+            <tbody>           
 
-              
-            
-
-            {filteredData.map((row, rowIndex) => (
+            {filteredData.map((row, rowIndex) => ( //if it contain image it mix the first and second values and slice them and doing the filter as usual else do the usual
     <tr key={rowIndex}>
-        {flag === true ? (
+      {ischecktable?(// here i checked if this table is check table i write it in the map function to be repeatable for all 
+ <td>
+ <Checkbox /**here i show the check box in the first */
+   checked={row[idx_checked] === 'checked'}
+   onChange={() => handleCheckboxChange(rowIndex)}
+ />
+</td>
+
+
+      )
+      :(null) 
+
+      }
+        {flag === true ? (/**means it contains image */
+
             <>
                 <td key={`${rowIndex}`}>
-                    <img src={row[0]} alt="Image" />{" "}
+                    <img src={row[0]} alt="Image"  className='table_img'/>{" "}
                     {row[1]}
                 </td>
                 {row.slice(2).map((val, index) => (
-                    <td key={`${rowIndex}-${index}`}>
-                        {val}
-                    </td>
-                ))}
+               
+               val !== 'checked' && val !== 'unchecked' && ( /**here i dont want the value of checked to appeat if you want it to appear remove ! */
+                <td key={`${rowIndex}-${index}`}>
+                {highlightText(val)}
+                     
+                </td>
+              )
+              ))}
             </>
         ) : (
-            <>
-                {row.map((val, index) => (
-                    <td key={`${rowIndex}-${index}`}>
-                        {val}
-                    </td>
+            <>  
+                {row.map((val, index) => (/**here it doesnt conatin images so i show the data as usual  */
+                 val !== 'checked' && val !== 'unchecked' && ( /**here i dont want the value of checked to appeat if you want it to appear remove ! */
+                  <td key={`${rowIndex}-${index}`}> 
+                
+                {highlightText(val)}
+                  </td>
+                )
                 ))}
             </>
         )}
-        {role === "Admin" ? (
-            <td className='lastchild'>
-                <div className='role_action_component'>
-                    <button className='editbtn'>Edit</button>
-                    <button className='del'>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                </div>
-            </td>
-        ) : (null)}
+       {role === "Admin" && (
+                      <>
+                        <td className='lastchild'>
+                          <div className='role_action_component'>
+                            <button className='editbtn' onClick={() => handleEdit(rowIndex)}>Edit</button>
+                          </div>
+                        </td>
+                        <td className='lastchild'>
+                          <div className='role_action_component'>
+                            <button className='delete' onClick={() => handleDelete(rowIndex)}>  <FontAwesomeIcon icon={faTrash} className="fa-trash" /></button>
+                          </div>
+                        </td>
+                      </>
+                    )}
     </tr>
 ))}
 
