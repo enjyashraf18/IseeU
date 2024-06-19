@@ -108,7 +108,7 @@ const num=data_patient_table.length;
              <Table_patients data={data_doctor_Available} anotherProp={role} headers={column__doctor_av} flag={flag_Doctors}  showSearch={true}/>
              </div>
              <div className='unavailable_doctors'>
-             <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors}  showSearch={true}/>
+             <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors}  showSearch={false}/>
 
              </div>
             </div>

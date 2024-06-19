@@ -38,7 +38,7 @@ const label="Add";
 };
 
   return (
-  
+  <div className='panalysis'>
     <div className="container-fluid ">
       <div className="row ">
         <div className="col-10 col-md-4 ">
@@ -56,6 +56,7 @@ const label="Add";
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }

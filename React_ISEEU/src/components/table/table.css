@@ -71,7 +71,7 @@ max-width: 100%;;
 
 .fasearch {
   position: sticky;
- 
+  top: 5px !important ;
   cursor: pointer;
   z-index: 2000;
   color: gray;
