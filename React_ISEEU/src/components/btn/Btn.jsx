@@ -1,4 +1,3 @@
-import React from 'react';
 import "./btn.css";
 
 import { Table, Form, InputGroup, Border } from 'react-bootstrap';

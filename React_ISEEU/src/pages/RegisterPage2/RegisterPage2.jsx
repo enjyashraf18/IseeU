@@ -116,7 +116,7 @@ const Register2 = () => {
                         <form>
                             <div className="row">
                                 <div id="profilePreview" className="col-3">
-                                    <img src={profileImg} alt="Preview" />
+                                    <img src={profileImg} alt="Preview"  className='img-register'/>
                                     <input onChange={handleImgupload} type="file" />
                                     <p id="imgSpecs">snsna<br />sfasfsaa<br />ssads</p>
                                 </div>

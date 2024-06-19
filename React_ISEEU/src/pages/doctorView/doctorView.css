@@ -16,6 +16,7 @@
     height: 300px;
     margin-top: 5px;
     background-color:white;
+    border-radius: 50px 50px;
 }
 .Doctor_table_patients .table-responsive{
     max-height: 200px;
@@ -52,6 +53,7 @@ top:40px;
     width:500px;
     height: 260px;
     margin-left: 50px;
+    border-radius: 50px 50px;
 }
 #staff-h2{
     margin-left: 265px;
@@ -109,6 +111,7 @@ left:1170px;
   height: 260px;
   margin-right: 10px;
   z-index: 3000;
+  border-radius: 50px 50px;
 }
 
 .Doctor_table_checkups .table-responsive{
@@ -116,9 +119,10 @@ left:1170px;
 }
 
 .Doctor_table_checkups .input{
-  top:390px;
+  top:395px;
   left:640px;
     }
+  
 .Doctor_table_checkups .checkbox:checked::after{
   top:-6px;
   left:-2px;
@@ -136,3 +140,18 @@ body {
       overflow: auto;
     }
   }
+
+  .unavailable_doctors .table_img{
+    filter: grayscale(80%);
+  }
+  .available_doctors .table-responsive td{
+    border-bottom: none;
+  }
+  .unavailable_doctors .table-responsive td {
+    color: gray;
+    border-bottom: none;
+}
+.unavailable_doctors .table-responsive .thead-fixed th {
+
+  border-bottom: none;
+}

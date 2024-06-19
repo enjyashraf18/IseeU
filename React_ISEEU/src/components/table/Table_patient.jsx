@@ -7,17 +7,36 @@ import { useState,useMemo } from 'react';
 import { Table, Form, InputGroup, Button,Border } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import Checkbox from "../checkbox/Checkbox"; // if you use component in component you must import the full path not what the export only in index js
+import DelButton from '../delButton/DelButton';
 const Table_Patient = (props) => {
   //const  data  = props.data;
   const { data, headers,flag,onDataChange,ischecktable,showSearch,idx_checked } = props
   //idx checked is the index of the word checked in the table 
   
   console.log(data[0])
-
+  const wordsToColor = {
+    "#3D9973": ['done'],
+    "#4381C1": ['male','pending'],
+    "#FE688C": ['female'],
+    
+  };
   let role= props.anotherProp||"user";
   console.log(role)
   //const flag=true;
+ 
+  const highlightText = (text) => { /**function to highlight words that i specify */
   
+    if (typeof text !== 'string') return text;
+    return text.split(' ').map((word, index) => {
+      let coloredWord = word;
+      Object.entries(wordsToColor).forEach(([color, words]) => {
+        if (words.includes(word.toLowerCase())) {
+          coloredWord = <span key={index} style={{ color }}>{word}</span>;
+        }
+      });
+      return <>{coloredWord }</>
+    });
+  };
 // for check box tables:
 //here i change the data if i check on the box to determine if the box is checked or not.
 const handleCheckboxChange = (index) => {
@@ -61,7 +80,24 @@ function toggle_search(){
   setSearchInput(true)
  }
 }
-// creating the table
+const handleEdit = (rowIndex) => { /**here we should go to admit git the patient id snd go  */
+  console.log(`Edit button clicked for row ${rowIndex}`);
+  
+};
+
+const handleDelete = (rowIndex) => {
+  let newData = data.filter((_, index) => index !== rowIndex);
+  
+  if (newData.length === 0){
+    newData = [[],];
+    onDataChange(newData);
+  }
+  else {
+    onDataChange(newData);
+  }
+};
+
+
   return (
     <div  className='tableComponent'>
       <div className="container-fluid">
@@ -94,7 +130,12 @@ function toggle_search(){
               {headers.map((header, index) => (
                     <th key={index}>{header}</th>
                   ))}
-                {role==="Admin"?(<th className='lastchild'>Actions</th>):(null)}
+              {role === "Admin" && (
+                        <>
+                            <th className='lastchild'>Action </th>
+                            <th className='lastchild'>   </th>
+                        </>
+                    )}
               </tr>
             </thead>
             <tbody>
@@ -121,39 +162,45 @@ function toggle_search(){
 
             <>
                 <td key={`${rowIndex}`}>
-                    <img src={row[0]} alt="Image" />{" "}
+                    <img src={row[0]} alt="Image"  className='table_img'/>{" "}
                     {row[1]}
                 </td>
                 {row.slice(2).map((val, index) => (
                
-                  <td key={`${rowIndex}-${index}`}>
-                    {val}
-                  </td>
-                
-                ))}
+               val !== 'checked' && val !== 'unchecked' && ( /**here i dont want the value of checked to appeat if you want it to appear remove ! */
+                <td key={`${rowIndex}-${index}`}>
+                {highlightText(val)}
+                     
+                </td>
+              )
+              ))}
             </>
         ) : (
             <>  
                 {row.map((val, index) => (/**here it doesnt conatin images so i show the data as usual  */
                  val !== 'checked' && val !== 'unchecked' && ( /**here i dont want the value of checked to appeat if you want it to appear remove ! */
-                  <td key={`${rowIndex}-${index}`}>
-                    {val}
+                  <td key={`${rowIndex}-${index}`}> 
+                
+                {highlightText(val)}
                   </td>
                 )
                 ))}
             </>
         )}
-        {role === "Admin" ? (// if role is admin i increase the column of action
-
-            <td className='lastchild'>
-                <div className='role_action_component'>
-                    <button className='editbtn'>Edit</button>
-                    <button className='del'>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                </div>
-            </td>
-        ) : (null)}
+       {role === "Admin" && (
+                      <>
+                        <td className='lastchild'>
+                          <div className='role_action_component'>
+                            <button className='editbtn' onClick={() => handleEdit(rowIndex)}>Edit</button>
+                          </div>
+                        </td>
+                        <td className='lastchild'>
+                          <div className='role_action_component'>
+                            <button className='delete' onClick={() => handleDelete(rowIndex)}>  <FontAwesomeIcon icon={faTrash} className="fa-trash" /></button>
+                          </div>
+                        </td>
+                      </>
+                    )}
     </tr>
 ))}
 

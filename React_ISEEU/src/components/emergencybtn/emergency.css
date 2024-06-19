@@ -17,3 +17,6 @@
     font-weight: 500;
     font-size: 3vh;
 }
+.emerbtn:hover{
+    background-color: pink;
+}

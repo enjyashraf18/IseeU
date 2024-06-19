@@ -195,7 +195,7 @@ const AddReport = () => {
                
                 <div className='row' id="submit-btn-report">
                  <div className='col-5 offset-7 '>
-                 <Btn data={"Submit"}/>
+                 <Btn label={"Submit"}/>
                  </div>
                  </div>
             
@@ -260,7 +260,7 @@ const AddReport = () => {
          </div>
          <div className='row'>
             <div className='col-12 submit-child-modal' onClick={handleMedicationSubmit}>
-            <Btn data={"submit"} /> </div></div>
+            <Btn label={"submit"} /> </div></div>
 
 
             <button onClick={toggleChildModal} className='close-modal'>

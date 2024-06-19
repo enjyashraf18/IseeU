@@ -1,0 +1,4 @@
+.flow_row_nurse{
+    display: flex;
+    flex-direction: row;
+}
