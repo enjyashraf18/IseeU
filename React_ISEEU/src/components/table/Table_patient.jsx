@@ -18,6 +18,7 @@ const Table_Patient = (props) => {
     "#3D9973": ['done'],
     "#4381C1": ['male','pending'],
     "#FE688C": ['female'],
+    
   };
   let role= props.anotherProp||"user";
   console.log(role)
@@ -25,7 +26,7 @@ const Table_Patient = (props) => {
  
   const highlightText = (text) => { /**function to highlight words that i specify */
   
-
+    if (typeof text !== 'string') return text;
     return text.split(' ').map((word, index) => {
       let coloredWord = word;
       Object.entries(wordsToColor).forEach(([color, words]) => {
