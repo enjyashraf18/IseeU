@@ -33,13 +33,17 @@ const App = (props) => {
     // Navigate to the desired page
     navigate('/PatientProfile');
   };
-
+  const handleButton5 = () => {
+    // Navigate to the desired page
+    navigate('/NurseProfile');
+  };
   return (
     <div className='App'>
     <button onClick={handleButton1} >go to patient analysis page</button>
     <button onClick={handleButton2} >go to Doctor View page</button>
     <button onClick={handleButton3} >go to ADD report page</button>
-    <button onClick={handleButton4} >go to ADD Patient PatientProfile </button>
+    <button onClick={handleButton4} >go to  PatientProfile </button>
+    <button onClick={handleButton5} >go to  NurseProfile </button>
      <QueryClientProvider client= {queryClient}>
   
     </QueryClientProvider>                            

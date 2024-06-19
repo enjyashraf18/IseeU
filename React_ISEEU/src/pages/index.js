@@ -9,3 +9,4 @@ export{default as Login} from"./LoginPage/Login";
 
 export{default as TestComponent} from"./test";
 export{default as PatientProfile} from "./Patient_profile/Patient_profile";
+export {default as NurseProfile} from "./nurseProfile/NurseProfile";
