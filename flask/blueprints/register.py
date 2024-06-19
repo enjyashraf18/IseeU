@@ -12,6 +12,18 @@ def register_1():
 
 """
 
+@register.route('/check_user', methods=['POST'])
+def check_user():
+        data = request.json
+        NID = data.get('NID')
+
+        cursor.execute("SELECT nid FROM Admins WHERE nid = %s", (NID,))
+        valid_user = cursor.fetchone()
+
+        if valid_user: # nid exists in the db
+            return jsonify({"message": "Valid user"}), 200
+        else: # nid dont exist in the db
+            return jsonify({"error": "User does not exist"}), 400
 
 @register.route('/Register', methods=['POST'])
 def Register_2():
@@ -30,9 +42,21 @@ def Register_2():
     datehired = data.get('dateHired')
     role = "Admin"
 
-    query = """INSERT INTO employee (nid, role, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired)
-               VALUES (%s,%s , %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    params = (NID, role ,username, password, firstname, lastname, dateofbirth, address, gender, email, phone, datehired)
+    cursor.execute("SELECT nid FROM employee WHERE nid = %s", (NID,))
+    user_exists = cursor.fetchone()
+    if user_exists:  # user with that nid already has an acc
+        return jsonify({"error": "User already exists"}), 400
+    else:
+        query = """INSERT INTO employee (role, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired)
+                                       VALUES (%s,%s , %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        params = (
+            role, username, password, firstname, lastname, dateofbirth, address, gender, email, phone,
+            datehired)
 
-    return execute_query(query, params)
+        return execute_query(query, params)
+
+
+
+
+
 
