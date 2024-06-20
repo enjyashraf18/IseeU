@@ -2,7 +2,7 @@ import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { Table_patients} from '../../components';
-import axios from 'axios'
+import axios from 'axios';
 
 
 const DoctorView = () => {

@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState,useMemo } from 'react';
 import { Table, Form, InputGroup, Button,Border } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import Checkbox from "../checkbox/Checkbox"; // if you use component in component you must import the full path not what the export only in index js
 import DelButton from '../delButton/DelButton';
 const Table_Patient = (props) => {
   //const  data  = props.data;
-  const { data, headers,flag,onDataChange,ischecktable,showSearch,idx_checked } = props
+  const { data, headers,flag,onDataChange,ischecktable,showSearch,idx_checked,buttonpic } = props
   //idx checked is the index of the word checked in the table 
-  
+  const navigate = useNavigate();
+
   console.log(data[0])
   const wordsToColor = {
     "#3D9973": ['done'],
@@ -96,7 +98,10 @@ const handleDelete = (rowIndex) => {
     onDataChange(newData);
   }
 };
-
+ const  handle_pic_click=(idx)=>{
+  const bed= data[idx][buttonpic];
+  navigate("/PatientProfile", { state: bed });
+ }
 
   return (
     <div  className='tableComponent'>
@@ -157,8 +162,19 @@ const handleDelete = (rowIndex) => {
 
             <>
                 <td key={`${rowIndex}`}>
-                    <img src={row[0]} alt="Image"  className='table_img'/>{" "}
+                {buttonpic ? (<>
+          <button className='table_btn_img' onClick={() => handle_pic_click(rowIndex)}>
+                    <img src={row[0]} alt="Image" className='table_img' />
+                  </button>
+                   {"  "}
+                   {row[1]}</>
+                ) : (
+                  <>
+                    <img src={row[0]} alt="Image" className='table_img' />
+                    {" "}
                     {row[1]}
+          </>
+        )}
                 </td>
                 {row.slice(2).map((val, index) => (
                

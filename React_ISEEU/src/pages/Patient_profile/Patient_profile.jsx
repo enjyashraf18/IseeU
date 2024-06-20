@@ -3,7 +3,12 @@ import "./patient_profile.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { Table_patients,Btn,EmerBtn} from '../../components';
+import { useLocation } from 'react-router-dom';
+import {Report} from '../../pages';
 const Patient_profile = () => {
+  const location = useLocation();
+  const bedNo=location.state; /**you should make all the data of the patient having this bed no */
+  console.log(bedNo);
   const patient=["download_(5).jfif","Miguel O’Hara","15A","5 days ",20,158,60]
   const intial_medication=[["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],
   ["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],
@@ -28,7 +33,7 @@ const Patient_profile = () => {
   const tests_header=["Test","Date","Status"];
   const scans_header=["Scan","Date","Status"];
   const reports_header=["Date","Doctor"]
-  const role="user";
+  const role="Doctor";
   const flag=false;
   const navigate = useNavigate();
   const handle_update_Click=()=>{
@@ -37,6 +42,12 @@ console.log("clicked on update")
   const handle_piege_Click=()=>{
     console.log("clicked on piege")
   }
+   /**intillay the report modal is false untill i click on the add report button */
+   const [showReportModal, setShowReportModal] = useState(false);
+  const handle_add_Report=()=>{
+    setShowReportModal(true);
+    };
+    
  
   return (
     <div className='pprofile container-fluid '> 
@@ -155,11 +166,23 @@ console.log("clicked on update")
           </div>
      
       </div>
+      {role.toLowerCase()==="admin" &&(<>
       <Btn label={"update"} className="upd-btn-pprofile" onclick={handle_update_Click}/>
+      </>)}
+      {role.toLowerCase()==="doctor" &&(<>
+      <Btn label={"Add Report"} className="upd-btn-pprofile" onclick={handle_add_Report}/>
+      </>)}
       
     </div>
       
     </div>
+    {showReportModal && (
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <Report data={bedNo} closeModal={() => setShowReportModal(false)} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

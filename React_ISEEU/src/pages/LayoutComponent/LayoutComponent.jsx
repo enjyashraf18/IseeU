@@ -1,7 +1,7 @@
 // LayoutComponent.js
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { CDBSidebar,CDBSidebarMenu, CDBSidebarMenuItem,CDBSidebarContent, CDBSidebarFooter, CDBSidebarHeader } from 'cdbreact';
+
 import { ProSide } from '../../components';
 import Patient_Analysis from '../patientsAnalysis/PatientAnalysis'
 import Login from '../LoginPage/Login';
