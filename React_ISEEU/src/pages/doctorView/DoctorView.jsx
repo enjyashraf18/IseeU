@@ -37,6 +37,17 @@ const DoctorView = () => {
     return days;
   }
 
+  function calculateHours(date) {
+    const thedate = new Date(date);
+    const today = new Date();
+    const timeDifference = today - thedate;
+    
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Remaining hours
+    
+    return  hours ;
+  }
+  
   
   
 
@@ -101,10 +112,10 @@ const columns_checkups=[" ","Name","Bed_No"," "];
 const role="user";
 
   const [dataCheckups, setDataCheckups] = useState(initialDataCheckups);
-    const [encounters, setEncounters] = useState(data_patient_table);
-
+  const [encounters, setEncounters] = useState(data_patient_table);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [staff , setStaff] = useState()
+  const [staff , setStaff] = useState(data_doctor_unAvailable, data_doctor_Available)
 
   useEffect(() => {
     // Define an async function inside the useEffect
@@ -119,8 +130,11 @@ const role="user";
           })
         ]);
         console.log("encounters", responseEncounters.data.active_encounters)
-        console.log("staff", responseStaff.data.active_employees )
-        const encountersData = responseEncounters.data.active_encounters.map(encounter => [
+        console.log("staff", responseStaff.data['active_employees'] )
+        const employeeData = responseStaff.data['active_employees']
+        const encounters = responseEncounters.data.active_encounters
+        const checkupInitial = responseEncounters.data.active_encounters
+        const encountersData = encounters.map(encounter => [
           encounter[24], // Profile Picture of the patient
           `${encounter[20]} ${encounter[21]}`, // First name and last name
           encounter[9], // Bed No of the encounter
@@ -130,10 +144,24 @@ const role="user";
           calculateDays(encounter[7]), // Days since encounter
           encounter[13] // Departments
         ]);
+
+        const checkupsData = checkupInitial.map(checkup =>[
+          checkup[24], // Profile Picture of the patient
+          `${checkup[20]} ${checkup[21]}`, // First name and last name
+          checkup[9], // Bed No of the encounter
+          calculateHours(checkup[14])
+
+        ])
+
+        console.log('check up data',checkupsData)
         console.log(encountersData)  
-        setEncounters(encountersData);
+        setDataCheckups(checkupsData)
+        setEncounters(encountersData)
+
+        console.log("fetched emnployees ....",employeeData)
+ 
               // Process staff
-      const employeesData = responseStaff.data.active_employees.map(employee => [
+      const employeesData = employeeData.map(employee => [
         employee[8], // ProfilePic
         `${employee[4]} ${employee[5]}`, // FullName
         employee[15], // Shift
@@ -154,7 +182,9 @@ const role="user";
 
       setStaff([employeesUnavailable, employeesAvailable]);
       // console.log(currentShift())
-      // console.log("fetched ....", staff, data_doctor_unAvailable)
+      console.log("fetched ....", staff)
+      setLoading(false);
+
   }
 
     // Call the async function to fetch data
@@ -169,6 +199,7 @@ const role="user";
 
 
 const num=data_patient_table.length;
+if (loading) return <p>Loading...</p>;
 
 
   return (
@@ -181,7 +212,7 @@ const num=data_patient_table.length;
         <h12 className="col- offset-3">{data_patient_table.length}</h12>
         </div>
         <div className='Doctor_table_patients'>
-          <Table_patients data={data_patient_table} anotherProp={role} headers={columns_patient} flag={flag_patient}  showSearch={true}/>
+          <Table_patients data={encounters} anotherProp={role} headers={columns_patient} flag={flag_patient}  showSearch={true}/>
         </div>
         <div id="flex_rotation" className='row'>
           <h2 className='col-3 offset-2'>Checkups</h2>
@@ -207,10 +238,10 @@ const num=data_patient_table.length;
           <div className='col-4 offset-1'>
             <div className='Doctor_table_staff'>
                 <div className='available_doctors'>
-             <Table_patients data={data_doctor_Available} anotherProp={role} headers={column__doctor_av} flag={flag_Doctors}  showSearch={true}/>
+             <Table_patients data={staff[1]} anotherProp={role} headers={column__doctor_av} flag={flag_Doctors}  showSearch={true}/>
              </div>
              <div className='unavailable_doctors'>
-             <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors}  showSearch={false}/>
+             <Table_patients data={staff[0]} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors}  showSearch={false}/>
 
              </div>
             </div>

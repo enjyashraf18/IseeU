@@ -3,56 +3,74 @@ import "./addReport.css";
 import { CCloseButton } from '@coreui/react';
 import { Table_patients,Btn} from '../../components';
 import { FaPlus } from 'react-icons/fa'; /**for adding "add" to the medication */
-import { TbTriangleInvertedFilled } from "react-icons/tb"; /**for the choices in the medication modal */
-const AddReport = (prop) => {
+import { TbTriangleInvertedFilled } from "react-icons/tb"; 
 
-const bedNo=prop.data; /**you should bring from this all the infromation needed to be showed  */
-const closeModal=prop.closeModal;
+/**for the choices in the medication modal */
+const AddReport = (prop) => {
+   
+  const initialMedication=[["Devil Breath (500gm)","5  /day","5 weeks"],] /**here i take the intial medication from database */
+  const medication_header=["    ","  "," "," "]
+  const initialtestsCheckups1=[["cbc","checked"],["db","unchecked"],["cbcc","checked"]]; /**take  the tests from database */
+  const columns_tests_checkups1=["A"," "];
+  const initialscansCheckups=[["Chest","checked"],["Brain MRI","unchecked"],["X-Ray","checked"]]; /**take the scans from database */
+  const columns_scans_checkups=["B"," "];
+  const options = ['day', 'week', 'month'];
+  const options_duartion = ['days', 'weeks', 'months'];
+
+  const bedNo=prop.data; /**you should bring from this all the infromation needed to be showed  */
+  const closeModal=prop.closeModal;
+  const role="user";
+  const flag=false;
+  const docID= 72; // will use Context to get it
+
   console.log(bedNo);
+
  /**intillay the report modal is true as you click on the button and call it*/
   const [childModal,setchildModal]=useState(false)
 
 
-  const role="user";
-  const flag=false;
-  const  initialMedication=[["Devil Breath (500gm)","5  /day","5 weeks","unchecked"],] /**here i take the intial medication from database */
-  const[medication,setmedication]=useState(initialMedication)
-  const medication_header=["    ","  "," "," "]
-  const initialtestsCheckups1=[["cbc","checked"],["db","unchecked"],["cbcc","checked"]]; /**take  the tests from database */
+
+  const [medication,setmedication]=useState(initialMedication)
   const [testsCheckups1, settestsCheckups1] = useState(initialtestsCheckups1);
-  const columns_tests_checkups1=["A"," "];
-  const initialscansCheckups=[["Chest","checked"],["Brain MRI","unchecked"],["X-Ray","checked"]]; /**take the scans from database */
   const [scansCheckups, setscansCheckups] = useState(initialscansCheckups);
-  const columns_scans_checkups=["B"," "];
   const [medicationName, setMedicationName] = useState(''); /**this for define the info from sumbit to be added to the table */
   const [frequencyNum, setFrequencyNum] = useState('');
   const [dosage, setDosage] = useState('');
   const [durationNum, setDurationNum] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0); /**for the choices in the medication modal */
+  const [currentIndexDur, setCurrentIndexDur] = useState(0); /**for the choices in the medication modal */
+  const [notes, setNotes] = useState('');
+
+
    // Function to filter checked items to make it appear in the orderd scans/tests
-   const getCheckedItems = (checkups) => {
+  const getCheckedItems = (checkups) => {
     return checkups
       .filter(item => item[1] === 'checked') // Filter only checked items
       .map(item => item[0]); // Extract the item name
-  };
 
-  // Get all checked items from both checkups tables (scans ,tests)
-  const allCheckedItems = [
-    ...getCheckedItems(testsCheckups1),
-    ...getCheckedItems(scansCheckups)
-  ];
-  const handleDataChange1 = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
-    settestsCheckups1(newData);
   };
-  const handleDataChange2 = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
+  
+  const handletestChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
+    settestsCheckups1(newData);
+    console.log('tests:',testsCheckups1 )
+
+  };
+  const handlescanChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setscansCheckups(newData);
+    console.log('scans:',scansCheckups)
+
   };
   const handleMedicationChange=(newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setmedication(newData);
   };
- 
+
+  const handleNotesChange = (event) => {
+    setNotes(event.target.value);
+  };
   const toggleChildModal=()=>{ /**here is function for medication add modal  toggle when press on the faplus */
     setchildModal(!childModal);
   }
+
   function getDate() { /**function to get the time and date */
     const options = {
       hour: "numeric",
@@ -72,13 +90,9 @@ const closeModal=prop.closeModal;
     return `${formattedTime} ${date}/${month}/${year}`;
 
   }
-  const options = ['day', 'week', 'month'];
-  const [currentIndex, setCurrentIndex] = useState(0); /**for the choices in the medication modal */
   const handleNext = () => { /**fot the choices of the medication modal */
     setCurrentIndex((prevIndex) => (prevIndex + 1) % options.length); /** "% "to ensure you go in cycle */
   };
-  const options_duartion = ['days', 'weeks', 'months'];
-  const [currentIndexDur, setCurrentIndexDur] = useState(0); /**for the choices in the medication modal */
   const handleNext_duration = () => { /**fot the choices of the medication modal */
     setCurrentIndexDur((prevIndex) => (prevIndex + 1) %options_duartion.length); /** "% "to ensure you go in cycle */
   };
@@ -89,13 +103,178 @@ const closeModal=prop.closeModal;
       `${durationNum} ${options_duartion[currentIndexDur]}`,`unchecked`
     ];
     setmedication([...medication, newMedication]);
+
+    console.log('medications:',medication)
+
     toggleChildModal();
   };
   const handle_parent_modal_submit=()=>{
     console.log("save first the data in the database")
-    closeModal()
+    // closeModal()
    
   }
+
+  const reportData = {
+    bedid: prop.data,
+    medications:medication,
+    investigations: [
+      ...getCheckedItems(testsCheckups1),
+      ...getCheckedItems(scansCheckups)
+    ],
+
+    report:{
+    notes: notes,
+    reportdoc: docID
+    },
+    currentTime: getDate()
+
+  }
+      // Get all checked items from both checkups tables (scans ,tests)
+    const allCheckedItems = [
+      ...getCheckedItems(testsCheckups1),
+      ...getCheckedItems(scansCheckups)
+    ];
+
+    function splitNameDose(productString) {
+      const splitIndex = productString.indexOf('(');
+      if (splitIndex === -1) {
+        throw new Error('Invalid product string format');
+      }
+    
+      const name = productString.slice(0, splitIndex).trim();
+      const dosageWithUnit = productString.slice(splitIndex + 1, productString.length - 1).trim();
+    
+      // Extract only the number from the dosage
+      const dosage = dosageWithUnit.replace('gm', '').trim();
+    
+      return { name, dosage };
+    }
+
+ 
+    function calculateTotalDoses(frequency, duration) {
+
+      function parseFrequency(frequencyString) {
+        const [doses, unit] = frequencyString.split(' /');
+        return { doses: parseInt(doses, 10), unit };
+      }
+      
+      function parseDuration(durationString) {
+        const [duration, unit] = durationString.split(' ');
+        return { duration: parseInt(duration, 10), unit };
+      }
+      
+      const { doses, unit: freqUnit } = parseFrequency(frequency);
+      const { duration: durationValue, unit: durUnit } = parseDuration(duration);
+    
+      let daysInDuration;
+    
+      // Calculate total duration in days
+      if (durUnit === 'day' || durUnit === 'days') {
+        daysInDuration = durationValue;
+      } else if (durUnit === 'week' || durUnit === 'weeks') {
+        daysInDuration = durationValue * 7;
+      } else if (durUnit === 'month' || durUnit === 'months') {
+        daysInDuration = durationValue * 30; // Approximate month as 30 days
+      } else {
+        throw new Error('Invalid duration unit');
+      }
+    
+      // Calculate doses per day
+      let dosesPerDay;
+      if (freqUnit === 'day' || freqUnit === 'days') {
+        dosesPerDay = doses;
+      } else if (freqUnit === 'week' || freqUnit === 'weeks') {
+        dosesPerDay = doses / 7;
+      } else if (freqUnit === 'month' || freqUnit === 'months') {
+        dosesPerDay = doses / 30; // Approximate month as 30 days
+      } else {
+        throw new Error('Invalid frequency unit');
+      }
+    
+      // Total doses is doses per day multiplied by the total number of days in the duration
+      const totalDoses = dosesPerDay * daysInDuration;
+      return totalDoses;
+    }
+    
+    function transformFrequency(frequencyString) {
+      const [doses, unit] = frequencyString.split(' /');
+      const dosesNum = parseInt(doses, 10);
+    
+      if (isNaN(dosesNum)) {
+        throw new Error('Invalid dose number');
+      }
+    
+      let dosesPerDay;
+    
+      switch (unit.trim().toLowerCase()) {
+        case 'day':
+        case 'days':
+          dosesPerDay = dosesNum;
+          break;
+        case 'week':
+        case 'weeks':
+          dosesPerDay = dosesNum / 7;
+          break;
+        case 'month':
+        case 'months':
+          dosesPerDay = dosesNum / 30; // Using 30 as an approximate number of days in a month
+          break;
+        default:
+          throw new Error('Invalid frequency unit');
+      }
+    
+      return dosesPerDay;
+    }
+    
+
+    
+  
+    function transformMedications (medication) {
+      const newMed = []
+      for(let i = 0; i < medication.length; i++ ){
+        newMed.push({
+          name: splitNameDose(medication[i][0]).name,
+          dosage:splitNameDose(medication[i][0]).dosage,
+          dosecount:calculateTotalDoses(medication[i][1],medication[i][2]),
+          assigndatetime: getDate(),
+          frequencyperday: transformFrequency(medication[i][1])
+        })
+
+      }
+      return newMed
+    }
+    function transformInvestigations (allCheckedItems) {
+      const investigations = []
+      for (let i =0 ;  i<allCheckedItems.length; i ++){
+        investigations.push(
+          {
+            invname: allCheckedItems[i],
+            invdatetiem: getDate(),
+            orderedby: docID
+          }
+        )
+
+      }
+    return investigations
+    }
+  const handlesubmit = () =>{
+
+    console.log('report data', reportData)
+    const body = {
+      bedid : reportData.bedid,
+      medications: transformMedications(reportData.medications),
+      investigations: transformInvestigations(reportData.investigations),
+      report:{
+        notes:reportData.notes,
+        reportdoc:docID
+      },
+      currentTime: reportData.currentTime
+    }
+
+    console.log(body)
+  }
+
+
 
   return (
     <div className='add_report_content'>
@@ -122,7 +301,11 @@ const closeModal=prop.closeModal;
             <div className='report col-6'>
          
          
-                <textarea></textarea> {/**text area for multi line text as the input support only one line */}
+                <textarea
+                  value={notes}
+                  onChange={handleNotesChange}>
+
+                </textarea> {/**text area for multi line text as the input support only one line */}
                 </div>
              
                 <div className='col-1'></div> {/**i make space between them */}
@@ -135,7 +318,7 @@ const closeModal=prop.closeModal;
          flag={flag}
          anotherProp={role}
          onDataChange={handleMedicationChange}
-         ischecktable={true}
+         ischecktable={false}
          showSearch={false}
          idx_checked ={3}
         />
@@ -158,7 +341,7 @@ const closeModal=prop.closeModal;
                 headers={columns_tests_checkups1}
                 flag={flag}
                 anotherProp={role}
-                onDataChange={handleDataChange1}
+                onDataChange={handletestChange}
                 ischecktable={true}
                 showSearch={false}
                 idx_checked ={1}
@@ -172,7 +355,7 @@ const closeModal=prop.closeModal;
                 headers={columns_scans_checkups}
                 flag={flag}
                 anotherProp={role}
-                onDataChange={handleDataChange2}
+                onDataChange={handlescanChange}
                 ischecktable={true}
                 showSearch={false}
                 idx_checked ={1}
@@ -196,13 +379,14 @@ const closeModal=prop.closeModal;
                
                 <div className='row' id="submit-btn-report">
                  <div className='col-5 offset-7 '>
-                  <div onClick={handle_parent_modal_submit}>
-                 <Btn label={"Submit"} /></div>
+                  <div onClick={handlesubmit}>
+                 <Btn label={"Submit.."} onClick={handlesubmit} />
+                 </div>
                  </div>
                  </div>
             
       
-        <button onClick={closeModal} className='close-modal'>
+        <button onClick={handle_parent_modal_submit} className='close-modal'>
 
         <CCloseButton dark />
         </button>
