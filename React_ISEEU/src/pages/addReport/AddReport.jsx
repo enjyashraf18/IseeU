@@ -4,6 +4,7 @@ import { CCloseButton } from '@coreui/react';
 import { Table_patients,Btn} from '../../components';
 import { FaPlus } from 'react-icons/fa'; /**for adding "add" to the medication */
 import { TbTriangleInvertedFilled } from "react-icons/tb"; 
+import axios from 'axios'
 
 /**for the choices in the medication modal */
 const AddReport = (prop) => {
@@ -270,6 +271,23 @@ const AddReport = (prop) => {
       },
       currentTime: reportData.currentTime
     }
+    axios.post('http://localhost:5000/login', body, {
+      headers: {      
+        'Content-Type': 'application/json'
+      }
+    })
+
+    .then(response => {
+      console.log(response.data);
+
+      // setServerResponse(response.data.message);
+      // setShow(true);
+    })
+    
+    .catch(error => {
+      console.log(error);
+    });
+
 
     console.log(body)
   }
