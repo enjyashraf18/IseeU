@@ -74,7 +74,7 @@ def current_employees(): # View all active employees (role should be either doct
         WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' OR employee.role = 'Nurse')
     """)
     active_employees = cursor.fetchall()
-    return jsonify({"current_employees": active_employees})
+    return jsonify({"active_employees": active_employees})
 
 
 
