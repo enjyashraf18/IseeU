@@ -1,9 +1,9 @@
-
 body, html {
    
     overflow-y: hidden; /* Prevent horizontal overflow */
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     overflow: hidden;
+    
   }
 .container-fluid {
     width: 100%; /* Ensure container does not exceed viewport width */

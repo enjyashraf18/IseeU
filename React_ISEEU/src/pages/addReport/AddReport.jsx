@@ -4,8 +4,12 @@ import { CCloseButton } from '@coreui/react';
 import { Table_patients,Btn} from '../../components';
 import { FaPlus } from 'react-icons/fa'; /**for adding "add" to the medication */
 import { TbTriangleInvertedFilled } from "react-icons/tb"; /**for the choices in the medication modal */
-const AddReport = () => {
-  const [modal, setModal] = useState(false); /**intillay the report modal is false untill i click on the add report button */
+const AddReport = (prop) => {
+
+const bedNo=prop.data; /**you should bring from this all the infromation needed to be showed  */
+const closeModal=prop.closeModal;
+  console.log(bedNo);
+ /**intillay the report modal is true as you click on the button and call it*/
   const [childModal,setchildModal]=useState(false)
 
 
@@ -45,10 +49,7 @@ const AddReport = () => {
   const handleMedicationChange=(newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setmedication(newData);
   };
-  const toggleModal = () => { /**here i toggle the state of report modal when i click on the button need to be modify after patient profile */
-    setModal(!modal);
-    document.body.classList.toggle('active-modal');
-  }; 
+ 
   const toggleChildModal=()=>{ /**here is function for medication add modal  toggle when press on the faplus */
     setchildModal(!childModal);
   }
@@ -90,18 +91,18 @@ const AddReport = () => {
     setmedication([...medication, newMedication]);
     toggleChildModal();
   };
+  const handle_parent_modal_submit=()=>{
+    console.log("save first the data in the database")
+    closeModal()
+   
+  }
 
   return (
     <div className='add_report_content'>
-      <button 
-        className='btn-modal'
-        onClick={toggleModal}
-      > 
-        Add Report
-      </button>
+   
       <div>
       <div className='container-fluid'>
-      <dialog className="dialog-modal" open={modal} >
+      <dialog className="dialog-modal" open={true} >
         <div className='row'>
         <div className='dialog_header'>
         <h1>Add Report</h1> 
@@ -195,12 +196,13 @@ const AddReport = () => {
                
                 <div className='row' id="submit-btn-report">
                  <div className='col-5 offset-7 '>
-                 <Btn label={"Submit"}/>
+                  <div onClick={handle_parent_modal_submit}>
+                 <Btn label={"Submit"} /></div>
                  </div>
                  </div>
             
       
-        <button onClick={toggleModal} className='close-modal'>
+        <button onClick={closeModal} className='close-modal'>
 
         <CCloseButton dark />
         </button>

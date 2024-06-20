@@ -19,7 +19,7 @@ color:#1A5952;
     color: var(--color-mainLight);
 }
 .left_pside img{
-    width:145px;
+    width:148px;
     height:145px;
     border-radius: 100%;
 }
@@ -98,7 +98,7 @@ color:#1A5952;
     position: relative;
     left: 20px;
     top:20px;
-    z-index: 1500;
+    z-index: 1000;
     
 }
 .pprofile_medication .table-responsive{

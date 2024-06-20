@@ -67,20 +67,26 @@ max-width: 100%;;
   height:30px;
   border-radius: 100%;
 }
-
+.table_btn_img{
+  width:30px;
+  height:30px;
+  border-radius: 100%;
+  outline: none;
+  border: none;
+}
 
 .fasearch {
   position: sticky;
   top: 5px !important ;
   cursor: pointer;
-  z-index: 2000;
+  z-index: 1000;
   color: gray;
 }
 
 .input {
   position: absolute;
   right: 300px;
-  z-index: 1000;
+  z-index: 900;
   top: 10px;
  
 }
@@ -149,4 +155,14 @@ font-size: 15px;
 
 .editbtn:hover {
   background-color: var(--color-mainLight);
+}
+.rep_icon{
+  outline: none;
+  border: none;
+  background-color: white;
+  color: #1A5952;
+  font-size: x-large;
+}
+.rep_icon:hover{
+  color: #258176;
 }
