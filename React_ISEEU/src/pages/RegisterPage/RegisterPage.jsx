@@ -31,16 +31,39 @@ const Register = () => {
       alert("Passwords do not match");
       return;
     }
-    try {
+    
+      axios.post('http://localhost:5000//check_user', formData,
+
+        {
+          headers: {      
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      .then(
+        response => {
+          if(response.data.message === "Valid user"){
+            console.log(response.data)
+
+            localStorage.setItem('formData', JSON.stringify(formData));
+            navigate('/RegisterPage2')
+          }
+
+        }
+      )
+
+      .catch(
+        error => {
+          console.log(error)
+        }
+      )
+
       console.log("FormData before sending:", formData);
 
-      console.log("Navigating with NID:", formData.NID);
-      localStorage.setItem('formData', JSON.stringify(formData));
-      navigate('/RegisterPage2');
+;
 
-    } catch (error) {
-      console.error('Error during registration:', error);
-    }
+     
+  
   };
 
   return (
