@@ -1,12 +1,13 @@
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import { Table_patients} from '../../components';
+import {Table_patients} from '../../components';
 import axios from 'axios'
 
 
 const DoctorView = () => {
-  
+ 
+
   
   
 
@@ -67,12 +68,7 @@ const role="user";
 
   const [dataCheckups, setDataCheckups] = useState(initialDataCheckups);
   const [error, setError] = useState(null);
-  const [staff , setDoctors] = useState({
-    data: [],
-    headers_av: ["Available",""],
-    headers_unav:["unAvailable", ""]
-
-  })
+  const [staff , setStaff] = useState()
 
   useEffect(() => {
     // Define an async function inside the useEffect
@@ -106,12 +102,10 @@ const role="user";
           Shift: employee[15]
         }))
 
-        const headers = Object.keys(employee[0])
-        console.log(headers)
-        
+
            
         // Update the state with the error
-        setDoctors( employee,        )
+        setDoctors( employees)
 
         console.log("fetched ....", staff)
 
