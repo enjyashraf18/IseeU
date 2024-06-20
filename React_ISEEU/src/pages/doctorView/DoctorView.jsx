@@ -1,8 +1,13 @@
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import {Table_patients} from '../../components';
 import axios from 'axios'
+=======
+import { Table_patients} from '../../components';
+import axios from 'axios';
+>>>>>>> ecb20b96088a31d1e557db7a9749483ca8389a7e
 
 
 const DoctorView = () => {
