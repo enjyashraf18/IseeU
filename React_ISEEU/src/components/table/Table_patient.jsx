@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import Checkbox from "../checkbox/Checkbox"; // if you use component in component you must import the full path not what the export only in index js
 import DelButton from '../delButton/DelButton';
+import { TbReportMedical } from "react-icons/tb";
+import {Report} from '../../pages';
 const Table_Patient = (props) => {
   //const  data  = props.data;
-  const { data, headers,flag,onDataChange,ischecktable,showSearch,idx_checked,buttonpic } = props
+  const { data, headers,flag,onDataChange,ischecktable,showSearch,idx_checked,buttonpic,check_rep } = props
   //idx checked is the index of the word checked in the table 
   const navigate = useNavigate();
 
@@ -41,10 +43,12 @@ const Table_Patient = (props) => {
   };
 // for check box tables:
 //here i change the data if i check on the box to determine if the box is checked or not.
-const handleCheckboxChange = (index) => {
+const handleCheckboxChange = (index,flag=false) => {
+ if( check_rep && flag===true || check_rep===undefined){
   const newData = [...data];
-  newData[index][idx_checked] = newData[index][idx_checked] === 'checked' ? 'unchecked' : 'checked';// here if box is checked and you click toggle the state and change the data
-  onDataChange(newData);
+  newData[index][idx_checked] = newData[index][idx_checked] === 'unchecked' ? 'checked' : 'checked';// here if box is checked and you click toggle the state and change the data
+  onDataChange(newData);}
+
 }; 
 
   // Get the keys from the first object in the data array to generate the table headers 
@@ -102,6 +106,21 @@ const handleDelete = (rowIndex) => {
   const bed= data[idx][buttonpic];
   navigate("/PatientProfile", { state: bed });
  }
+ const [showReportModal, setShowReportModal] = useState(false); 
+
+ const [bedRep, setBedRep] = useState(null);
+ const [idxRepRow, setIdxRepRow] = useState(null);
+ const handle_rep_btn=(idx)=>{
+setShowReportModal(true)
+const  bed_rep = data[idx][check_rep];
+console.log("the row index"+idx)
+console.log("the bed number in doc in fun "+bed_rep)
+setBedRep(bed_rep);
+setIdxRepRow(idx)
+ } 
+
+
+ console.log("the bed in doc out fun"+bedRep)
 
   return (
     <div  className='tableComponent'>
@@ -147,6 +166,9 @@ const handleDelete = (rowIndex) => {
     <tr key={rowIndex}>
       {ischecktable?(// here i checked if this table is check table i write it in the map function to be repeatable for all 
  <td>
+
+
+  
  <Checkbox /**here i show the check box in the first */
    checked={row[idx_checked] === 'checked'}
    onChange={() => handleCheckboxChange(rowIndex)}
@@ -212,6 +234,14 @@ const handleDelete = (rowIndex) => {
                         </td>
                       </>
                     )}
+                    {check_rep&&(<>
+                      <td className='lastchild'>
+                          <div className='add_rep_component'>
+                            <button  className='rep_icon' onClick={()=> handle_rep_btn(rowIndex)}> <TbReportMedical /></button>
+                          </div>
+                        </td>
+                    
+                    </>)}
     </tr>
 ))}
 
@@ -228,6 +258,14 @@ const handleDelete = (rowIndex) => {
         </div>
       </div>
     </div>
+    {showReportModal && (
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <Report data={ bedRep} closeModal={() => setShowReportModal(false)} submitModal={() => handleCheckboxChange(idxRepRow,true)} />
+          </div>
+        </div>
+      )}
+    
     </div>
   );
 };
