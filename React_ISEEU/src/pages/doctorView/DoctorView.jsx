@@ -1,17 +1,41 @@
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import {Table_patients} from '../../components';
 import axios from 'axios'
-=======
-import { Table_patients} from '../../components';
-import axios from 'axios';
->>>>>>> ecb20b96088a31d1e557db7a9749483ca8389a7e
+
 
 
 const DoctorView = () => {
- 
+  function currentShift() {
+    const currentHour = new Date().getHours();
+    // Assuming day shift is from 6 AM to 6 PM
+    
+    if (currentHour >= 6 && currentHour < 18) {
+      return "Day";
+    } else {
+      return "Night";
+    }
+  }
+
+  function calculateAge(dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  function calculateDays(date) {
+    const thedate = new Date(date);
+    const today = new Date();
+    const timeDifference = today - thedate;
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+    return days;
+  }
 
   
   
@@ -51,6 +75,11 @@ const data_doctor_unAvailable=[
       ["download.png","Talal emara","16A","unchecked"],
     ]
 
+    let urls = [
+      "http://localhost:5000/doctor/current_employees",
+      "http://localhost:5000/doctor/current_e",
+    ];
+
 
 /**
  * Here we want all the patients of the department from the encounter 
@@ -72,61 +101,71 @@ const columns_checkups=[" ","Name","Bed_No"," "];
 const role="user";
 
   const [dataCheckups, setDataCheckups] = useState(initialDataCheckups);
+    const [encounters, setEncounters] = useState(data_patient_table);
+
   const [error, setError] = useState(null);
   const [staff , setStaff] = useState()
 
   useEffect(() => {
     // Define an async function inside the useEffect
-    const fetchstaff = async () => {
+    const fetchData = async () => {
         // Perform the axios GET request
-        const response = await axios.get('http://localhost:5000/doctor/current_employees', {
-          headers: {      
-            'Content-Type': 'application/json'
-          }
-        });
-        console.log("starttttttt",response.data);
+        const [responseEncounters, responseStaff] = await Promise.all([
+          axios.get('http://localhost:5000/doctor/current_encounters', {
+            headers: { 'Content-Type': 'application/json' }
+          }),
+          axios.get('http://localhost:5000/doctor/current_employees', {
+            headers: { 'Content-Type': 'application/json' }
+          })
+        ]);
+        console.log("encounters", responseEncounters.data.active_encounters)
+        console.log("staff", responseStaff.data.active_employees )
+        const encountersData = responseEncounters.data.active_encounters.map(encounter => [
+          encounter[24], // Profile Picture of the patient
+          `${encounter[20]} ${encounter[21]}`, // First name and last name
+          encounter[9], // Bed No of the encounter
+          encounter[3], // The status
+          encounter[22], // Gender of the patient
+          calculateAge(encounter[25]), // Age
+          calculateDays(encounter[7]), // Days since encounter
+          encounter[13] // Departments
+        ]);
+        console.log(encountersData)  
+        setEncounters(encountersData);
+              // Process staff
+      const employeesData = responseStaff.data.active_employees.map(employee => [
+        employee[8], // ProfilePic
+        `${employee[4]} ${employee[5]}`, // FullName
+        employee[15], // Shift
+        employee[12]  // Role
+      ]);
 
+      const employeesAvailable = [];
+      const employeesUnavailable = [];
 
-        // Update the state with the fetched data
-        const employee = response.data.current_employees.map(employee => ({
-          ProfilePic: employee[8],
-          NID: employee[1],
-          EmployeeID: employee[0],
-          UserName: employee[2],
-          Password: employee[3],
-          FirstName: employee[4],
-          LastName: employee[5],
-          Gender: employee[6],
-          EmailAddress: employee[7],
-          DateOfBirth: employee[9],
-          PhoneNumber: employee[10],
-          Address: employee[11],
-          Role: employee[12],
-          DateHired: employee[13],
-          DateLeft: employee[14],
-          Shift: employee[15]
-        }))
+      for (let i = 0; i < employeesData.length; i++) {
+        if (employeesData[i][2] === currentShift()) {
+          employeesAvailable.push(employeesData[i]);
+        } else {
+          employeesUnavailable.push(employeesData[i]);
+        }
 
+      }
 
-           
-        // Update the state with the error
-        setDoctors( employees)
-
-        console.log("fetched ....", staff)
-
-        // console.log("keys",Object.keys(doctors))
-
+      setStaff([employeesUnavailable, employeesAvailable]);
+      // console.log(currentShift())
+      // console.log("fetched ....", staff, data_doctor_unAvailable)
   }
-    const fetchEncounters = async() => {
-      
-    }
+
     // Call the async function to fetch data
-    fetchstaff();
+    fetchData();
   }, []);
 
   const handleDataChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setDataCheckups(newData);
   };
+
+
 
 
 const num=data_patient_table.length;
