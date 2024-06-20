@@ -156,3 +156,13 @@ font-size: 15px;
 .editbtn:hover {
   background-color: var(--color-mainLight);
 }
+.rep_icon{
+  outline: none;
+  border: none;
+  background-color: white;
+  color: #1A5952;
+  font-size: x-large;
+}
+.rep_icon:hover{
+  color: #258176;
+}
