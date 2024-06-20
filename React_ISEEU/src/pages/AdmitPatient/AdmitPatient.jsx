@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./AdmitPatient.css";
-import { OR, Btn, UserText1, UserAge, List } from '../../components';
+import { OR, Btn, UserText1, List } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const AdmitPatient = () => {
@@ -14,9 +14,13 @@ const AdmitPatient = () => {
         email: '',
         phone: '',
         NID: '',
-        username: '',
-        password: '',
-        passwordConfirm: ''
+        //Stay data
+        admitTime: '',
+        refDepart: "",
+        bedID: "",
+        admitDoc: '',
+        morningNurse: '',
+        eveningNurse: '',
     });
     const [isPatientFound, setIsPatientFound] = useState(false); // New state for button status
 
@@ -140,19 +144,24 @@ const AdmitPatient = () => {
 
                                     <p id="stayTitle">Stay Details</p>
 
-                                    <UserText1 label="Admitting Time" type="datetime-local" name="admittingTIme" value={formData.phone}
+                                    <UserText1 label="Admitting Time" type="datetime-local" name="admittingTIme" value={formData.admitTime}
                                                onChange={handleInputChange} />
 
-                                    <List label="Referral Department" options={refDepart} />
-                                    <List label="Admitting doctor" options={doctors} />
-                                    <List label="Bed ID" options={bedIDs} />
+                                    <List label="Referral Department" options={refDepart} name={"refDepart"} value={formData.refDepart}
+                                          onChange={handleInputChange}/>
+                                    <List label="Admitting doctor" options={doctors} name="admitDoc" value={formData.admitDoc}
+                                          onChange={handleInputChange} />
+                                    <List label="Bed ID" options={bedIDs} name= "bedID" value={formData.bedID}
+                                          onChange={handleInputChange}/>
 
                                     <div className="row">
                                         <div className="col-6">
-                                            <List label="Morning nurse" disabled="true" options={nurses} />
+                                            <List label="Morning nurse"  options={nurses} name= "morningNurse"  value={formData.morningNurse}
+                                                  onChange={handleInputChange}/>
                                         </div>
                                         <div className="col-6">
-                                            <List label="Evening Nurse" disabled="true" options={nurses} />
+                                            <List label="Evening Nurse"  options={nurses} name= "eveningNurse" value={formData.eveningNurse}
+                                                  onChange={handleInputChange}/>
                                         </div>
                                     </div>
 
