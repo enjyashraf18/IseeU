@@ -3,9 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./AdmitPatient.css";
 import { OR, Btn, UserText1, List } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 const AdmitPatient = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/500x320");
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -14,10 +16,11 @@ const AdmitPatient = () => {
         email: '',
         phone: '',
         NID: '',
+        gender:'',
         //Stay data
         admitTime: '',
-        refDepart: "",
-        bedID: "",
+        refDepart: '',
+        bedID: '',
         admitDoc: '',
         morningNurse: '',
         eveningNurse: '',
@@ -63,34 +66,7 @@ const AdmitPatient = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (formData.password !== formData.passwordConfirm) {
-            alert("Passwords do not match");
-            return;
-        }
-        console.log("FormData to be sent:", formData); // Debug statement
-
-        fetch('/Register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                navigate('/success'); // navigate to a success page or another route
-            })
-            .catch(error => {
-                console.error('Error during registration:', error);
-                alert('Registration failed: ' + error.message);
-            });
-    };
-
-    const handleCheckClick = () => {
-        setIsPatientFound(true);
-    };
+   
 
     return (
         <div className="AdmitPatientCont">

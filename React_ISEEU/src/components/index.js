@@ -13,8 +13,8 @@ export{default as  EmerBtn} from "./emergencybtn/Emergencybtn";
 export{default as Btn} from"./btn/Btn";
 export{default as LiBTN} from"./libtn/Libtn";
 export{default as ProSide} from"./SidebarComp/ProSide";
-
-export{default as Chart} from "./chart/Chart"
-export{default as Card} from "./card/Card"
+export{default as List} from "./List/List";
+export{default as Chart} from "./chart/Chart";
+export{default as Card} from "./card/Card";
 
 

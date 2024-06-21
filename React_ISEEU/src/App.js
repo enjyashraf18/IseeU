@@ -6,7 +6,7 @@ import { OR,MBut,DEL,Search,UserText1,UserText2,UserAge,CheckBox,OpenLi,EmerBtn,
 import {QueryClient, QueryClientProvider} from "react-query"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { Login,PatientProfile,Patient_Analysis,Doctor_View,Report} from "./pages"
+import { Login,PatientProfile,Patient_Analysis,Doctor_View,Report, adm} from "./pages"
 import { ProSide } from './components';
 
 const queryClient = new QueryClient();
@@ -37,6 +37,14 @@ const App = (props) => {
     // Navigate to the desired page
     navigate('/NurseProfile');
   };
+  const handleButton6 = () => {
+    // Navigate to the desired page
+    navigate('/admin');
+  };
+  const handleButton7 = () => {
+    // Navigate to the desired page
+    navigate('/admitpatient');
+  };
   return (
     <div className='App'>
     <button onClick={handleButton1} >go to patient analysis page</button>
@@ -44,6 +52,9 @@ const App = (props) => {
     <button onClick={handleButton3} >go to ADD report page</button>
     <button onClick={handleButton4} >go to  PatientProfile </button>
     <button onClick={handleButton5} >go to  NurseProfile </button>
+    <button onClick={handleButton6} >go to  admin </button>
+    <button onClick={handleButton7} >go to  admitpatient </button>
+
      <QueryClientProvider client= {queryClient}>
   
     </QueryClientProvider>                            
