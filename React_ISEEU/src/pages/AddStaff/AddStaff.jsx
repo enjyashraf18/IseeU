@@ -6,7 +6,10 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 const AddStaff = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/500x320");
+    const [cameForEdit, setCameForEdit] = useState(false); //depends on the page before
     const [formData, setFormData] = useState({
+        username: '',
+        password:'',
         firstName: '',
         lastName: '',
         dob: '',
@@ -16,7 +19,11 @@ const AddStaff = () => {
         NID: '',
         expYrs: '',
         role: '',
+        gender: "",
     });
+
+
+
 
     const roles = ["Doctor", "Nurse"];
 
@@ -123,6 +130,13 @@ const AddStaff = () => {
                                     <UserText1 label="Years of Experience" type="number" name="expYrs" value={formData.expYrs}
                                                onChange={handleInputChange}/>
                                     <List label="Role" options={roles} name="role" value={formData.role}
+                                               onChange={handleInputChange}/>
+
+
+                                    <UserText1 label="Username" type="text" name="username" value={formData.username} hidden={!cameForEdit}
+                                               onChange={handleInputChange}/>
+
+                                    <UserText1 label="Password" type="password" name="Password" value={formData.password} hidden={!cameForEdit}
                                                onChange={handleInputChange}/>
 
 

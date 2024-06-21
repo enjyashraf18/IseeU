@@ -3,7 +3,7 @@ import './list.css';
 
 const List = ( props ) => {
     return (
-        <div className='List'>
+        <div className='List' hidden={props.hidden}>
             <p>{props.label}</p>
             <select disabled={props.disabled} name = {props.name}  value={props.value} onChange={props.onChange}>
                 <option> ---choose ---</option>
