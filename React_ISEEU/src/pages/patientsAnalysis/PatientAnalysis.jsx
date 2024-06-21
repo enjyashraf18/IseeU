@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import "./patientAnalysis.css";
 import styles from './patientAnalysis.css';
 import { Table_patients,Btn } from '../../components';
+import axios from 'axios'
+
+
 const PatientAnalysis = () => {
 
   const initialPatientData = [
@@ -24,18 +27,70 @@ const PatientAnalysis = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","fatma","31A","Coma","Female",20,"5 days ago "],
     ["Icons-Land-Medical-People-Patient-Female.ico","zeina","32A","Coma","Female",20,"5 days ago "],
 
-   
-   
+  ];
+  const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
+  const [encounters, setEncounters] = useState(patientAnalysisData);
+  const [loading, setLoading] = useState(true);
 
-];
-const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
- const role="Admin";
-const label="Add";
- const flag=true;
- const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
- const handleDataChange = (newData) => {
+  const role="Admin";
+  const label="Add";
+  const flag=true;
+  const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
+  const handleDataChange = (newData) => {
   setPatientAnalysisData(newData);
-};
+  };
+  function calculateDays(date) {
+    const thedate = new Date(date);
+    const today = new Date();
+    const timeDifference = today - thedate;
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+    return days;
+  }
+  function calculateAge(dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+  useEffect(() => {
+    // Define an async function inside the useEffect
+    const fetchData = async () => {
+        // Perform the axios GET request
+        const responseEncounter = await axios.get('http://localhost:5000/doctor/current_encounters', {
+            headers: { 'Content-Type': 'application/json' }
+          })
+        console.log("encounters", responseEncounter.data.active_encounters)
+        
+        const encounters = responseEncounter.data.active_encounters
+        const encountersData = encounters.map(encounter => [
+          encounter[24], // Profile Picture of the patient
+          `${encounter[20]} ${encounter[21]}`, // First name and last name
+          encounter[9], // Bed No of the encounter
+          encounter[3], // The status
+          encounter[22], // Gender of the patient
+          calculateAge(encounter[25]), // Age
+          calculateDays(encounter[7]), // Days since encounter
+        ]);
+
+
+        console.log(encountersData)  
+        setEncounters(encountersData)
+
+      
+      console.log("fetched ....")
+      setLoading(false);
+
+    }
+
+    // Call the async function to fetch data
+     fetchData();
+    }, []);
+
+    if (loading) return <p>Loading...</p>;
 
   return (
   <div className='panalysis'>
@@ -43,7 +98,7 @@ const label="Add";
       <div className="row ">
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
-            <Table_patients data={patientAnalysisData} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
+            <Table_patients data={encounters} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
 
           </div>
         </div>
