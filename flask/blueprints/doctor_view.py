@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask_cors import CORS
-from database import cursor, database_session, execute_query
+from database import cursor, database_session
 
 doctor_view = Blueprint("doctor_view", __name__, static_folder="static", template_folder="templates")
 CORS(doctor_view, resources={
@@ -50,12 +50,13 @@ def doc_report():
 
 
 def doc_investigation(report_id, encounter_id, investigation):
-    '''
+    """
 
-        :param report_id: the report to be put in the investigation
-        :param investigation: the investigation string
+        :param investigation:
+        :param encounter_id:
+        :param report_id: the report to be put in the investigation        :param investigation:  string
         :return: true or false if there's an investigation
-        '''
+    """
     if investigation:
         # add the investigation to the patient and return true
         # get the investigation data
@@ -110,8 +111,7 @@ def current_encounters():  # view all active patients ( dischargedatetime in enc
 def current_employees():  # View all active employees (role should be either doctor or nurse)
     cursor.execute("""
         SELECT * FROM employee
-        WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' :: ROLE OR employee.role = 'Nurse' :: ROLE)
+        WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' OR employee.role = 'Nurse')
     """)
     active_employees = cursor.fetchall()
     return jsonify({"active_employees": active_employees})
-
