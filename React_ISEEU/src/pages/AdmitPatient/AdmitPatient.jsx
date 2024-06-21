@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./AdmitPatient.css";
 import { OR, Btn, UserText1, List } from '../../components';
@@ -21,7 +21,7 @@ const AdmitPatient = () => {
         //Stay data
         admitTime: '',
         refDepart: '',
-        bsdType:'',
+        bedType:'',
         bedID: '',
         admitDoc: '',
         morningNurse: '',
@@ -35,8 +35,14 @@ const AdmitPatient = () => {
     const [isPatientFound, setIsPatientFound] = useState(false); // New state for button status
 
     const refDepart = ["Aaaa", "Baaaa"]; // should get all available depart
-    const doctors = ["A", "B"]; // should get all available doctors
-    const nurses = ["A", "B"]; // should get all available nurses
+    const doctorsNames = ["A", "B"]; // should get all available doctors
+    const doctorsdata = {};
+    const nursesdata = {};
+    const nursesNames = {
+        morningNurses:[],
+        nightNurses: []
+    }
+     // should get all available nurses
     const bedIDs = ["1A", "3A"]; // should get all available beds
 
     const navigate = useNavigate();
@@ -51,7 +57,62 @@ const AdmitPatient = () => {
             }));
         }
     }, [location.state]); // Set NID from location state
+    useMemo(
+        ()=>{
+            const fetchData = async () => {
+                const body = {
+                    bedtype: formData.bedType
+                }
+                // Perform the axios GET request
+                const [responsebeds,responseNurses, responseDoctors] = await Promise.all([
+                    axios.post('http://localhost:5000/doctor/avilable_beds', body,{
+                        headers: { 'Content-Type': 'application/json' }
+                      }),                    
+                    axios.get('http://localhost:5000/doctor/current_encounters', {
+                        headers: { 'Content-Type': 'application/json' }
+                    }),
+                    axios.get('http://localhost:5000/doctor/current_employees', {
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                ]);
 
+                const allnurses = responseNurses.data
+                const doctors = responseDoctors.data
+                const beds = responsebeds
+
+                for(let i=0;i<allnurses.length; i++ ){
+                    const key = `${allnurses[i].firstName} ${allnurses[i].lastName}`;
+
+                    if(allnurses[i].shift === "morning"){
+                        nursesNames.morningNurses.push(key)
+                    }
+                    if(allnurses[i].shift === "night"){
+                        nursesNames.nightNurses.push(key)
+                    }
+                    nursesdata[key] = allnurses[i].id;
+
+                }
+
+                for(let i=0;i<doctors.length; i++ ){
+                    const key = `${doctors[i].firstName} ${doctors[i].lastName}`;
+
+                    doctorsNames.push(key)
+                    doctorsdata[key] = doctors[i].id;
+                }
+
+                for(let i=0;i<beds.length; i++ ){
+                    bedIDs.push(beds[i].id)
+                }        
+
+            //   setLoading(false);
+        
+          }
+        
+            // Call the async function to fetch data
+            fetchData();
+
+        }
+    )
     function handleImgupload(e) {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -72,6 +133,8 @@ const AdmitPatient = () => {
             [name]: value
         });
     };
+
+    
 
     const handleSubmit = (e) => {
 
@@ -96,9 +159,9 @@ const AdmitPatient = () => {
                 GCS: formData.GCS, 
                 AdmitDateTime: formData.admitTime,
                 bedID:formData.bedID,
-                MorningNurseID:formData.morningNurse ,
-                EveningNurseID: formData.eveningNurse,
-                AdmittingDoctorID:formData.admitDoc,
+                MorningNurseID:nursesdata[formData.morningNurse] ,
+                EveningNurseID: nursesdata[formData.eveningNurse],
+                AdmittingDoctorID:doctorsdata[formData.admitDoc],
                 ReferralDep: formData.refDepart
             }
         }
@@ -229,18 +292,18 @@ const AdmitPatient = () => {
                                             onChange={handleInputChange}/>
                                     </div>
                                     </div>
-                                    <List label="Admitting doctor" options={doctors} name="admitDoc"
+                                    <List label="Admitting doctor" options={doctorsNames} name="admitDoc"
                                           value={formData.admitDoc}
                                           onChange={handleInputChange}/>
 
                                     <div className="row">
                                         <div className="col-6">
-                                            <List label="Morning nurse" options={nurses} name="morningNurse"
+                                            <List label="Morning nurse" options={nursesNames.morningNurses} name="morningNurse"
                                                   value={formData.morningNurse}
                                                   onChange={handleInputChange}/>
                                         </div>
                                         <div className="col-6">
-                                            <List label="Evening Nurse" options={nurses} name="eveningNurse"
+                                            <List label="Evening Nurse" options={nursesNames.nightNurses} name="eveningNurse"
                                                   value={formData.eveningNurse}
                                                   onChange={handleInputChange}/>
                                         </div>
