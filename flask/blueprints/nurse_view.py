@@ -12,6 +12,7 @@ def nurse_profile():
     print(data)
     NID = data.get('NID')
 
+    # Initializing a dictionary to store the data
     nurse_data = {
         "patients": [],
         "medications": [],

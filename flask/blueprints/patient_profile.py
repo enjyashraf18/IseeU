@@ -8,120 +8,142 @@ CORS(patient_profile, resources={
 
 @patient_profile.route('/PatientProfile', methods=['POST'])
 def patient():
-    # bed id
-    # Initializing a list to store the data
-    all_patient_data = []
+    data = request.json
+    print(data)
+    BID = data.get('BID')
 
-
-    # Fetching data from allergicdrugs table
+    # fetching patient_id and encounter_id from bed_id
     cursor.execute("""
-        SELECT *
-        FROM allergicdrugs JOIN patients ON allergicdrugs.patientid = patients.nid
-        WHERE 
-    """)
-    allergicdrugs_data = cursor.fetchall()
-    all_patient_data.extend(allergicdrugs_data)
+            SELECT patientid, encounterid
+            FROM encounters
+            WHERE bedid = %s 
+        """, (BID,))
+    result = cursor.fetchone()
+    patient_id, encounter_id = result
+
+
+    # initializing a dictionary to store the data
+    all_patient_data = {
+        "patients": [],
+        "allergicdrugs": [],
+        "chronicdiseases": [],
+        "emergencycontact": [],
+        "FamilyDisease" : [],
+        "investigations": [],
+        "medications": [],
+        "PatientHabits": [],
+        "reports": []
+    }
+
+    # fetching data from patients table
+    cursor.execute("""
+           SELECT *
+           FROM patients
+           WHERE nid = %s
+       """, (patient_id,))
+    all_patient_data['patients'] = cursor.fetchall()
+
+    # fetching data from allergicdrugs table
+    cursor.execute("""
+           SELECT *
+           FROM allergicdrugs 
+           WHERE patientid = %s
+       """, (patient_id,))
+    all_patient_data['allergicdrugs'] = cursor.fetchall()
 
 
     # Fetching data from chronicdiseases table
     cursor.execute("""
-        SELECT *
-        FROM chronicdiseases JOIN patients ON chronicdiseases.patientid = patients.nid
-    """)
-    chronicdiseases_data = cursor.fetchall()
-    all_patient_data.extend(chronicdiseases_data)
+           SELECT *
+           FROM chronicdiseases 
+           WHERE patientid = %s
+       """, (patient_id,))
+    all_patient_data['chronicdiseases'] = cursor.fetchall()
 
 
-    # Fetching data from emergencycontact table
+    # fetching data from emergencycontact table
     cursor.execute("""
-        SELECT *
-        FROM emergencycontact
-        JOIN Encounters ON emergencycontact.EncounterID = Encounters.EncounterID
-        JOIN patients ON Encounters.PatientID = patients.NID;
-    """)
-    emergencycontact_data = cursor.fetchall()
-    all_patient_data.extend(emergencycontact_data)
+           SELECT *
+           FROM emergencycontact
+           WHERE patientid = %s
+       """, (patient_id,))
+    all_patient_data['emergencycontact'] = cursor.fetchall()
 
 
-    # Fetching data from FamilyDisease table
+    # fetching data from FamilyDisease table
     cursor.execute("""
-        SELECT *
-        FROM FamilyDisease JOIN patients ON FamilyDisease.patientid = patients.nid
-    """)
-    FamilyDisease_data = cursor.fetchall()
-    all_patient_data.extend(FamilyDisease_data)
+           SELECT *
+           FROM FamilyDisease 
+           WHERE patientid = %s
+       """, (patient_id,))
+    all_patient_data['FamilyDisease'] = cursor.fetchall()
 
 
-    # Fetching data from investigations table
+    # fetching data from investigations table
     cursor.execute("""
-        SELECT *
-        FROM investigations
-        JOIN Encounters ON investigations.encounter = Encounters.EncounterID
-        JOIN patients ON Encounters.PatientID = patients.NID;
-    """)
-    investigations_data = cursor.fetchall()
-    all_patient_data.extend(investigations_data)
+           SELECT *
+           FROM investigations
+           WHERE encounter = %s
+       """, (encounter_id,))
+    all_patient_data['investigations'] = cursor.fetchall()
 
 
-    # Fetching data from medications table
+    # fetching data from medications table
     cursor.execute("""
-        SELECT *
-        FROM medications
-        JOIN Encounters ON medications.encounter = Encounters.EncounterID
-        JOIN patients ON Encounters.PatientID = patients.NID;
-    """)
-    medications_data = cursor.fetchall()
-    all_patient_data.extend(medications_data)
+           SELECT *
+           FROM medications
+           WHERE encounter = %s
+       """, (encounter_id,))
+    all_patient_data['medications'] = cursor.fetchall()
 
 
-    # Fetching data from PatientHabits table
+    # fetching data from PatientHabits table
     cursor.execute("""
-        SELECT *
-        FROM PatientHabits JOIN patients ON PatientHabits.patientid = patients.nid
-    """)
-    PatientHabits_data = cursor.fetchall()
-    all_patient_data.extend(PatientHabits_data)
+           SELECT *
+           FROM PatientHabits 
+           WHERE patientid = %s
+       """, (patient_id,))
+    all_patient_data['PatientHabits'] = cursor.fetchall()
 
 
     # Fetching data from previoussurgeries table
     cursor.execute("""
-        SELECT *
-        FROM previoussurgeries JOIN patients ON previoussurgeries.patientid = patients.nid
-    """)
-    previoussurgeries_data = cursor.fetchall()
-    all_patient_data.extend(previoussurgeries_data)
+           SELECT *
+           FROM previoussurgeries
+           WHERE patientid = %s
+       """, (patient_id,))
+    all_patient_data['previoussurgeries'] = cursor.fetchall()
 
 
-    # Fetching data from Reports table
+    # fetching data from Reports table
     cursor.execute("""
-        SELECT *
-        FROM Reports
-        JOIN Encounters ON Reports.encounter = Encounters.EncounterID
-        JOIN patients ON Encounters.PatientID = patients.NID;
-    """)
-    reports_data = cursor.fetchall()
-    all_patient_data.extend(reports_data)
-
+           SELECT *
+           FROM Reports
+           WHERE encounter = %s
+       """, (encounter_id,))
+    all_patient_data['reports'] = cursor.fetchall()
 
     return jsonify({"patient_data": all_patient_data})
 
 
 @patient_profile.route('/PatientProfile/update', methods=['POST'])
 def update():
+    """
     data = request.json
     print(data)
     patient_id = data.get("patient_id")
     drugname = data.get("drugname")
     reaction = data.get("reaction")
 
-    update_allergicdrugs = """
+    update_allergicdrugs =
             UPDATE allergicdrugs
             SET drugname = %s, reaction = %s
             WHERE patientid = %s
-        """
+
     params = (drugname, reaction, patient_id)
     execute_query(update_allergicdrugs, params)
 
     # will do the same for other tables when needed
+    """
 
 
