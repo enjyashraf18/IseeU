@@ -28,6 +28,16 @@ function TestComponent() {
       return `${hours}:${minutes}`;
     }
   }
+  function currentShift() {
+    const currentHour = new Date().getHours();
+    // Assuming day shift is from 6 AM to 6 PM
+    
+    if (currentHour >= 6 && currentHour < 18) {
+      return "Day";
+    } else {
+      return "Night";
+    }
+  }
   useEffect(
     ()=>{
         const fetchData = async () => {
@@ -80,6 +90,29 @@ function TestComponent() {
                 rawpat[i][3]
               ])
             }
+                    // Process staff
+      const doc = rawdoc.map(employee => [
+        employee[7], // ProfilePic
+        `DR ${employee[3]} ${employee[4]}`, // FullName
+        employee[14], // Shift
+      ]);
+
+      const docAvailable = [];
+      const docUnavailable = [];
+
+      for (let i = 0; i < doc.length; i++) {
+        if (doc[i][2] === currentShift()) {
+          docAvailable.push(doc[i]);
+        } else {
+          docUnavailable.push(doc[i]);
+        }
+
+      }
+
+      // console.log(currentShift())
+      console.log(docAvailable)
+      console.log(docUnavailable)
+
 
       
 
