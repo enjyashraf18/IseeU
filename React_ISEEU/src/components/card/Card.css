@@ -1,4 +1,4 @@
-.Card{
+.Card, .card-add{
     background-color: #F5F5F5;
     min-height: 30vh;
     max-height: 30vh;
@@ -9,6 +9,19 @@
     display: inline-block;
     margin: 1vh 2vh;
 }
+.card-add{
+    background-color:#A6A9AB  !important;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plus-icon {
+    font-size: 10vh;
+    color: #F5F5F5; /* Example color */
+}
+
 .card-img{
     margin-bottom: 1vh;
     border-bottom-left-radius: 5vh;

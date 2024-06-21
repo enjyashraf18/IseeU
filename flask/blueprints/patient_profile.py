@@ -126,24 +126,93 @@ def patient():
     return jsonify({"patient_data": all_patient_data})
 
 
-@patient_profile.route('/PatientProfile/update', methods=['POST'])
-def update():
-    """
-    data = request.json
-    print(data)
-    patient_id = data.get("patient_id")
-    drugname = data.get("drugname")
-    reaction = data.get("reaction")
-
-    update_allergicdrugs =
-            UPDATE allergicdrugs
-            SET drugname = %s, reaction = %s
-            WHERE patientid = %s
-
-    params = (drugname, reaction, patient_id)
-    execute_query(update_allergicdrugs, params)
-
-    # will do the same for other tables when needed
-    """
+# @patient_profile.route('/PatientProfile/update', methods=['POST'])
+# def update():
+#     """
+#     data = request.json
+#     print(data)
+#     patient_id = data.get("patient_id")
+#     drugname = data.get("drugname")
+#     reaction = data.get("reaction")
+#
+#     update_allergicdrugs =
+#             UPDATE allergicdrugs
+#             SET drugname = %s, reaction = %s
+#             WHERE patientid = %s
+#
+#     params = (drugname, reaction, patient_id)
+#     execute_query(update_allergicdrugs, params)
+#
+#     # will do the same for other tables when needed
+#     """
+#     data = request.json
+#     print(data)
+#     updateFlag = data.get('updateFlag')
+#     NID = data.get('NID')
+#     FName = data.get('FName')
+#     LName = data.get('LName')
+#     Gender = data.get('Gender')
+#     Email = data.get('Email')
+#     PPic = data.get('PPic')
+#     BrithD = data.get('BrithD')
+#     Address = data.get('Address')
+#     InformedConsent = data.get('InformedConsent')
+#     Complaint = data.get('Complaint')
+#     DocNotes = data.get('DocNotes')
+#     APACHE = data.get('APACHE')
+#     GCS = data.get('GCS')
+#     AdmitDateTime = data.get('AdmitDateTime')
+#     bedID = data.get('bedID')
+#     MorningNurseID = data.get('MorningNurseID')
+#     EveningNurseID = data.get('EveningNurseID')
+#     AdmittingDoctorID = data.get('AdmittingDoctorID')
+#     ReferralDep = data.get('ReferralDep')
+#
+#     if updateFlag:
+#         query_patient = """INSERT INTO patients (nid, fname, lname, gender, email, ppic, brithd, address)
+#                                                VALUES (%s, %s,%s, %s, %s, %s, %s, %s)
+#                                                """
+#
+#         params_patient = (
+#             NID, FName, LName, Gender, Email, PPic, BrithD, Address)
+#         cursor.execute(query_patient, params_patient)
+#
+#         query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+#          morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
+#                                                        VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+#                                                        """
+#
+#         params_encounter = (
+#             InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+#             AdmittingDoctorID, ReferralDep)
+#         cursor.execute(query_encounter, params_encounter)
+#
+#
+# """
+#                 updateFlag : !isPatientFound,
+#             patient : {
+#                 NID :formData.NID ,
+#                 FName:  formData.firstName ,
+#                 LName: formData.lastName,
+#                 Gender: formData.gender,
+#                 Email:formData.email,
+#                 PPic: profileImg ,
+#                 BrithD:formData.dob,
+#                 Address: formData.address
+#             },
+#             encounter:{
+#                 InformedConsent: '',
+#                 Complaint:formData.complaint,
+#                 DocNotes: formData.docNotes,
+#                 APACHE:formData.apache,
+#                 GCS: formData.GCS,
+#                 AdmitDateTime: formData.admitTime,
+#                 bedID:formData.bedID,
+#                 MorningNurseID:nursesdata[formData.morningNurse] ,
+#                 EveningNurseID: nursesdata[formData.eveningNurse],
+#                 AdmittingDoctorID:doctorsdata[formData.admitDoc],
+#                 ReferralDep: formData.refDepart
+#             }
+#             """
 
 
