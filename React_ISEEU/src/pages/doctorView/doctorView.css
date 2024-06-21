@@ -5,6 +5,7 @@
 /*  display: flex;
   flex-direction: column;*/
 
+
 }
 .Doctor_table_patients{
   
@@ -17,7 +18,7 @@
   margin-top: 5px;
   background-color:white;
   border-radius: 50px 50px;
-  margin-left: -10px;
+  margin-left: 30px;
 }
 .Doctor_table_patients .table-responsive{
   max-height: 200px;
@@ -53,11 +54,12 @@ top:30px;
   background-color: #fff;
   width:500px;
   height: 260px;
-  margin-left: 50px;
+  margin-left: 70px;
   border-radius: 50px 50px;
 }
 #staff-h2{
   margin-left: 265px;
+  z-index: 900;
 }
 .Doctor_staff_ava,
 .Doctor_staff_unava {
@@ -98,8 +100,8 @@ left:1260px;
   align-items: center; /* Vertically center the content */
   align-content: center;
   justify-content: center; /* Horizontally center the content */
-  margin-top: -30px;
-  margin-left: 120px;
+  margin-top: -29px;
+  margin-left: 180px;
   font-weight: bolder;
 }
 
@@ -113,7 +115,7 @@ background-color: white !important;
 background-color: #fff;
 width:550px;
 height: 260px;
-margin-right: 10px;
+margin-left: 35px;
 z-index: 3000;
 border-radius: 50px 50px;
 }
@@ -161,4 +163,8 @@ border-bottom: none;
 }
 .doc_staff h2{
 margin-left: 50px;
+z-index: 900!important;
+}
+.doc_staff{
+  margin-left:-70px;
 }

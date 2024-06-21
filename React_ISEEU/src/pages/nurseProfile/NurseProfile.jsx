@@ -1,7 +1,7 @@
 import React, { useState, useMemo,useEffect } from 'react';
 import "./nurseProfile.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table_patients,Btn,Card } from '../../components';
+import { Table_patients,Btn,Card,ProSide } from '../../components';
 import axios from 'axios'
 const NurseProfile = () => {
 
@@ -21,14 +21,37 @@ const NurseProfile = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","nouran","15A","Coma"],
     ["Icons-Land-Medical-People-Patient-Female.ico","yasmeen","15A","Coma"]];
     const nurse_staff=[["Miguel", "O'Hara", "22", "Male"],["Miguel", "O'Hara", "22", "Male"],["Miguel", "O'Hara", "22", "Male"]]
-    const [medication,setmedication]=useState(intialMedication);
-   const medication_header=["","Medication","Bed No.","Patient","Time"];
-   const patient_header=["Name","Bed_No","Statue"]
-const role="user";
-const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
+    
+    
+    const [medication,setmedication]= useState(intialMedication);
+    const [loading, setLoading] = useState(true);
+
+
+    const medication_header=["","Medication","Bed No.","Patient","Time"];
+    const patient_header=["Name","Bed_No","Statue"]
+    const role="user";
+    const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setmedication(newData);
   };
 
+  const data_doctor_Available=[
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+]
+const data_doctor_unAvailable=[
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+    ["download.jfif","DR. Otto Octavius","morning shift"],
+  
+    ]
+    const flag_Doctors =true;
+const column__doctor_av=["Available"," "];
+const column_doctor_un=["unAvailable"," "];
   useMemo(
     ()=>{
         const fetchData = async () => {
@@ -76,7 +99,7 @@ const handleMedicationChange = (newData) => { // here i change the data of the p
 
       
 
-        //   setLoading(false);
+           setLoading(false);
     
       }
     
@@ -85,19 +108,26 @@ const handleMedicationChange = (newData) => { // here i change the data of the p
 
     }
 )
+
+
+if (loading) return <p>Loading...</p>;
+
+  
 return (
+
 
   <div className='nurseprofile container-fluid'>
     <div className='row'>
-      <div className='col-3'>{/* Sidebar */}
+      <div className='col-2'>{/* Sidebar */}
         <div className='sidebar_nurse'>
       <ProSide data={"nurse"}/>
       </div>
       </div>
       
-      <div className='col-8'>
+      <div className='col-9'>
+      <h2>Medication</h2>
         <div className="medication_nurse">
-          <h5>Medication</h5>
+        
           <Table_patients
             data={medication}
             headers={medication_header}
@@ -109,12 +139,13 @@ return (
             idx_checked={4}
           />
         </div>
-        <div className='row' style={{height:"20px"}}></div> 
+        <div className='row' style={{height:"0px"}}></div> 
         <div className='flow_row_nurse'>
           <div className='row'>
-            <div className='col-6'>
+            <div className='col-7'>
+            <h2>Patient</h2>
               <div className='patient_nurse'>
-                <h5>Patient</h5>
+          
                 <div className='Number'>
                   <span>{patient_nurse.length}</span>
                 </div>
@@ -129,10 +160,12 @@ return (
                 />
               </div>
             </div>
-            <div className='col-6'>
+            <div className='col-5'>
+              <div className='staff_nurse'></div>
+            <h2>Staff</h2>
               <div className='nurse_staff'>
                 <div className='Doctor_table_staff'>
-                <h5>Staff</h5>
+             
                   <div className='available_doctors'>
                     <Table_patients
                       data={data_doctor_Available}

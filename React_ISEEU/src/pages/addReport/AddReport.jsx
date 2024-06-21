@@ -20,6 +20,7 @@ const AddReport = (prop) => {
 
   const bedNo=prop.data; /**you should bring from this all the infromation needed to be showed  */
   const closeModal=prop.closeModal;
+  const submitModal = prop.submitModal;
   const role="user";
   const flag=false;
   const docID= 72; // will use Context to get it
@@ -111,10 +112,16 @@ const AddReport = (prop) => {
   };
   const handle_parent_modal_submit=()=>{
     console.log("save first the data in the database")
-    // closeModal()
-   
+     closeModal()
+     submitModal();
   }
-
+  const allCheckedItems = [
+    ...getCheckedItems(testsCheckups1),
+    ...getCheckedItems(scansCheckups)
+  ];
+const handle_parent_modal_close=()=>{
+  closeModal()
+}
   const reportData = {
     bedid: prop.data,
     medications:medication,
@@ -131,10 +138,7 @@ const AddReport = (prop) => {
 
   }
       // Get all checked items from both checkups tables (scans ,tests)
-    const allCheckedItems = [
-      ...getCheckedItems(testsCheckups1),
-      ...getCheckedItems(scansCheckups)
-    ];
+  
 
     function splitNameDose(productString) {
       const splitIndex = productString.indexOf('(');
@@ -394,14 +398,14 @@ const AddReport = (prop) => {
                
                 <div className='row' id="submit-btn-report">
                  <div className='col-5 offset-7 '>
-                  <div onClick={handlesubmit}>
-                 <Btn label={"Submit.."} onClick={handlesubmit} />
+                  <div onClick={handle_parent_modal_submit}>
+                 <Btn label={"Submit"}  onClick={handlesubmit}/>
                  </div>
                  </div>
                  </div>
             
       
-        <button onClick={handle_parent_modal_submit} className='close-modal'>
+        <button onClick={handle_parent_modal_close} className='close-modal'>
 
         <CCloseButton dark />
         </button>

@@ -153,12 +153,38 @@ def admit_patient():
 
     database_session.commit()
 
-
-@admin_view.route('/admin/admitPatient', methods=['POST'])
+@admin_view.route('/admin/add_employee', methods=['POST'])
 def add_employee():
     data = request.json
     print(data)
     NID = data.get('NID')
+    username = data.get('username')
+    password = data.get('password')
+    firstname = data.get('firstName')
+    lastname = data.get('lastName')
+    dateofbirth = data.get('dob')
+    address = data.get('address')
+    gender = data.get('gender')
+    email = data.get('email')
+    phone = data.get('phone')
+    datehired = data.get('dateHired')
+    role = data.get('role')
+
+    cursor.execute("SELECT nid FROM employee WHERE nid = %s", (NID,))
+    user_exists = cursor.fetchone()
+    if user_exists:  
+        return jsonify({"error": "User already exists"}), 400
+    else:
+        query = """INSERT INTO employee (nid, role, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired, role)
+                                       VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                       """
+
+        params = (
+            NID, role, username, password, firstname, lastname, dateofbirth, address, gender, email, phone,
+            datehired, role)
+
+        return execute_query(query, params)
+
 
 
 

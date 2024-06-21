@@ -1,7 +1,7 @@
 import "./doctorView.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import {Table_patients} from '../../components';
+import {Table_patients,ProSide} from '../../components';
 import axios from 'axios'
 
 
@@ -104,7 +104,7 @@ const data_doctor_unAvailable=[
  * 
  */
 
-const flag_Doctors=true;
+const flag_Doctors =true;
 const column__doctor_av=["Available"," "];
 const column_doctor_un=["unAvailable"," "];
 const columns_patient=["Name","Bed_No","Statue","Gender","Age","Admitted","Refell Department"];
@@ -204,14 +204,15 @@ if (loading) return <p>Loading...</p>;
 
 return (
   <div className='DoctorView container-fluid'>
+    
     <div className='row'>
-      <div className='col-3'>
+      <div className='col-2'>
         <div className='doc_sidebar'>
-          <ProSide />
+          <ProSide data={"doctor"} />
         </div>
       </div>
 
-      <div className='col-8'>
+      <div className='col-9'>
 <div>
           <h2>Patients</h2>
           <div className='Number'>
@@ -224,7 +225,7 @@ return (
 
         <div className='flow_row_nurse'>
           <div className='row'>
-            <div className='col-6'>
+            <div className='col-7'>
               <h2>Checkups</h2>
               <div className='Doctor_table_checkups'>
                 <Table_patients
@@ -242,15 +243,15 @@ return (
               </div>
             </div>
 
-            <div className='col-6'>
+            <div className='col-5'>
               <div className='doc_staff'>
               <h2>Staff</h2>
               <div className='Doctor_table_staff'>
                 <div className='available_doctors'>
-                  <Table_patients data={data_doctor_Available} anotherProp={role} headers={column__doctor_av} flag={flag_Doctors} showSearch={true} />
+                  <Table_patients data={data_doctor_Available} anotherProp={role} headers={column__doctor_av} flag={true} showSearch={true} />
                 </div>
                 <div className='unavailable_doctors'>
-                  <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors} showSearch={false} />
+                  <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={true} showSearch={false} />
                 </div>
               </div>
               </div>
