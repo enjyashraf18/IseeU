@@ -24,6 +24,11 @@ const AdmitPatient = () => {
         admitDoc: '',
         morningNurse: '',
         eveningNurse: '',
+
+        complaint:'',
+        apache:'',
+        GCS:'',
+        docNotes:'',
     });
     const [isPatientFound, setIsPatientFound] = useState(false); // New state for button status
 
@@ -86,13 +91,13 @@ const AdmitPatient = () => {
                                     <div className="row">
                                         <div className="col-10 gx-1">
                                             <UserText1 label="National ID" type="text" name="NID" value={formData.NID}
-                                                       onChange={handleInputChange} />
+                                                       onChange={handleInputChange}/>
                                         </div>
                                         <div className="col-2">
                                             {isPatientFound ? (
                                                 <span id="label">Patient found</span>
                                             ) : (
-                                                <Btn id="checkBtn" label="Check" onClick={handleCheckClick} />
+                                                <Btn id="checkBtn" label="Check" onClick={handleCheckClick}/>
                                             )}
                                         </div>
                                     </div>
@@ -100,53 +105,83 @@ const AdmitPatient = () => {
                                     <div className="row">
                                         <div className="col-6">
                                             <UserText1 label="First name" type="text" name="firstName"
-                                                       value={formData.firstName} onChange={handleInputChange} />
+                                                       value={formData.firstName} onChange={handleInputChange}/>
                                         </div>
                                         <div className="col-6">
                                             <UserText1 label="Last name" type="text" name="lastName"
-                                                       value={formData.lastName} onChange={handleInputChange} />
+                                                       value={formData.lastName} onChange={handleInputChange}/>
                                         </div>
                                     </div>
 
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob}
-                                               onChange={handleInputChange} />
-                                    <OR />
+                                               onChange={handleInputChange}/>
+                                    <OR/>
+                                    {/*
                                     <UserText1 label="Address" type="text" name="address" value={formData.address}
-                                               onChange={handleInputChange} />
+                                               onChange={handleInputChange}/>
                                     <UserText1 label="Email" type="email" name="email" value={formData.email}
-                                               onChange={handleInputChange} />
+                                               onChange={handleInputChange}/>
                                     <UserText1 label="Phone" type="tel" name="phone" value={formData.phone}
-                                               onChange={handleInputChange} />
+                                               onChange={handleInputChange}/>
+                                               */}
 
                                     <p id="stayTitle">Stay Details</p>
 
-                                    <UserText1 label="Admitting Time" type="datetime-local" name="admittingTIme" value={formData.admitTime}
-                                               onChange={handleInputChange} />
+                                    <UserText1 label="Admitting Time" type="datetime-local" name="admittingTIme"
+                                               value={formData.admitTime}
+                                               onChange={handleInputChange}/>
 
-                                    <List label="Referral Department" options={refDepart} name={"refDepart"} value={formData.refDepart}
+                                    <List label="Referral Department" options={refDepart} name={"refDepart"}
+                                          value={formData.refDepart}
                                           onChange={handleInputChange}/>
-                                    <List label="Admitting doctor" options={doctors} name="admitDoc" value={formData.admitDoc}
-                                          onChange={handleInputChange} />
-                                    <List label="Bed ID" options={bedIDs} name= "bedID" value={formData.bedID}
+                                    <List label="Bed ID" options={bedIDs} name="bedID" value={formData.bedID}
+                                          onChange={handleInputChange}/>
+                                    <List label="Admitting doctor" options={doctors} name="admitDoc"
+                                          value={formData.admitDoc}
                                           onChange={handleInputChange}/>
 
                                     <div className="row">
                                         <div className="col-6">
-                                            <List label="Morning nurse"  options={nurses} name= "morningNurse"  value={formData.morningNurse}
+                                            <List label="Morning nurse" options={nurses} name="morningNurse"
+                                                  value={formData.morningNurse}
                                                   onChange={handleInputChange}/>
                                         </div>
                                         <div className="col-6">
-                                            <List label="Evening Nurse"  options={nurses} name= "eveningNurse" value={formData.eveningNurse}
+                                            <List label="Evening Nurse" options={nurses} name="eveningNurse"
+                                                  value={formData.eveningNurse}
                                                   onChange={handleInputChange}/>
                                         </div>
                                     </div>
 
+                                    <UserText1 label="Complaint" type="text" name="complaint" value={formData.complaint}
+                                               onChange={handleInputChange}/>
+
+
+                                    <label id={"docNotesLabel"}>Doctor Notes</label>
+                                    <textarea id={"docNotes"} value={formData.docNotes}>ksalnf</textarea>
+
+
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <UserText1 label="GCS" type="number" name="GCS" value={formData.GCS}
+                                                       onChange={handleInputChange}/>
+                                        </div>
+                                        <div className="col-6">
+                                            <UserText1 label="Apache" type="number" name="apache"
+                                                       value={formData.apache}
+                                                       onChange={handleInputChange}/>
+                                        </div>
+                                    </div>
+
+                                    <label id={"consentLabel"}>Consent</label>
+                                    <input onChange={handleImgupload} type="file"/>
+
                                     <div className="row">
                                         <div className="col-3">
-                                            <Btn label="Back" />
+                                            <Btn label="Back"/>
                                         </div>
                                         <div className="col-3 offset-6">
-                                            <Btn label="Next" />
+                                            <Btn label="Next"/>
                                         </div>
                                     </div>
                                 </div>

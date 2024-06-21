@@ -68,3 +68,30 @@
     margin-top: 1.9vh;
     align-self: end;
 }
+#docNotes{
+    background-color: #E9F5F4;
+    width: 100%;
+    height: 230px;
+    border:#549991 1px solid;
+    border-radius: 20px;
+    padding: 10px ;
+    font-family: var(--font-family);
+    font-size: large;
+    text-align: left;
+}
+#docNotesLabel {
+    color:var(--color-box);
+    width: 90%;
+    margin-left: 4%;
+    font-weight:500;
+    font-size: 2vh;
+
+}
+#consentLabel {
+    color:var(--color-box);
+    width: 90%;
+    margin-left: 4%;
+    font-weight:500;
+    font-size: 2vh;
+
+}
