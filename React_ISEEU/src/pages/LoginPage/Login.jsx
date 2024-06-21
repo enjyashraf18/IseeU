@@ -109,9 +109,7 @@ function Login() {
   return (
     <Container fluid id='fullPage'>
       <Row>
-      <Col md={2} className="d-none d-md-block bg-light sidebar">
-          <ProSide /> {/* Pass callback prop */}
-        </Col>
+   
         <div id="left">
         <Col  xl={6}>
         <div 

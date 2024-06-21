@@ -90,7 +90,7 @@ const PatientAnalysis = () => {
      fetchData();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    // if (loading) return <p>Loading...</p>;
 
   return (
   <div className='panalysis'>
