@@ -16,7 +16,7 @@ def patient():
     cursor.execute("""
             SELECT patientid, encounterid
             FROM encounters
-            WHERE bedid = %s 
+            WHERE bedid = %s AND dischargedatetime is NULL 
         """, (BID,))
     result = cursor.fetchone()
     patient_id, encounter_id = result
@@ -28,7 +28,7 @@ def patient():
         "allergicdrugs": [],
         "chronicdiseases": [],
         "emergencycontact": [],
-        "FamilyDisease" : [],
+        "FamilyDisease": [],
         "investigations": [],
         "medications": [],
         "PatientHabits": [],
