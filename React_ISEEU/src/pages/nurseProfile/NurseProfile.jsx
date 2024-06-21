@@ -85,59 +85,82 @@ const handleMedicationChange = (newData) => { // here i change the data of the p
 
     }
 )
-  return (
-    <div className='nurseprofile container-fluid'>
-        <div className='row'>
-<div className='col-2'></div> {/**sidebar */}
-<div className='col-1'></div>{/**space */}
-<div className='col-8'>
+return (
 
-
-<div className="medicication_nurse">
-    <h5>Medication</h5>
-<Table_patients 
-         data={medication}
-         headers={medication_header}
-         flag={false}
-         anotherProp={role}
-         onDataChange={handleMedicationChange}
-         ischecktable={true}
-         showSearch={false}
-         idx_checked ={4}
-        />
-        </div>
-        <div className='flow_row_nurse'>
-<div className='patient_nurse'>
-    <h5>Patient</h5>
-    <div className='Number'>
-        <h12 >{patient_nurse.length}</h12>
-        </div>
-<Table_patients 
-         data={patient_nurse}
-         headers={patient_header}
-         flag={true}
-         anotherProp={role}
+  <div className='nurseprofile container-fluid'>
+    <div className='row'>
+      <div className='col-3'>{/* Sidebar */}
+        <div className='sidebar_nurse'>
+      <ProSide data={"nurse"}/>
+      </div>
+      </div>
       
-         ischecktable={false}
-         showSearch={false}
-     
-        />
+      <div className='col-8'>
+        <div className="medication_nurse">
+          <h5>Medication</h5>
+          <Table_patients
+            data={medication}
+            headers={medication_header}
+            flag={false}
+            anotherProp={role}
+            onDataChange={handleMedicationChange}
+            ischecktable={true}
+            showSearch={false}
+            idx_checked={4}
+          />
         </div>
-        <div className='nurse_staff'>
-        <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-
-        </div>
-
-</div>
-        </div> 
-    </div>{/**end row */}
-    </div>
-  )
+        <div className='row' style={{height:"20px"}}></div> 
+        <div className='flow_row_nurse'>
+          <div className='row'>
+            <div className='col-6'>
+              <div className='patient_nurse'>
+                <h5>Patient</h5>
+                <div className='Number'>
+                  <span>{patient_nurse.length}</span>
+                </div>
+                <Table_patients
+                  data={patient_nurse}
+                  headers={patient_header}
+                  flag={true}
+                  anotherProp={role}
+                  ischecktable={false}
+                  showSearch={true}
+                  buttonpic={2}
+                />
+              </div>
+            </div>
+            <div className='col-6'>
+              <div className='nurse_staff'>
+                <div className='Doctor_table_staff'>
+                <h5>Staff</h5>
+                  <div className='available_doctors'>
+                    <Table_patients
+                      data={data_doctor_Available}
+                      anotherProp={role}
+                      headers={column__doctor_av}
+                      flag={flag_Doctors}
+                      showSearch={true}
+                    />
+                  </div>
+                  <div className='unavailable_doctors'>
+                    <Table_patients
+                      data={data_doctor_unAvailable}
+                      anotherProp={role}
+                      headers={column_doctor_un}
+                      flag={flag_Doctors}
+                      showSearch={false}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> {/* End of nested row */}
+        </div> {/* End of flow_row_nurse */}
+      </div> {/* End of col-8 */}
+    </div> {/* End of main row */}
+    <div className='row' style={{height:"400px"}}></div>  {/**this solve the problem of background color */}
+          </div>
+);
 }
 
-export default NurseProfile
+export default NurseProfile;
