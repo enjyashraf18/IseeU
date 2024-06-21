@@ -61,13 +61,13 @@ const AdminView = () => {
                         <div id="chartDiv" className="col-6">
                             <Chart
                                 id="bedCapChart"
+                                type={"doughnut"}
                                 data={bedsData}
                                 labels={["Available", "Taken"]}
                                 options={{
                                     maintainAspectRatio: false,
                                     responsive: true
-                                }}
-                            />
+                                }}/>
                         </div>
                     </div>
                 </div>
@@ -97,11 +97,26 @@ const AdminView = () => {
                         <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
                         <Card data={["Miguel", "O'Hara", "22", "Doctor"]}/>
                         <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
+
+                        {
+                            //Stay in end !!!!DONT TOUCH
+                        }
+
                         <Card typeAdd={true} onClick={()=>{console.log("I have been clicked")}}/>
                     </div>
                 </div>
 
                 <div id="statsPanel">
+                    <p id={"doctorsPanelTitle"}>Patients Analysis</p>
+                    <Chart
+                        id="bedCapChart"
+                        type={"bar"}
+                        data={[10,2,55,3]}
+                        labels={["Available", "Taken","A","B"]}
+                        options={{
+                            maintainAspectRatio: false,
+                            responsive: true
+                        }}/>
                 </div>
             </div>
 

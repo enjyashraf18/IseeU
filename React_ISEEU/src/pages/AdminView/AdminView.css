@@ -150,5 +150,6 @@ button#dischargeButton:hover {
 }
 
 #statsPanel {
-    background-color: #040C18;
+    background-color: #F5F5F5;
+    border-radius: 3vh;
 }
