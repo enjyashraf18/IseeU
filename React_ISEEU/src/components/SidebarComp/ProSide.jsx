@@ -3,9 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import './SidebarComp.css'; // Import CSS for styles
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
-const ProSide = (props) => {
+const ProSide = (prop) => {
     const navigate = useNavigate();
-    const role = "admin"; // This should ideally come from props or context
+    const role = prop.data; // This should ideally come from props or context
 
     const [activeItem, setActiveItem] = useState(null);
 

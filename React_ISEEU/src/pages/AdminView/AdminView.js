@@ -12,35 +12,35 @@ const AdminView = () => {
         const fetchData = async () => {
             const [responseEncounters, responseStaff] = await Promise.all([
                 axios.get('http://localhost:5000/doctor/current_encounters', {
-                  headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' }
                 }),
                 axios.get('http://localhost:5000/doctor/current_employees', {
-                  headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' }
                 })
-              ]);
-              const encounters = responseEncounters.data.active_encounters
-              setPatientsNum(encounters.length)
-              setBedsData([20, encounters.length])
-              const employeeData = responseStaff.data['active_employees']
-              const employeesData = employeeData.map(employee => [
+            ]);
+            const encounters = responseEncounters.data.active_encounters
+            setPatientsNum(encounters.length)
+            setBedsData([20, encounters.length])
+            const employeeData = responseStaff.data['active_employees']
+            const employeesData = employeeData.map(employee => [
                 employee[8], // ProfilePic
                 `${employee[4]} ${employee[5]}`, // FullName
                 employee[15], // Shift
                 employee[12]  // Role
-              ]);
+            ]);
 
-              const employeesAvailable = [];
-              const employeesUnavailable = [];
-              for (let i = 0; i < employeesData.length; i++) {
+            const employeesAvailable = [];
+            const employeesUnavailable = [];
+            for (let i = 0; i < employeesData.length; i++) {
                 if (employeesData[i][2] === currentShift()) {
-                  employeesAvailable.push(employeesData[i]);
+                    employeesAvailable.push(employeesData[i]);
                 } else {
-                  employeesUnavailable.push(employeesData[i]);
+                    employeesUnavailable.push(employeesData[i]);
                 }
-        
-              }
-        
-              setStaff([employeesUnavailable, employeesAvailable]);
+
+            }
+
+            setStaff([employeesUnavailable, employeesAvailable]);
 
         }
 
@@ -90,15 +90,15 @@ const AdminView = () => {
                 </div>
 
                 <div id="doctorsPanel">
-                <p id={"doctorsPanelTitle"}> Doctors <span id={"doctorsNo"}>55</span> </p>
-                <div id={"doctorCards"}>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                    <Card data={["Miguel", "O'Hara", "22", "Male"]}/>
-                </div>
+                    <p id={"doctorsPanelTitle"}> Staff <span id={"doctorsNo"}>55</span> </p>
+                    <div id={"doctorCards"}>
+                        <Card data={["Miguel", "O'Hara", "22", "Doctor"]}/>
+                        <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
+                        <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
+                        <Card data={["Miguel", "O'Hara", "22", "Doctor"]}/>
+                        <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
+                        <Card typeAdd={true} onClick={()=>{console.log("I have been clicked")}}/>
+                    </div>
                 </div>
 
                 <div id="statsPanel">

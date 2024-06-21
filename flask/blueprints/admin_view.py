@@ -15,19 +15,151 @@ def admin_nurses():
     cursor.execute("""
            SELECT *
            FROM employee
-           WHERE nid = %s AND role = 'Nurse'
+           WHERE nid = %s AND role = 'Nurse' :: ROLE
        """, (NID,))
 
-
-@admin_view.route('/admit', methods=['GET'])
-def admit():
-
-
-@admin_view.route('/discharge', methods=['POST'])
-def discharge(): #discharge the patient
+    admin_nurse = cursor.fetchall()
+    return jsonify({"admin_nurse": admin_nurse})
 
 
-@admin_view.route('/assign', methods=['POST'])
-def assign(): #assign a doctor
+@admin_view.route('/admin/employee', methods=['POST'])
+def admin_employees():
+    data = request.json
+    print(data)
+    NID = data.get('NID')
+
+    cursor.execute("""
+           SELECT *
+           FROM employee
+           WHERE nid = %s 
+       """, (NID,))
+
+    admin_employee = cursor.fetchall()
+    return jsonify({"admin_employee": admin_employee})
+
+@admin_view.route('/check_patient', methods=['POST'])
+def check_patient():
+        data = request.json
+        print(data)
+        NID = data.get('NID')
+
+        cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
+        patient_exists = cursor.fetchone()
+
+        if patient_exists: # patient exists in the db
+            cursor.execute("""
+                           SELECT *
+                           FROM patients
+                           WHERE nid = %s 
+                       """, (NID,))
+
+            patient_data = cursor.fetchall()
+            return jsonify({"admin_employee": patient_data})
+        else: # patient does not exist in the db
+            return jsonify({"message": "User does not exist"}), 400
+
+
+@admin_view.route('/admin/admitPatient', methods=['POST'])
+def admit_patient():
+    data = request.json
+    print(data)
+    updateFlag = data.get('updateFlag')
+    patient = data.get('patient')
+    encounter = data.get('encounter')
+
+    NID = patient.get('NID')
+    FName = patient.get('FName')
+    LName = patient.get('LName')
+    Gender = patient.get('Gender')
+    Email = patient.get('Email')
+    PPic = patient.get('PPic')
+    BrithD = patient.get('BrithD')
+    Address = patient.get('Address')
+    WeightKg = patient.get('weightkg')
+    HightCm = patient.get('hightcm')
+
+    InformedConsent = encounter.get('InformedConsent')
+    Complaint = encounter.get('Complaint')
+    DocNotes = encounter.get('DocNotes')
+    APACHE = encounter.get('APACHE')
+    GCS = encounter.get('GCS')
+    AdmitDateTime = encounter.get('AdmitDateTime')
+    bedID = encounter.get('bedID')
+    MorningNurseID = encounter.get('MorningNurseID')
+    EveningNurseID = encounter.get('EveningNurseID')
+    AdmittingDoctorID = encounter.get('AdmittingDoctorID')
+    ReferralDep = encounter.get('ReferralDep')
+
+    # check if the patient exists still in the db (encounters)
+    cursor.execute("SELECT patientid FROM encounters WHERE patientid = %s AND dischargedatetime IS NULL", (NID,))
+    patient_exists = cursor.fetchone()
+
+    if patient_exists:  # patient exists in the db (update the encounter)
+        #update encounter
+        update_encounter_query = """
+            UPDATE encounters
+            SET InformedConsent = %s, Complaint = %s, docnotes = %s, apache = %s, gcs = %s,
+             admitdatetime = %s, bedid = %s, morningnurseid = %s, eveningnurseid = %s,
+              admittingdoctorid = %s, referraldep = %s
+            WHERE patientid = %s AND dischargedatetime IS NULL
+        """
+        update_encounter_params = (
+            InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+            AdmittingDoctorID, ReferralDep, NID)
+        cursor.execute(update_encounter_query, update_encounter_params)
+
+        #update patients table
+        update_patient_query = """
+            UPDATE patients
+            SET fname = %s, lname = %s, gender = %s, email = %s, ppic = %s, brithd = %s,
+             address = %s, weightkg = %s, hightcm = %s
+            WHERE nid = %s
+            """
+        update_patient_params = (FName, LName, Gender, Email, PPic, BrithD, Address,
+                                 WeightKg, HightCm, NID)
+        cursor.execute(update_patient_query, update_patient_params)
+
+        return jsonify({"message": "Patient successfully updated"}), 400
+    else:  # patient does not exist in the db (insert the patient and the encounter)
+        if updateFlag:
+            query_patient = """INSERT INTO patients (nid, fname, lname, gender, email, ppic, brithd, address, weightkg, hightcm)
+                                                   VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s)
+                                                   """
+
+            params_patient = (
+                NID, FName, LName, Gender, Email, PPic, BrithD, Address, WeightKg, HightCm)
+            cursor.execute(query_patient, params_patient)
+
+            query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+             morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
+                                                           VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                           """
+
+            params_encounter = (
+                InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+                AdmittingDoctorID, ReferralDep)
+            cursor.execute(query_encounter, params_encounter)
+
+        else:
+            query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+             morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
+                                                           VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                           """
+
+            params_encounter = (
+                InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+                AdmittingDoctorID, ReferralDep)
+            cursor.execute(query_encounter, params_encounter)
+
+    database_session.commit()
+
+
+@admin_view.route('/admin/admitPatient', methods=['POST'])
+def add_employee():
+    data = request.json
+    print(data)
+    NID = data.get('NID')
+
+
 
 

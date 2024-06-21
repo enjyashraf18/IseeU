@@ -13,6 +13,7 @@ import axios from 'axios'
 
 const Register2 = () => {
 
+
     const [firstForm , setFirstForm] = useState(form1data)
 
     const [profileImg, setProfileImg] = useState("https://placehold.co/320x320");

@@ -202,56 +202,66 @@ const num=data_patient_table.length;
 if (loading) return <p>Loading...</p>;
 
 
-  return (
-    <div className='DoctorView'>
-  <div className='container-fluid'>
+return (
+  <div className='DoctorView container-fluid'>
     <div className='row'>
-      <div className='col-10 offset-1'>
-        <h2 className='col-3 offset-2'>Patients</h2>
-        <div className='Number'>
-        <h12 className="col- offset-3">{data_patient_table.length}</h12>
-        </div>
-        <div className='Doctor_table_patients'>
-          <Table_patients data={encounters} anotherProp={role} headers={columns_patient} flag={flag_patient}  showSearch={true}/>
-        </div>
-        <div id="flex_rotation" className='row'>
-          <h2 className='col-3 offset-2'>Checkups</h2>
-
-          <h2 id='staff-h2' className='col-3 offset-2'>Staff</h2>
-        </div>
-        <div className='row'>
-          <div className='col-4 offset-2'>
-            <div className='Doctor_table_checkups'>
-            <Table_patients
-                data={dataCheckups}
-                headers={columns_checkups}
-                flag={flag_patient}
-                anotherProp={role}
-                onDataChange={handleDataChange}
-                ischecktable={true}
-                showSearch={true}
-                idx_checked ={3}
-              />
-
-            </div>
-          </div>
-          <div className='col-4 offset-1'>
-            <div className='Doctor_table_staff'>
-                <div className='available_doctors'>
-             <Table_patients data={staff[1]} anotherProp={role} headers={column__doctor_av} flag={flag_Doctors}  showSearch={true}/>
-             </div>
-             <div className='unavailable_doctors'>
-             <Table_patients data={staff[0]} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors}  showSearch={false}/>
-
-             </div>
-            </div>
-          </div>
+      <div className='col-3'>
+        <div className='doc_sidebar'>
+          <ProSide />
         </div>
       </div>
-    </div>
-  </div>
-</div>
-  )
-}
 
-export default DoctorView
+      <div className='col-8'>
+<div>
+          <h2>Patients</h2>
+          <div className='Number'>
+            <h12>{data_patient_table.length}</h12>
+          </div>
+          <div className='Doctor_table_patients'>
+            <Table_patients data={data_patient_table} anotherProp={role} headers={columns_patient} flag={flag_patient} showSearch={true} buttonpic={2} />
+          </div>
+        </div>
+
+        <div className='flow_row_nurse'>
+          <div className='row'>
+            <div className='col-6'>
+              <h2>Checkups</h2>
+              <div className='Doctor_table_checkups'>
+                <Table_patients
+                  data={dataCheckups}
+                  headers={columns_checkups}
+                  flag={flag_patient}
+                  anotherProp={role}
+                  onDataChange={() => {}}
+                  ischecktable={true}
+                  showSearch={true}
+                  idx_checked={3}
+                  check_rep={2}
+                  buttonpic={2}
+                />
+              </div>
+            </div>
+
+            <div className='col-6'>
+              <div className='doc_staff'>
+              <h2>Staff</h2>
+              <div className='Doctor_table_staff'>
+                <div className='available_doctors'>
+                  <Table_patients data={data_doctor_Available} anotherProp={role} headers={column__doctor_av} flag={flag_Doctors} showSearch={true} />
+                </div>
+                <div className='unavailable_doctors'>
+                  <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={flag_Doctors} showSearch={false} />
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>
+);
+};
+
+export default DoctorView;
