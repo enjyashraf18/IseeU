@@ -89,8 +89,12 @@ return (
 
   <div className='nurseprofile container-fluid'>
     <div className='row'>
-      <div className='col-2'>{/* Sidebar */}</div>
-      <div className='col-1'>{/* Space */}</div>
+      <div className='col-3'>{/* Sidebar */}
+        <div className='sidebar_nurse'>
+      <ProSide data={"nurse"}/>
+      </div>
+      </div>
+      
       <div className='col-8'>
         <div className="medication_nurse">
           <h5>Medication</h5>
@@ -154,7 +158,7 @@ return (
         </div> {/* End of flow_row_nurse */}
       </div> {/* End of col-8 */}
     </div> {/* End of main row */}
-    <div className='row' style={{height:"200px"}}></div>  {/**this solve the problem of background color */}
+    <div className='row' style={{height:"400px"}}></div>  {/**this solve the problem of background color */}
           </div>
 );
 }
