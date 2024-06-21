@@ -21,15 +21,20 @@ const NurseProfile = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","nouran","15A","Coma"],
     ["Icons-Land-Medical-People-Patient-Female.ico","yasmeen","15A","Coma"]];
     const nurse_staff=[["Miguel", "O'Hara", "22", "Male"],["Miguel", "O'Hara", "22", "Male"],["Miguel", "O'Hara", "22", "Male"]]
-    const [medication,setmedication]=useState(intialMedication);
-   const medication_header=["","Medication","Bed No.","Patient","Time"];
-   const patient_header=["Name","Bed_No","Statue"]
-const role="user";
-const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
+    
+    
+    const [medication,setmedication]= useState(intialMedication);
+    const [loading, setLoading] = useState(true);
+
+
+    const medication_header=["","Medication","Bed No.","Patient","Time"];
+    const patient_header=["Name","Bed_No","Statue"]
+    const role="user";
+    const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
     setmedication(newData);
   };
 
-  useMemo(
+  useEffect(
     ()=>{
         const fetchData = async () => {
             const body = {
@@ -76,7 +81,7 @@ const handleMedicationChange = (newData) => { // here i change the data of the p
 
       
 
-        //   setLoading(false);
+           setLoading(false);
     
       }
     
@@ -85,7 +90,19 @@ const handleMedicationChange = (newData) => { // here i change the data of the p
 
     }
 )
+<<<<<<< HEAD
+
+if (loading) return <p>Loading...</p>;
+
+  return (
+    <div className='nurseprofile container-fluid'>
+        <div className='row'>
+<div className='col-2'></div> {/**sidebar */}
+<div className='col-1'></div>{/**space */}
+<div className='col-8'>
+=======
 return (
+>>>>>>> f02b11db61a0b82aed606737f5da576170131384
 
   <div className='nurseprofile container-fluid'>
     <div className='row'>

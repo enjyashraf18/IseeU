@@ -75,6 +75,8 @@ def admit_patient():
     PPic = patient.get('PPic')
     BrithD = patient.get('BrithD')
     Address = patient.get('Address')
+    WeightKg = patient.get('weightkg')
+    HightCm = patient.get('hightcm')
 
     InformedConsent = encounter.get('InformedConsent')
     Complaint = encounter.get('Complaint')
@@ -88,35 +90,66 @@ def admit_patient():
     AdmittingDoctorID = encounter.get('AdmittingDoctorID')
     ReferralDep = encounter.get('ReferralDep')
 
-    if updateFlag:
-        query_patient = """INSERT INTO patients (nid, fname, lname, gender, email, ppic, brithd, address)
-                                               VALUES (%s, %s,%s, %s, %s, %s, %s, %s)
-                                               """
+    # check if the patient exists still in the db (encounters)
+    cursor.execute("SELECT patientid FROM encounters WHERE patientid = %s AND dischargedatetime IS NULL", (NID,))
+    patient_exists = cursor.fetchone()
 
-        params_patient = (
-            NID, FName, LName, Gender, Email, PPic, BrithD, Address)
-        cursor.execute(query_patient, params_patient)
-
-        query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
-         morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
-                                                       VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                                                       """
-
-        params_encounter = (
+    if patient_exists:  # patient exists in the db (update the encounter)
+        #update encounter
+        update_encounter_query = """
+            UPDATE encounters
+            SET InformedConsent = %s, Complaint = %s, docnotes = %s, apache = %s, gcs = %s,
+             admitdatetime = %s, bedid = %s, morningnurseid = %s, eveningnurseid = %s,
+              admittingdoctorid = %s, referraldep = %s
+            WHERE patientid = %s AND dischargedatetime IS NULL
+        """
+        update_encounter_params = (
             InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
-            AdmittingDoctorID, ReferralDep)
-        cursor.execute(query_encounter, params_encounter)
+            AdmittingDoctorID, ReferralDep, NID)
+        cursor.execute(update_encounter_query, update_encounter_params)
 
-    else:
-        query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
-         morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
-                                                       VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                                                       """
+        #update patients table
+        update_patient_query = """
+            UPDATE patients
+            SET fname = %s, lname = %s, gender = %s, email = %s, ppic = %s, brithd = %s,
+             address = %s, weightkg = %s, hightcm = %s
+            WHERE nid = %s
+            """
+        update_patient_params = (FName, LName, Gender, Email, PPic, BrithD, Address,
+                                 WeightKg, HightCm, NID)
+        cursor.execute(update_patient_query, update_patient_params)
 
-        params_encounter = (
-            InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
-            AdmittingDoctorID, ReferralDep)
-        cursor.execute(query_encounter, params_encounter)
+        return jsonify({"message": "Patient successfully updated"}), 400
+    else:  # patient does not exist in the db (insert the patient and the encounter)
+        if updateFlag:
+            query_patient = """INSERT INTO patients (nid, fname, lname, gender, email, ppic, brithd, address, weightkg, hightcm)
+                                                   VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s)
+                                                   """
+
+            params_patient = (
+                NID, FName, LName, Gender, Email, PPic, BrithD, Address, WeightKg, HightCm)
+            cursor.execute(query_patient, params_patient)
+
+            query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+             morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
+                                                           VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                           """
+
+            params_encounter = (
+                InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+                AdmittingDoctorID, ReferralDep)
+            cursor.execute(query_encounter, params_encounter)
+
+        else:
+            query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+             morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
+                                                           VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                           """
+
+            params_encounter = (
+                InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+                AdmittingDoctorID, ReferralDep)
+            cursor.execute(query_encounter, params_encounter)
 
     database_session.commit()
 
