@@ -1,0 +1,73 @@
+
+
+.HabitsCont {
+    background-color: var(--color-main);
+    align-items: center; /* Align items vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+#SelectPreview  {
+    min-height: 80vh; /* Adjust the minimum height as needed */
+    height: 100vh; /* Set height to auto */
+    background-color: #ededed;
+    padding: 4vh 3vh ;
+    text-align: center;
+}
+.selectedItem{
+    font-size: 2vh;
+    color: #1a1a1a;
+    list-style-type: none;
+}
+.selectedHeader{
+    font-size: 3vh;
+    font-weight: bold;
+    color: var(--color-main);
+    list-style-type: none;
+}
+#inputs {
+    min-height: 89vh;
+}
+.selectOption{
+    color: #1a1a1a;
+
+
+}
+.optionP{
+    font-size: 3vh;
+}
+
+#SelectForm {
+    background-color: #F5F5F5;
+    border-radius: 20px 20px 0 0;
+    min-height: 50vh; /* Adjust the minimum height as needed */
+    height: 92vh; /* Set height to auto */
+    max-width: 80%; /* Set maximum width */
+    margin: auto; /* Center horizontally */
+    position: absolute; /* Position at the bottom */
+    bottom: 0; /* Stick to the bottom */
+    left: 0; /* Align left edge with container */
+    right: 0; /* Align right edge with container */
+    overflow: hidden;
+}
+#inputs{
+    height: 600px;
+    overflow-y: scroll;
+    padding: 3vw;
+}
+#scndTitle{
+    text-align: center;
+    color: var(--color-main);
+    margin-bottom: 15px;
+    margin-top: 7px;
+    font-size: 5vh;
+    font-weight: 600;
+}
+.scroller {
+    --scrollbar-color-thumb: hotpink;
+    --scrollbar-color-track: blue;
+    --scrollbar-width: thin;
+    --scrollbar-width-legacy: 0.5rem;
+}
