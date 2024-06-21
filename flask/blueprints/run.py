@@ -6,7 +6,7 @@ from doctor_view import doctor_view
 from admin_view import admin_view
 from flask_cors import CORS
 app = Flask(__name__)
-app.register_blueprint(login)  #, url_prefix="/login"
+app.register_blueprint(login)
 app.register_blueprint(register)
 app.register_blueprint(nurse_view)
 app.register_blueprint(doctor_view)
