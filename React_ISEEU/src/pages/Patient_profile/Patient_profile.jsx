@@ -39,8 +39,8 @@ const Patient_profile = () => {
   const handle_update_Click=()=>{
 console.log("clicked on update")
   }
-  const handle_piege_Click=()=>{
-    console.log("clicked on piege")
+  const handle_discharge_Click=()=>{
+    console.log("clicked on discharge")
   }
    /**intillay the report modal is false untill i click on the add report button */
    const [showReportModal, setShowReportModal] = useState(false);
@@ -70,7 +70,8 @@ console.log("clicked on update")
        <h2>{patient[6]+" Kg"}</h2>
        <a href='show_more'>show more</a>
        </div>
-       <EmerBtn label={"piege"} onclick={handle_piege_Click} className="piegebtn"/>
+       {role.toLowerCase()==="doctor"&&(
+       <EmerBtn label={"Disharge"} onclick={handle_discharge_Click} className="piegebtn"/>)}
       </div>
       <div className='col-7'>
         <div className='pprofile_medication'>
@@ -172,6 +173,7 @@ console.log("clicked on update")
       {role.toLowerCase()==="doctor" &&(<>
       <Btn label={"Add Report"} className="upd-btn-pprofile" onclick={handle_add_Report}/>
       </>)}
+      {role.toLowerCase()!=="doctor"||role.toLowerCase()!=="admin"&&(null) }
       
     </div>
       
@@ -179,7 +181,7 @@ console.log("clicked on update")
     {showReportModal && (
         <div className="modal-overlay">
           <div className="modal-container">
-            <Report data={bedNo} closeModal={() => setShowReportModal(false)} />
+            <Report data={bedNo} closeModal={()=> setShowReportModal(false)}  submitModal={()=>{}}/>
           </div>
         </div>
       )}

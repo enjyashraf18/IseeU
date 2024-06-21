@@ -72,8 +72,7 @@ const ProSide = (prop) => {
                     </div>
                 ) : (
                     <div>
-                        <h2>Welcome</h2>
-                        <p>Please select an item from the sidebar.</p>
+                        
                     </div>
                 )}
             </div>
