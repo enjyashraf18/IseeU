@@ -22,6 +22,7 @@ const Table_Patient = (props) => {
     "#3D9973": ['done'],
     "#4381C1": ['male','pending'],
     "#FE688C": ['female'],
+    "#FE5755":["now"]
     
   };
   let role= props.anotherProp||"user";
