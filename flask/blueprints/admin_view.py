@@ -38,8 +38,9 @@ def admin_employees():
     return jsonify({"admin_employee": admin_employee})
 
 @admin_view.route('/check_patient', methods=['POST'])
-def check_user():
+def check_patient():
         data = request.json
+        print(data)
         NID = data.get('NID')
 
         cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
@@ -57,30 +58,35 @@ def check_user():
         else: # patient does not exist in the db
             return jsonify({"message": "User does not exist"}), 400
 
+
 @admin_view.route('/admin/admitPatient', methods=['POST'])
 def admit_patient():
     data = request.json
     print(data)
     updateFlag = data.get('updateFlag')
-    NID = data.get('NID')
-    FName = data.get('FName')
-    LName = data.get('LName')
-    Gender = data.get('Gender')
-    Email = data.get('Email')
-    PPic = data.get('PPic')
-    BrithD = data.get('BrithD')
-    Address = data.get('Address')
-    InformedConsent = data.get('InformedConsent')
-    Complaint = data.get('Complaint')
-    DocNotes = data.get('DocNotes')
-    APACHE = data.get('APACHE')
-    GCS = data.get('GCS')
-    AdmitDateTime = data.get('AdmitDateTime')
-    bedID = data.get('bedID')
-    MorningNurseID = data.get('MorningNurseID')
-    EveningNurseID = data.get('EveningNurseID')
-    AdmittingDoctorID = data.get('AdmittingDoctorID')
-    ReferralDep = data.get('ReferralDep')
+    patient = data.get('patient')
+    encounter = data.get('encounter')
+
+    NID = patient.get('NID')
+    FName = patient.get('FName')
+    LName = patient.get('LName')
+    Gender = patient.get('Gender')
+    Email = patient.get('Email')
+    PPic = patient.get('PPic')
+    BrithD = patient.get('BrithD')
+    Address = patient.get('Address')
+
+    InformedConsent = encounter.get('InformedConsent')
+    Complaint = encounter.get('Complaint')
+    DocNotes = encounter.get('DocNotes')
+    APACHE = encounter.get('APACHE')
+    GCS = encounter.get('GCS')
+    AdmitDateTime = encounter.get('AdmitDateTime')
+    bedID = encounter.get('bedID')
+    MorningNurseID = encounter.get('MorningNurseID')
+    EveningNurseID = encounter.get('EveningNurseID')
+    AdmittingDoctorID = encounter.get('AdmittingDoctorID')
+    ReferralDep = encounter.get('ReferralDep')
 
     if updateFlag:
         query_patient = """INSERT INTO patients (nid, fname, lname, gender, email, ppic, brithd, address)
@@ -101,40 +107,18 @@ def admit_patient():
             AdmittingDoctorID, ReferralDep)
         cursor.execute(query_encounter, params_encounter)
 
+    else:
+        query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+         morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
+                                                       VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                       """
 
-"""
-                updateFlag : !isPatientFound,
-            patient : {
-                NID :formData.NID ,
-                FName:  formData.firstName ,
-                LName: formData.lastName,
-                Gender: formData.gender,
-                Email:formData.email,
-                PPic: profileImg ,
-                BrithD:formData.dob,
-                Address: formData.address
-            },
-            encounter:{
-                InformedConsent: '',
-                Complaint:formData.complaint,
-                DocNotes: formData.docNotes,
-                APACHE:formData.apache, 
-                GCS: formData.GCS, 
-                AdmitDateTime: formData.admitTime,
-                bedID:formData.bedID,
-                MorningNurseID:nursesdata[formData.morningNurse] ,
-                EveningNurseID: nursesdata[formData.eveningNurse],
-                AdmittingDoctorID:doctorsdata[formData.admitDoc],
-                ReferralDep: formData.refDepart
-            }
-            """
+        params_encounter = (
+            InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+            AdmittingDoctorID, ReferralDep)
+        cursor.execute(query_encounter, params_encounter)
 
-
-
-
-
-
-
+    database_session.commit()
 
 
 @admin_view.route('/admin/admitPatient', methods=['POST'])
