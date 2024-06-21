@@ -4,6 +4,7 @@ import "./AdmitPatient.css";
 import { OR, Btn, UserText1, List } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import axios from 'axios'
 
 const AdmitPatient = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/500x320");
@@ -20,6 +21,7 @@ const AdmitPatient = () => {
         //Stay data
         admitTime: '',
         refDepart: '',
+        bsdType:'',
         bedID: '',
         admitDoc: '',
         morningNurse: '',
@@ -71,7 +73,89 @@ const AdmitPatient = () => {
         });
     };
 
-   
+    const handleSubmit = (e) => {
+
+        console.log("FormData to be sent:", formData); // Debug statement
+        const requestData = {
+            updateFlag : !isPatientFound,
+            patient : {
+                NID :formData.NID ,
+                FName:  formData.firstName ,
+                LName: formData.lastName,
+                Gender: formData.gender,
+                Email:formData.email,
+                PPic: profileImg ,
+                BrithD:formData.dob,
+                Address: formData.address
+            },
+            encounter:{
+                InformedConsent: '',
+                Complaint:formData.complaint,
+                DocNotes: formData.docNotes,
+                APACHE:formData.apache, 
+                GCS: formData.GCS, 
+                AdmitDateTime: formData.admitTime,
+                bedID:formData.bedID,
+                MorningNurseID:formData.morningNurse ,
+                EveningNurseID: formData.eveningNurse,
+                AdmittingDoctorID:formData.admitDoc,
+                ReferralDep: formData.refDepart
+            }
+        }
+        axios.post('http://localhost:5000/admit_patient', requestData, {
+            headers: {      
+              'Content-Type': 'application/json'
+            }
+          })
+        .then(response => {
+                console.log(response.data);
+                if (response.data.message === "admitted successfully") {
+                    // Redirect to another route, e.g., /dashboard
+                    navigate('/',formData);
+                } else {
+                    // Handle login failure, show error message etc.
+                    console.log('admitting failed');
+                }
+                // setServerResponse(response.data.message);
+                // setShow(true);
+                })
+
+            .catch(error => {
+                console.error('Error during checking:', error);
+                alert('addmiting failed failed: ' + error.message);
+            });
+    };
+
+    const handleCheckClick = (formData) => {
+
+        const body = {
+            NID: formData.NID
+          };
+      
+          axios.post('http://localhost:5000/check_patient', body, {
+            headers: {      
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(
+            response => {
+                if(response.data.message === "Valid User"){
+                    const patient = response.data.patient
+
+                    setFormData({
+                        ...formData,
+                        patient
+                    });
+                    setIsPatientFound(true);
+
+                }
+            
+            }
+          )
+          .catch(error => {
+            console.log(error);
+          });
+    };
 
     return (
         <div className="AdmitPatientCont">
@@ -116,14 +200,14 @@ const AdmitPatient = () => {
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob}
                                                onChange={handleInputChange}/>
                                     <OR/>
-                                    {/*
+                                    
                                     <UserText1 label="Address" type="text" name="address" value={formData.address}
                                                onChange={handleInputChange}/>
                                     <UserText1 label="Email" type="email" name="email" value={formData.email}
                                                onChange={handleInputChange}/>
                                     <UserText1 label="Phone" type="tel" name="phone" value={formData.phone}
                                                onChange={handleInputChange}/>
-                                               */}
+                                              
 
                                     <p id="stayTitle">Stay Details</p>
 
@@ -134,8 +218,17 @@ const AdmitPatient = () => {
                                     <List label="Referral Department" options={refDepart} name={"refDepart"}
                                           value={formData.refDepart}
                                           onChange={handleInputChange}/>
-                                    <List label="Bed ID" options={bedIDs} name="bedID" value={formData.bedID}
-                                          onChange={handleInputChange}/>
+                                    <div className="row">
+                                    <div className="col-6">
+                                            <UserText1 label="Bed Type" type="text" name="bedtype" value={formData.complaint}
+                                            onChange={handleInputChange}/>
+
+                                    </div>
+                                    <div className="col-6">
+                                            <List label="Bed ID" options={bedIDs} name="bedID" value={formData.bedID}
+                                            onChange={handleInputChange}/>
+                                    </div>
+                                    </div>
                                     <List label="Admitting doctor" options={doctors} name="admitDoc"
                                           value={formData.admitDoc}
                                           onChange={handleInputChange}/>
