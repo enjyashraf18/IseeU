@@ -11,24 +11,6 @@ def admin(): #view all employees and beds and patients
     data = request.json
     print(data)
     NID = data.get('NID')
-    username = data.get('username')
-    password = data.get('password')
-
-    cursor.execute("SELECT nid FROM employee WHERE nid = %s", (NID,))
-    valid_user = cursor.fetchone()
-    print(valid_user)
-    if valid_user:
-        cursor.execute("SELECT lastname FROM employee WHERE nid = %s", (NID,))
-        user_exist = cursor.fetchone()
-        print(user_exist)
-
-        if user_exist != [None]:
-            return jsonify({"error": "User already exists"}), 400
-        else:
-            query = """UPDATE employee SET username = %s, password = %s, firstname = %s, emailaddress = %s
-                            WHERE nid = %s"""
-            params = (username, password, "7amada", "", NID)
-            return execute_query(query, params)
 
 
 @admin_view.route('/admit', methods=['GET'])

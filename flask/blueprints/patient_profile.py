@@ -8,13 +8,16 @@ CORS(patient_profile, resources={
 
 @patient_profile.route('/PatientProfile', methods=['POST'])
 def patient():
+    # bed id
     # Initializing a list to store the data
     all_patient_data = []
+
 
     # Fetching data from allergicdrugs table
     cursor.execute("""
         SELECT *
         FROM allergicdrugs JOIN patients ON allergicdrugs.patientid = patients.nid
+        WHERE 
     """)
     allergicdrugs_data = cursor.fetchall()
     all_patient_data.extend(allergicdrugs_data)
