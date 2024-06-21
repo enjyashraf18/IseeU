@@ -1,4 +1,66 @@
+.nurseprofile{
+    background-color: var(--color-background-table);
+    box-sizing: border-box;
+    padding-top: 10px;
+}
 .flow_row_nurse{
     display: flex;
     flex-direction: row;
+}
+.medication_nurse{
+
+    background-color: white;
+    border-radius: 50px 50px;
+    height: 350px;
+}
+.medication_nurse h5,.patient_nurse h5,.nurse_staff  .Doctor_table_staff h5{
+    color: var(--color-main);
+    font-weight: bold;
+    position: relative;
+    left: 20px;
+    top:20px;
+    z-index: 1000;
+}
+.medication_nurse .table-responsive{
+    height: 300px;
+    
+}
+.medication_nurse .table-responsive thead th,.patient_nurse .table-responsive thead th{
+
+    background-color:white;
+    border: #EAEAEA;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 0;
+}
+.patient_nurse {
+    background-color: white;
+    border-radius: 50px 50px;
+    height: 315px;
+}
+.patient_nurse .table-responsive{
+    height: 240px;
+    
+}
+.nurse_staff .Doctor_table_staff{
+    height: 315px;
+}
+.nurse_staff  .Doctor_table_staff .table-responsive{
+   height: 122px;   
+}
+.patient_nurse .Number{
+    position: fixed;
+    top: 435px;
+    left: 165px;
+  
+}
+.patient_nurse .input{
+    position: fixed;
+    left:570px;
+    top:380px;
+}
+.nurse_staff  .Doctor_table_staff .input{
+    position: fixed;
+    top:380px;
+    left:1140px;
 }

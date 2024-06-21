@@ -77,7 +77,8 @@ max-width: 100%;;
 
 .fasearch {
   position: sticky;
-  top: 5px !important ;
+  top: 10px  ;
+
   cursor: pointer;
   z-index: 1000;
   color: gray;
@@ -88,11 +89,19 @@ max-width: 100%;;
   right: 300px;
   z-index: 900;
   top: 10px;
+
  
 }
 .tableComponent .input {
   margin-top: 24px;
   left: 1050px;
+}
+.input .bar-input {
+  width: 190px; /* Specify your desired width */
+  padding: 10px; /* Optional: add some padding */
+
+
+  box-sizing: border-box; /* Ensure padding is included in the width */
 }
 .tableComponent .fasearch{
   left: 1520px;
