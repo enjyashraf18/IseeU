@@ -19,7 +19,7 @@ def doc_report(): #add report for the patient from the doctor (after the doctor 
 
     #############        check      #################
     #get the encounter id from the bed id
-    cursor.execute("SELECT encounterid FROM encounters WHERE bedid = %s", (bed_id,))
+    cursor.execute("SELECT encounterid FROM encounters WHERE bedid = %s AND dischargedatetime IS NULL ", (bed_id,))
     encounter_id = cursor.fetchone()
 
     #create the initial report to get the report_id

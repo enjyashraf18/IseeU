@@ -1,11 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./AdminView.css";
 import {Card, Chart} from '../../components'; // Adjust import statement based on actual component paths
+import axios from 'axios'
 
 const AdminView = () => {
-    const bedsData = [55, 22]; // Assuming 55 beds available, 22 taken
-    const patientsNumber = 55;
+    const [bedsData, setBedsData ]= useState([55, 22]); // Assuming 55 beds available, 22 taken
+    const [patientsNumber, setPatientsNum] = useState(55);
+    const [staff , setStaff] = useState([], [])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const [responseEncounters, responseStaff] = await Promise.all([
+                axios.get('http://localhost:5000/doctor/current_encounters', {
+                  headers: { 'Content-Type': 'application/json' }
+                }),
+                axios.get('http://localhost:5000/doctor/current_employees', {
+                  headers: { 'Content-Type': 'application/json' }
+                })
+              ]);
+              const encounters = responseEncounters.data.active_encounters
+              setPatientsNum(encounters.length)
+              setBedsData([20, encounters.length])
+              const employeeData = responseStaff.data['active_employees']
+              const employeesData = employeeData.map(employee => [
+                employee[8], // ProfilePic
+                `${employee[4]} ${employee[5]}`, // FullName
+                employee[15], // Shift
+                employee[12]  // Role
+              ]);
+
+              const employeesAvailable = [];
+              const employeesUnavailable = [];
+              for (let i = 0; i < employeesData.length; i++) {
+                if (employeesData[i][2] === currentShift()) {
+                  employeesAvailable.push(employeesData[i]);
+                } else {
+                  employeesUnavailable.push(employeesData[i]);
+                }
+        
+              }
+        
+              setStaff([employeesUnavailable, employeesAvailable]);
+
+        }
+
+    },[])
     //should return number not 55 in span in doctors title
 
     return (

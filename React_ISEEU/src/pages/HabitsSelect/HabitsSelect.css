@@ -1,6 +1,6 @@
 
 
-.AdmitPatientCont {
+.HabitsCont {
     background-color: var(--color-main);
     align-items: center; /* Align items vertically */
     display: flex;
@@ -9,19 +9,39 @@
     min-height: 100vh;
 }
 
-#profilePreview {
+#SelectPreview  {
     min-height: 80vh; /* Adjust the minimum height as needed */
-    height: 89vh; /* Set height to auto */
+    height: 100vh; /* Set height to auto */
+    background-color: #ededed;
+    padding: 4vh 3vh ;
+    text-align: center;
 }
-
+.selectedItem{
+    font-size: 2vh;
+    color: #1a1a1a;
+    list-style-type: none;
+}
+.selectedHeader{
+    font-size: 3vh;
+    font-weight: bold;
+    color: var(--color-main);
+    list-style-type: none;
+}
 #inputs {
     min-height: 89vh;
 }
+.selectOption{
+    color: #1a1a1a;
 
-#AdmitForm {
+
+}
+.optionP{
+    font-size: 3vh;
+}
+
+#SelectForm {
     background-color: #F5F5F5;
     border-radius: 20px 20px 0 0;
-    padding: 3vh 4vh;
     min-height: 50vh; /* Adjust the minimum height as needed */
     height: 92vh; /* Set height to auto */
     max-width: 80%; /* Set maximum width */
@@ -30,19 +50,14 @@
     bottom: 0; /* Stick to the bottom */
     left: 0; /* Align left edge with container */
     right: 0; /* Align right edge with container */
+    overflow: hidden;
 }
 #inputs{
     height: 600px;
     overflow-y: scroll;
     padding: 3vw;
 }
-#profileImg{
-    width: 100%;
-    height: 100%;
-    max-height: 30vh;
-    margin: 3vh 0;
-}
-#scndTitle, #stayTitle{
+#scndTitle{
     text-align: center;
     color: var(--color-main);
     margin-bottom: 15px;
@@ -50,48 +65,9 @@
     font-size: 5vh;
     font-weight: 600;
 }
-#imgSpecs{
-    text-align: left;
-    color: #000000;
-    font-size: 2vh;
-    font-weight: 300;
-}
 .scroller {
     --scrollbar-color-thumb: hotpink;
     --scrollbar-color-track: blue;
     --scrollbar-width: thin;
     --scrollbar-width-legacy: 0.5rem;
-}
-#checkBtn{
-    height: 3vh;
-    font-size: 2vh;
-    margin-top: 1.9vh;
-    align-self: end;
-}
-#docNotes{
-    background-color: #E9F5F4;
-    width: 100%;
-    height: 230px;
-    border:#549991 1px solid;
-    border-radius: 20px;
-    padding: 10px ;
-    font-family: var(--font-family);
-    font-size: large;
-    text-align: left;
-}
-#docNotesLabel {
-    color:var(--color-box);
-    width: 90%;
-    margin-left: 4%;
-    font-weight:500;
-    font-size: 2vh;
-
-}
-#consentLabel {
-    color:var(--color-box);
-    width: 90%;
-    margin-left: 4%;
-    font-weight:500;
-    font-size: 2vh;
-
 }

@@ -227,9 +227,6 @@ const AddReport = (prop) => {
       return dosesPerDay;
     }
     
-
-    
-  
     function transformMedications (medication) {
       const newMed = []
       for(let i = 0; i < medication.length; i++ ){

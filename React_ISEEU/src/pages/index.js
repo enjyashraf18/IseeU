@@ -11,7 +11,7 @@ export{default as LayoutComponent} from"./LayoutComponent/LayoutComponent";
 export{default as TestComponent} from"./test";
 export {default as AdminView} from "./AdminView/AdminView"
 
-
+export{default as AdmitPatient} from "./AdmitPatient/AdmitPatient"
 export{default as PatientProfile} from "./Patient_profile/Patient_profile";
 export {default as NurseProfile} from "./nurseProfile/NurseProfile";
 
