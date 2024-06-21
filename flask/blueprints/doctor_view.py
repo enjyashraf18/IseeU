@@ -8,7 +8,7 @@ CORS(doctor_view, resources={
 
 
 @doctor_view.route('/doctor/report', methods=['POST'])
-def doc_report(): #add report for the patient from the doctor (after the doctor click on the submit button in add report page)
+def doc_report():  # add report for the patient from the doctor (after the doctor click on the submit button in add report page)
     data = request.json
     print(data)
     bed_id = data.get('bed_id')
@@ -18,20 +18,27 @@ def doc_report(): #add report for the patient from the doctor (after the doctor 
     curr_time = data.get('currentTime')
 
     #############        check      #################
-    #get the encounter id from the bed id
+    # get the encounter id from the bed id
     cursor.execute("SELECT encounterid FROM encounters WHERE bedid = %s AND dischargedatetime IS NULL ", (bed_id,))
     encounter_id = cursor.fetchone()
 
-    #create the initial report to get the report_id
-    #excute_query(add encounter_id, reporter doc, notes)
-    report_id = 1 # placeholder (select report_id from reports where encounter_id)
+    # create the initial report to get the report_id
+    initial_report_query = "INSERT INTO reports (notes, reportdoctorid, encounter) VALUES (%s, %s, %s) RETURNING reportid"
+    initial_report_params = (notes, reporter_doc, encounter_id)
+    cursor.execute(initial_report_query, initial_report_params)
+    report_id = cursor.fetchone()[0]
 
     medication_flag = doc_medications(report_id, data.get('medications'))
     investigation_flag = doc_investigation(report_id, data.get('investigations'))
-    #update the report with the flags of it
+    # update the report with the flags of it
+    update_report_query = "UPDATE reports SET medicationflag = %s, scansflag = %s WHERE reportid = %s"
+    update_report_params = (medication_flag, investigation_flag, report_id)
+    cursor.execute(update_report_query, update_report_params)
 
-    #update lastcheckup time with currentTime
-    #excute query update encounters laste check value = current time
+    # update lastcheckup time with currentTime
+    update_encounter_query = "UPDATE encounters SET lastcheckup = %s WHERE encounterid = %s"
+    update_encounter_params = (curr_time, encounter_id)
+    cursor.execute(update_encounter_query, update_encounter_params)
 
     database_session.commit()
     return jsonify({"message": "Report added successfully"}), 200
@@ -50,18 +57,21 @@ def doc_investigation(report_id, investigation):
         execute_query(query, params)
         return True
     return False
+
+
 # @doctor_view.route('/doctor/medications', methods=['POST'])
-def doc_medications(report_id, medication): #add medication for the patient from the doctor
+def doc_medications(report_id, medication):  # add medication for the patient from the doctor
     # data = request.json
     # print(data)
     # patient_id = data.get('patient_id')
     # medication = data.get('medication')
-    #cursor.execute("UPDATE patients SET medication = %s WHERE patient_id = %s", (medication, patient_id))
+    # cursor.execute("UPDATE patients SET medication = %s WHERE patient_id = %s", (medication, patient_id))
     database_session.commit()
     return jsonify({"message": "Medication added successfully"}), 200
 
+
 @doctor_view.route('/doctor/current_encounters', methods=['GET'])
-def current_encounters(): #view all active patients ( dischargedatetime in encounters is NULL)
+def current_encounters():  # view all active patients ( dischargedatetime in encounters is NULL)
     cursor.execute("""
         SELECT *
         FROM encounters JOIN patients ON encounters.patientid = patients.nid
@@ -70,15 +80,15 @@ def current_encounters(): #view all active patients ( dischargedatetime in encou
     active_encounters = cursor.fetchall()
     return jsonify({"active_encounters": active_encounters})
 
+
 @doctor_view.route('/doctor/current_employees', methods=['GET'])
-def current_employees(): # View all active employees (role should be either doctor or nurse)
+def current_employees():  # View all active employees (role should be either doctor or nurse)
     cursor.execute("""
         SELECT * FROM employee
         WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' OR employee.role = 'Nurse')
     """)
     active_employees = cursor.fetchall()
     return jsonify({"active_employees": active_employees})
-
 
 # @doctor_view.route('/doctor', methods=['POST'])
 # def doctor(): #view all employees and beds and patients for the doctor
@@ -110,9 +120,3 @@ def current_employees(): # View all active employees (role should be either doct
 #     cursor.execute("SELECT * FROM patients")
 #     patients = cursor.fetchall()
 #     return jsonify({"patients": patients})
-
-
-
-
-
-
