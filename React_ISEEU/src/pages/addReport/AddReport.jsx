@@ -11,9 +11,32 @@ const AddReport = (prop) => {
    
   const initialMedication=[["Devil Breath (500gm)","5  /day","5 weeks"],] /**here i take the intial medication from database */
   const medication_header=["    ","  "," "," "]
-  const initialtestsCheckups1=[["cbc","checked"],["db","unchecked"],["cbcc","checked"]]; /**take  the tests from database */
+    const initialtestsCheckups1 = [
+        ["Blood Test", "unchecked"],
+        ["CBC", "unchecked"],
+        ["CMP", "unchecked"],
+        ["Liver Panel", "unchecked"],
+        ["Renal Panel", "unchecked"],
+        ["Lipid Panel", "unchecked"],
+        ["Thyroid Panel", "unchecked"],
+        ["Coagulation Panel", "unchecked"]
+    ];
+    /**take  the tests from database */
+
   const columns_tests_checkups1=["A"," "];
-  const initialscansCheckups=[["Chest","checked"],["Brain MRI","unchecked"],["X-Ray","checked"]]; /**take the scans from database */
+    const initialscansCheckups = [
+        ["CT Scan", "unchecked"],
+        ["Head CT", "unchecked"],
+        ["Chest CT", "checked"],
+        ["Abd CT", "unchecked"],
+        ["MRI", "unchecked"],
+        ["Brain MRI", "checked"],
+        ["Spinal MRI", "unchecked"],
+        ["Cardiac MRI", "unchecked"],
+        ["X-ray", "unchecked"],
+        ["Chest X-ray", "unchecked"]
+    ];
+    ; /**take the scans from database */
   const columns_scans_checkups=["B"," "];
   const options = ['day', 'week', 'month'];
   const options_duartion = ['days', 'weeks', 'months'];
