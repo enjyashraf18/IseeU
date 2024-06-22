@@ -257,5 +257,15 @@ def all_nurses():
     nurses = cursor.fetchall()
     return jsonify({"all_nurses": nurses})
 
+#get all equipment
+@admin_view.route('/admin/equipment', methods=['GET'])
+def all_equipment():
+    cursor.execute("""
+        SELECT *
+        FROM equipment
+    """)
+    equipment = cursor.fetchall()
+    return jsonify({"equipment": equipment})
+
 
 
