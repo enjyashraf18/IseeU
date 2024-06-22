@@ -31,8 +31,9 @@ const PatientAnalysis = () => {
   const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
   const [encounters, setEncounters] = useState(patientAnalysisData);
   const [loading, setLoading] = useState(true);
+   const user = JSON.parse(localStorage.getItem('user'));
 
-  const role="Admin";
+  const role=user.role;
   const label="Add";
   const flag=true;
   const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]

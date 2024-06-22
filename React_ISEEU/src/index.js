@@ -47,7 +47,7 @@ import { Register2 } from "./pages";
       },
        
       {
-        path: "/Doctor_View",
+        path: "/doctordashboard",
         element: <Doctor_View/>
       },
       {
@@ -62,7 +62,7 @@ import { Register2 } from "./pages";
       },
       {
 
-        path: "/NurseProfile",
+        path: "/nursedashboard",
         element: <NurseProfile/>
       },
 

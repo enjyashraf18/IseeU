@@ -14,9 +14,11 @@ const ProSide = (prop) => {
     const [activeItem, setActiveItem] = useState(null);
 
     const handleItemClick = (item) => {
+
         console.log(item.label);
-        navigate(`${item.link}`,{replace: true});
+        if(item.label === 'logout') {localStorage.clear();}
         setActiveItem(item);
+        navigate(`${item.link}`,{replace: true});
 
 
     };
@@ -24,25 +26,29 @@ const ProSide = (prop) => {
     const adminSidebarItems = [
         { id: 1, label: 'Admin Dashboard', icon: 'fa-solid fa-user-shield' ,link:'/admindashboard' },
         { id: 2, label: 'Doctors', icon: 'fa-solid fa-users',link:'/doctorsdata'  },
-        { id: 2, label: 'Nurses', icon: 'fa-solid fa-users',link:'/nursesdata'  },
-        { id: 3, label: 'Current Encounters', icon: 'fa-solid fa-chart-line',link:'/currentencounters'  },
-        { id: 3, label: 'Encounters History', icon: 'fa-solid fa-chart-line',link:''  },
-        { id: 4, label: 'All Patients', icon: 'fa-solid fa-envelope',link:'' },
-        { id: 4, label: 'Devices', icon: 'fa-solid fa-envelope',link:'' },
+        { id: 3, label: 'Nurses', icon: 'fa-solid fa-users',link:'/nursesdata'  },
+        { id: 4, label: 'Current Encounters', icon: 'fa-solid fa-chart-line',link:'/currentencounters'  },
+        { id: 5, label: 'Encounters History', icon: 'fa-solid fa-chart-line',link:'/allencounters'  },
+        { id: 6, label: 'All Patients', icon: 'fa-solid fa-envelope',link:'/patients' },
+        { id: 7, label: 'Equipments', icon: 'fa-solid fa-envelope',link:'/Equipments' },
+        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:'/profile'  },
 
 
     ];
 
     const docSidebarItems = [
-        { id: 1, label: 'Doctor View', icon: 'fa-solid fa-user-md' },
-        { id: 2, label: 'Patient Analysis', icon: 'fa-solid fa-chart-line' },
+        { id: 1, label: 'Doctor Dashboard', icon: 'fa-solid fa-user-md', link: '/doctordashboard' },
+        { id: 2, label: 'Current Encounters', icon: 'fa-solid fa-chart-line', link: '/currentencounters' },
+        { id: 3, label: 'Reports History', icon: 'fa-solid fa-chart-line',link:'/reports'  },
+        { id: 3, label: 'Investigations Tracking', icon: 'fa-solid fa-chart-line',link:'/investigations'  },
+        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:'/profile'  },
 
-        { id: 5, label: 'Logout', icon: '',link:'' }
     ];
 
     const nurseSidebarItems = [
-        { id: 1, label: 'Login', icon: 'fa-solid fa-sign-in-alt' },
-        { id: 2, label: 'Register', icon: 'fa-solid fa-user-plus' },
+        { id: 1, label: 'Nurse Dashboard', icon: 'fa-solid fa-sign-in-alt',link: '/nursedashboard' },
+        { id: 2, label: 'Current Encounters', icon: 'fa-solid fa-chart-line', link: '/currentencounters' },
+        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:'/profile'  },
 
     ];
 
