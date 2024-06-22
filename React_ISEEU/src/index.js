@@ -68,12 +68,12 @@ import { Register2 } from "./pages";
       },
       {
 
-        path: "/Add_Report",
+        path: "/addreport",
         element: <Report/>
       },
       {
 
-        path: "/PatientProfile",
+        path: "/patientprofile",
         element: <PatientProfile/>
       },
       {
@@ -88,10 +88,7 @@ import { Register2 } from "./pages";
       //     element:<TestComponent />      
       //   },
 
-      {
-        path: "/Doctor_View",
-        element: <Doctor_View/>
-      },
+
 
        {
           path: "/login",
