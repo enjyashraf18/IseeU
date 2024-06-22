@@ -115,3 +115,29 @@ def current_employees():  # View all active employees (role should be either doc
     """)
     active_employees = cursor.fetchall()
     return jsonify({"active_employees": active_employees})
+
+@doctor_view.route('/doctor/doctor_investigations', methods=['POST'])
+def doctor_investigations():
+    data = request.json
+    print(data)
+    DID = data.get('DID')
+    cursor.execute("""
+        SELECT * 
+        FROM investigations
+        WHERE orderedby = %s
+    """, (DID,))
+    investigations = cursor.fetchall()
+    return jsonify({"doctor_investigations": investigations})
+
+@doctor_view.route('/doctor/doctor_reports', methods=['POST'])
+def doctor_reports():
+    data = request.json
+    print(data)
+    DID = data.get('DID')
+    cursor.execute("""
+        SELECT * 
+        FROM reports
+        WHERE reportdoctorid = %s
+    """, (DID,))
+    reports = cursor.fetchall()
+    return jsonify({"doctor_reports": reports})
