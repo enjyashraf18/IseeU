@@ -5,7 +5,7 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-import {DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,PatientProfile,NurseProfile, AdminView, Loading } from "./pages";
+import {Equipments,AllPatients,DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,PatientProfile,NurseProfile, AdminView, Loading } from "./pages";
 
 import{
     createBrowserRouter,
@@ -17,6 +17,14 @@ import { Register2 } from "./pages";
     {
       path: "/",
       element: <App/>
+    },
+    {
+      path: "/admin/patients",
+      element: <AllPatients/>
+    },
+    {
+      path: "/admin/equips",
+      element: <Equipments/>
     },
     {
       path: "/admindashboard",
