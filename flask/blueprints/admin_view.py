@@ -2,16 +2,21 @@ from flask import request, jsonify, Blueprint
 from flask_cors import CORS
 from database import cursor, database_session, execute_query
 
+# Create a blueprint for the admin view
 admin_view = Blueprint("admin_view", __name__, static_folder="static", template_folder="templates")
 CORS(admin_view, resources={
-    r"/*": {"origins": "http://localhost:3000"}})  # Allow CORS for the login blueprint (Cross-Origin Resource Sharing
+    r"/*": {"origins": "http://localhost:3000"}})
+# Allow CORS for the login blueprint (Cross-Origin Resource Sharing)
 
+
+# route to retrieve nurse data based on NID
 @admin_view.route('/admin/nurses', methods=['POST'])
 def admin_nurses():
     data = request.json
     print(data)
     NID = data.get('NID')
 
+    # Fetch nurse data
     cursor.execute("""
            SELECT *
            FROM employee
@@ -22,12 +27,15 @@ def admin_nurses():
     return jsonify({"admin_nurse": admin_nurse})
 
 
+# Route to retrieve employee data based on NID
 @admin_view.route('/admin/employee', methods=['POST'])
 def admin_employees():
+    # return data of a specific employee
     data = request.json
     print(data)
     NID = data.get('NID')
 
+    # Fetch employee data
     cursor.execute("""
            SELECT *
            FROM employee
@@ -37,30 +45,37 @@ def admin_employees():
     admin_employee = cursor.fetchall()
     return jsonify({"admin_employee": admin_employee})
 
+
+# Route to check whether a specific patient exists
 @admin_view.route('/check_patient', methods=['POST'])
 def check_patient():
-        data = request.json
-        print(data)
-        NID = data.get('NID')
+    # checks whether a specific patient exists
+    data = request.json
+    print(data)
+    NID = data.get('NID')
 
-        cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
-        patient_exists = cursor.fetchone()
+    # Check if patient exists
+    cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
+    patient_exists = cursor.fetchone()
 
-        if patient_exists: # patient exists in the db
-            cursor.execute("""
-                           SELECT *
-                           FROM patients
-                           WHERE nid = %s 
-                       """, (NID,))
+    if patient_exists:
+        # Fetch patient data
+        cursor.execute("""
+                               SELECT *
+                               FROM patients
+                               WHERE nid = %s 
+                           """, (NID,))
 
-            patient_data = cursor.fetchall()
-            return jsonify({"admin_employee": patient_data})
-        else: # patient does not exist in the db
-            return jsonify({"message": "User does not exist"}), 400
+        patient_data = cursor.fetchall()
+        return jsonify({"admin_employee": patient_data})
+    else:  # patient does not exist in the db
+        return jsonify({"message": "patient does not exist"}), 400
 
 
+# Route to admit/update patient data
 @admin_view.route('/admin/admitPatient', methods=['POST'])
 def admit_update_patient():
+    # Extract relevant data
     data = request.json
     print(data)
     updateFlag = data.get('updateFlag')
@@ -153,8 +168,10 @@ def admit_update_patient():
 
     database_session.commit()
 
+# route to add an employee (doctor / nurse)
 @admin_view.route('/admin/add_employee', methods=['POST'])
 def add_employee():
+    #fetch employee data
     data = request.json
     print(data)
     NID = data.get('NID')
@@ -170,6 +187,7 @@ def add_employee():
     datehired = data.get('dateHired')
     role = data.get('role')
 
+    # checks if the employee already exists
     cursor.execute("SELECT nid FROM employee WHERE nid = %s", (NID,))
     user_exists = cursor.fetchone()
     if user_exists:  
@@ -230,6 +248,7 @@ def available_beds(bed_type):
     else:
         return jsonify({"error": "No available beds of this type"}), 400
 
+# route to fetch all the doctors
 @admin_view.route('/admin/doctors', methods=['GET'])
 def all_doctors():
 
@@ -244,6 +263,7 @@ def all_doctors():
     return jsonify({"all_doctors": doctors})
 
 
+# route to fetch all the nurses 
 @admin_view.route('/admin/nurses', methods=['GET'])
 def all_nurses():
 
