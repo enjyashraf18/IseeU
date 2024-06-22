@@ -1,8 +1,5 @@
 #adminCont {
     background-color: #EAEAEA;
-    min-height: 100vh; /* Ensures minimum height is 100% of the viewport */
-    height: 100vh; /* Ensures height is 100% of the viewport */
-    position: absolute; /* Makes it fill the viewport */
     padding: 2vh;
     top: 0;
     left: 0;
@@ -152,4 +149,7 @@ button#dischargeButton:hover {
 #statsPanel {
     background-color: #F5F5F5;
     border-radius: 3vh;
+}
+#SideBarAdmin{
+    margin-top: -2vh;
 }
