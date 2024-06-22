@@ -216,5 +216,19 @@ def available_evening_nurses():
     """)
     return cursor.fetchall()
 
+#check if there's available beds of a certain type
+def available_beds(bed_type):
+    avaialable_beds_query = """
+        SELECT *
+        FROM bed
+        WHERE bedtype = 'Standard' AND isoccupied IS NOT TRUE
+    """
+    cursor.execute(avaialable_beds_query, (bed_type,))
+    beds = cursor.fetchall()
+    if beds:
+        return beds
+    else:
+        return jsonify({"error": "No available beds of this type"}), 400
+
 
 
