@@ -230,5 +230,32 @@ def available_beds(bed_type):
     else:
         return jsonify({"error": "No available beds of this type"}), 400
 
+@admin_view.route('/admin/doctors', methods=['POST'])
+def all_doctors():
+    
+    # return all the doctors
+    cursor.execute("""
+           SELECT *
+           FROM employee
+           WHERE employee.role = 'Doctor' :: ROLE
+       """)
+
+    doctors = cursor.fetchall()
+    return jsonify({"all_doctors": doctors})
+
+
+@admin_view.route('/admin/nurses', methods=['POST'])
+def all_nurses():
+
+    # return all the nurses
+    cursor.execute("""
+           SELECT *
+           FROM employee
+           WHERE employee.role = 'Nurse' :: ROLE
+       """)
+
+    nurses = cursor.fetchall()
+    return jsonify({"all_nurses": nurses})
+
 
 

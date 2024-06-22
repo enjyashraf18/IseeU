@@ -47,7 +47,7 @@ def nurse_profile():
     # displaying all the available doctors
     cursor.execute("""
         SELECT * FROM employee
-        WHERE employee.dateleft IS NULL AND employee.role = 'Doctor'
+        WHERE employee.dateleft IS NULL AND employee.role = 'Doctor' :: ROLE
     """)
 
     nurse_data["doctors"] = cursor.fetchall()

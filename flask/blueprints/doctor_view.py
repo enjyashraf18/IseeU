@@ -111,7 +111,7 @@ def current_encounters():  # view all active patients ( dischargedatetime in enc
 def current_employees():  # View all active employees (role should be either doctor or nurse)
     cursor.execute("""
         SELECT * FROM employee
-        WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' OR employee.role = 'Nurse')
+        WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' :: ROLE OR employee.role = 'Nurse' :: ROLE)
     """)
     active_employees = cursor.fetchall()
     return jsonify({"active_employees": active_employees})
