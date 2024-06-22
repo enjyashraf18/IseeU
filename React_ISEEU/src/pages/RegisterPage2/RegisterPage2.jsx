@@ -7,9 +7,9 @@ import axios from 'axios'
 
 
 
-    const form1data = JSON.parse(localStorage.getItem('formData'));
+const form1data = JSON.parse(localStorage.getItem('formData'));
 
-    console.log(form1data)
+console.log(form1data)
 
 const Register2 = () => {
 
@@ -34,7 +34,7 @@ const Register2 = () => {
 
 
 
-    
+
 
     const navigate = useNavigate();
     // const location = useLocation();
@@ -76,41 +76,41 @@ const Register2 = () => {
 
 
 
-      const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.password !== formData.passwordConfirm) {
             alert("Passwords do not match");
             return;
-        }            
- 
+        }
+
 
 
         console.log("FormData to be sent:", formData);  // Debug statement
-  
-        axios.post('http://localhost:5000/Register', formData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-        .then(response => {
-            console.log(response.data);
 
-            // setServerResponse(response.data.message);
-            // setShow(true);
+        axios.post('http://localhost:5000/Register', formData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                console.log(response.data);
+
+                // setServerResponse(response.data.message);
+                // setShow(true);
             })
-        // Save form data to localStorage
-        // navigate('/success'); // navigate to a success page or another route if needed
-                
-    .catch(error => {
-        console.log(error);
-      });
+            // Save form data to localStorage
+            // navigate('/success'); // navigate to a success page or another route if needed
+
+            .catch(error => {
+                console.log(error);
+            });
     };
-  
+
 
 
     return (
-        
-            <div className={"reg2Cont"}>
+
+        <div className={"reg2Cont"}>
             <div className="container-fluid">
                 <div className="row">
                     <div id="regForm2" className="col-10 mx-auto">
@@ -124,15 +124,15 @@ const Register2 = () => {
                                 <div id="inputs" className="col-9">
                                     <p id="scndTitle">Personal Info</p>
                                     <div className="row">
-                                            <div className="col-6">
-                                                <UserText1 label="First name" type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
-                                            </div>
-                                            <div className="col-6">
-                                                <UserText1 label="Last name" type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
-                                            </div>
+                                        <div className="col-6">
+                                            <UserText1 label="First name" type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
+                                        </div>
+                                        <div className="col-6">
+                                            <UserText1 label="Last name" type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+                                        </div>
                                     </div>
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob} onChange={handleInputChange} />
-                                    <OR />
+                                    <OR formData={formData} onChange={setFormData}/>
                                     <UserText1 label="Address" type="text" name="address" value={formData.address} onChange={handleInputChange} />
                                     <UserText1 label="Email" type="email" name="email" value={formData.email} onChange={handleInputChange} />
                                     <UserText1 label="Phone" type="number" name="phone" value={formData.phone} onChange={handleInputChange} />
