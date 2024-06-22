@@ -9,7 +9,10 @@ CORS(admin_view, resources={
 # Allow CORS for the login blueprint (Cross-Origin Resource Sharing)
 
 
+<<<<<<< HEAD
 # route to retrieve nurse data based on NID
+=======
+>>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 @admin_view.route('/admin/nurses', methods=['POST'])
 def admin_nurses():
     data = request.json
@@ -46,14 +49,20 @@ def admin_employees():
     return jsonify({"admin_employee": admin_employee})
 
 
+<<<<<<< HEAD
 # Route to check whether a specific patient exists
 @admin_view.route('/check_patient', methods=['POST'])
 def check_patient():
     # checks whether a specific patient exists
+=======
+@admin_view.route('/check_patient', methods=['POST'])
+def check_patient():
+>>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
     data = request.json
     print(data)
     NID = data.get('NID')
 
+<<<<<<< HEAD
     # Check if patient exists
     cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
     patient_exists = cursor.fetchone()
@@ -65,11 +74,26 @@ def check_patient():
                                FROM patients
                                WHERE nid = %s 
                            """, (NID,))
+=======
+    cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
+    patient_exists = cursor.fetchone()
+
+    if patient_exists:  # patient exists in the db
+        cursor.execute("""
+                           SELECT *
+                           FROM patients
+                           WHERE nid = %s 
+                       """, (NID,))
+>>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 
         patient_data = cursor.fetchall()
         return jsonify({"admin_employee": patient_data})
     else:  # patient does not exist in the db
+<<<<<<< HEAD
         return jsonify({"message": "patient does not exist"}), 400
+=======
+        return jsonify({"message": "User does not exist"}), 400
+>>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 
 
 # Route to admit/update patient data
@@ -168,7 +192,11 @@ def admit_update_patient():
 
     database_session.commit()
 
+<<<<<<< HEAD
 # route to add an employee (doctor / nurse)
+=======
+
+>>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 @admin_view.route('/admin/add_employee', methods=['POST'])
 def add_employee():
     #fetch employee data
@@ -190,7 +218,7 @@ def add_employee():
     # checks if the employee already exists
     cursor.execute("SELECT nid FROM employee WHERE nid = %s", (NID,))
     user_exists = cursor.fetchone()
-    if user_exists:  
+    if user_exists:
         return jsonify({"error": "User already exists"}), 400
     else:
         query = """INSERT INTO employee (nid, role, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired, role)
@@ -203,7 +231,24 @@ def add_employee():
 
         return execute_query(query, params)
 
+
 #get the nurses that have less than 5 patients (one morning shift and another night shift)
+@admin_view.route('/admin/available_nurses', methods=['GET'])
+def available_nurses():
+    morning_nurses = available_morning_nurses()
+    evening_nurses = available_evening_nurses()
+
+    return jsonify({"morning_nurses": morning_nurses, "evening_nurses": evening_nurses})
+
+
+#check if there's available beds of a certain type
+@admin_view.route('/admin/available_beds', methods=['POST'])
+def available_beds():
+    bed_type = request.json.get('bedtype')
+    beds = available_beds_fn(bed_type)
+    return jsonify({"available_beds": beds})
+
+
 def available_morning_nurses():
     cursor.execute("""
         SELECT *
@@ -218,6 +263,7 @@ def available_morning_nurses():
         )
     """)
     return cursor.fetchall()
+
 
 def available_evening_nurses():
     cursor.execute("""
@@ -234,12 +280,13 @@ def available_evening_nurses():
     """)
     return cursor.fetchall()
 
+
 #check if there's available beds of a certain type
-def available_beds(bed_type):
+def available_beds_fn(bed_type):
     avaialable_beds_query = """
         SELECT *
         FROM bed
-        WHERE bedtype = 'Standard' AND isoccupied IS NOT TRUE
+        WHERE bedtype = %s AND isoccupied IS NOT TRUE
     """
     cursor.execute(avaialable_beds_query, (bed_type,))
     beds = cursor.fetchall()
@@ -248,10 +295,13 @@ def available_beds(bed_type):
     else:
         return jsonify({"error": "No available beds of this type"}), 400
 
+<<<<<<< HEAD
 # route to fetch all the doctors
+=======
+
+>>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 @admin_view.route('/admin/doctors', methods=['GET'])
 def all_doctors():
-
     # return all the doctors
     cursor.execute("""
            SELECT *
@@ -266,7 +316,6 @@ def all_doctors():
 # route to fetch all the nurses 
 @admin_view.route('/admin/nurses', methods=['GET'])
 def all_nurses():
-
     # return all the nurses
     cursor.execute("""
            SELECT *
@@ -278,4 +327,34 @@ def all_nurses():
     return jsonify({"all_nurses": nurses})
 
 
+#get all equipment
+@admin_view.route('/admin/equipment', methods=['GET'])
+def all_equipment():
+    cursor.execute("""
+        SELECT *
+        FROM equipment
+    """)
+    equipment = cursor.fetchall()
+    return jsonify({"equipment": equipment})
 
+
+#get all patients
+@admin_view.route('/admin/patients', methods=['GET'])
+def all_patients():
+    cursor.execute("""
+        SELECT *
+        FROM patients
+    """)
+    patients = cursor.fetchall()
+    return jsonify({"patients": patients})
+
+
+#get all encounters
+@admin_view.route('/admin/encounters', methods=['GET'])
+def all_encounters():
+    cursor.execute("""
+        SELECT *
+        FROM encounters
+    """)
+    encounters = cursor.fetchall()
+    return jsonify({"encounters": encounters})
