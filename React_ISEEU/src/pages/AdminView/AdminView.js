@@ -48,13 +48,13 @@ const AdminView = () => {
     
             const employeeData = responseStaff.data.active_employees
             const employeesData = employeeData.map(employee => [
-                employee[7], // ProfilePic
+                // employee[7], // ProfilePic
                 `${employee[3]} ${employee[4]}`, // FullName
                 employee[14], // Shift
                 employee[11],  // Role
                 calculateAge(employee[8])
             ]);
-            setStaff(employeeData)
+            setStaff(employeesData)
             console.log(employeesData)
             setLoading(false)
               
