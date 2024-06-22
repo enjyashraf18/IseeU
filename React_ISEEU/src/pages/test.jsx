@@ -38,92 +38,63 @@ function TestComponent() {
       return "Night";
     }
   }
-  useEffect(
-    ()=>{
-        const fetchData = async () => {
-            const body = {
-                NID: 'N001'
-            }
-            // Perform the axios GET request
-            const response = await axios.post('http://localhost:5000//NurseProfile', body,{
-                    headers: { 'Content-Type': 'application/json' }
-                  })                  
-               
 
-            const responseData = response.data
-            const rawdoc = response.data.nurse_data.doctors
-            const rawpat = response.data.nurse_data.patients
-            const rawmed = response.data.nurse_data.medications
-
-            console.log(responseData)
-            for(let i=0;i<rawmed.length; i++ ){
-                const key = rawmed[i][9]
-                meddata[key] = rawmed[i][30];
-                 displayMedications.push(
-                   [
-                     `${rawmed[i][38]} (${rawmed[i]}gm)`,
-                     rawmed[i][9],
-                     `${rawmed[i][20]} ${rawmed[i][21]}`,
-                     calcNextDose(rawmed[i][33], rawmed[i][35])
-                   ]
-                 )
-              }
-
-            console.log(displayMedications)
-
-
-            for(let i=0;i<rawpat.length; i++ ){
-              displayedPatients.push([
-                rawpat[i][24], // Profile Picture of the patient
-                `${rawpat[i][20]} ${rawpat[i][21]}`, // First name and last name
-                rawpat[i][9], // Bed No of the encounter
-                rawpat[i][3]
-              ])
-            }
-            console.log(displayedPatients)
-
-            for(let i=0;i<rawdoc.length; i++ ){
-              displayedPatients.push([
-                rawpat[i][24], // Profile Picture of the patient
-                `${rawpat[i][20]} ${rawpat[i][21]}`, // First name and last name
-                rawpat[i][9], // Bed No of the encounter
-                rawpat[i][3]
-              ])
-            }
-                    // Process staff
-      const doc = rawdoc.map(employee => [
-        employee[7], // ProfilePic
-        `DR ${employee[3]} ${employee[4]}`, // FullName
-        employee[14], // Shift
-      ]);
-
-      const docAvailable = [];
-      const docUnavailable = [];
-
-      for (let i = 0; i < doc.length; i++) {
-        if (doc[i][2] === currentShift()) {
-          docAvailable.push(doc[i]);
-        } else {
-          docUnavailable.push(doc[i]);
-        }
-
-      }
-
-      // console.log(currentShift())
-      console.log(docAvailable)
-      console.log(docUnavailable)
-
-
-      
-
-    
-      }
-    
-        // Call the async function to fetch data
-        fetchData();
-
+  function calculateAge(dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
-)
+    return age;
+  }
+  const [bedsData, setBedsData ]= useState([20, 15]); // Assuming 55 beds available, 22 taken
+  const [patientsNumber, setPatientsNum] = useState(20);
+  const [staff , setStaff] = useState([], [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+        // const [responseEncounters, responseStaff] = await Promise.all([
+        //     axios.get('http://localhost:5000/doctor/current_encounters', {
+        //         headers: { 'Content-Type': 'application/json' }
+        //     }),
+        //     axios.get('http://localhost:5000/doctor/current_employees', {
+        //         headers: { 'Content-Type': 'application/json' }
+        //     })
+        // ]);
+        const responseEncounters = await axios.get('http://localhost:5000/doctor/current_encounters', {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const encounters = responseEncounters.data.active_encounters
+        console.log(encounters)
+        setPatientsNum(encounters.length)
+        setBedsData([20, encounters.length])
+        console.log(patientsNumber)
+        console.log(bedsData)
+
+        const responseStaff = await axios.get('http://localhost:5000/doctor/current_employees', {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+
+        const employeeData = responseStaff.data.active_employees
+        const employeesData = employeeData.map(employee => [
+            employee[7], // ProfilePic
+            `${employee[3]} ${employee[4]}`, // FullName
+            employee[14], // Shift
+            employee[11],  // Role
+            calculateAge(employee[8])
+        ]);
+        setStaff(employeeData)
+        console.log(employeesData)
+
+          
+    }
+    fetchData()
+
+},[])
 
 
  // Empty array means this effect runs once when the component mounts

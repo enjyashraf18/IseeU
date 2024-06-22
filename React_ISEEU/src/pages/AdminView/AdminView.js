@@ -1,54 +1,74 @@
 import React, { useEffect, useState } from 'react';
 import "./AdminView.css";
-import {Card, Chart} from '../../components'; // Adjust import statement based on actual component paths
+import {Card, Chart,ProSide} from '../../components'; // Adjust import statement based on actual component paths
 import axios from 'axios'
 
 const AdminView = () => {
-    const [bedsData, setBedsData ]= useState([55, 22]); // Assuming 55 beds available, 22 taken
-    const [patientsNumber, setPatientsNum] = useState(55);
+    const [bedsData, setBedsData ]= useState([20, 15]); // Assuming 55 beds available, 22 taken
+    const [patientsNumber, setPatientsNum] = useState(20);
     const [staff , setStaff] = useState([], [])
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    function calculateAge(dateOfBirth) {
+        const birthDate = new Date(dateOfBirth);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+      useEffect(() => {
         const fetchData = async () => {
-            const [responseEncounters, responseStaff] = await Promise.all([
-                axios.get('http://localhost:5000/doctor/current_encounters', {
-                    headers: { 'Content-Type': 'application/json' }
-                }),
-                axios.get('http://localhost:5000/doctor/current_employees', {
-                    headers: { 'Content-Type': 'application/json' }
-                })
-            ]);
+            // const [responseEncounters, responseStaff] = await Promise.all([
+            //     axios.get('http://localhost:5000/doctor/current_encounters', {
+            //         headers: { 'Content-Type': 'application/json' }
+            //     }),
+            //     axios.get('http://localhost:5000/doctor/current_employees', {
+            //         headers: { 'Content-Type': 'application/json' }
+            //     })
+            // ]);
+            const responseEncounters = await axios.get('http://localhost:5000/doctor/current_encounters', {
+              headers: { 'Content-Type': 'application/json' }
+            });
+    
             const encounters = responseEncounters.data.active_encounters
+            console.log(encounters)
             setPatientsNum(encounters.length)
             setBedsData([20, encounters.length])
-            const employeeData = responseStaff.data['active_employees']
+            console.log(patientsNumber)
+            console.log(bedsData)
+    
+            const responseStaff = await axios.get('http://localhost:5000/doctor/current_employees', {
+              headers: { 'Content-Type': 'application/json' }
+            });
+    
+    
+            const employeeData = responseStaff.data.active_employees
             const employeesData = employeeData.map(employee => [
-                employee[8], // ProfilePic
-                `${employee[4]} ${employee[5]}`, // FullName
-                employee[15], // Shift
-                employee[12]  // Role
+                employee[7], // ProfilePic
+                `${employee[3]} ${employee[4]}`, // FullName
+                employee[14], // Shift
+                employee[11],  // Role
+                calculateAge(employee[8])
             ]);
-
-            const employeesAvailable = [];
-            const employeesUnavailable = [];
-            for (let i = 0; i < employeesData.length; i++) {
-                if (employeesData[i][2] === currentShift()) {
-                    employeesAvailable.push(employeesData[i]);
-                } else {
-                    employeesUnavailable.push(employeesData[i]);
-                }
-
-            }
-
-            setStaff([employeesUnavailable, employeesAvailable]);
-
+            setStaff(employeeData)
+            console.log(employeesData)
+            setLoading(false)
+              
         }
-
+        fetchData()
+    
     },[])
     //should return number not 55 in span in doctors title
+    if (loading) return <p>Loading...</p>;
 
     return (
+        
         <div id="adminCont" className="container-fluid">
+
             <div className="AdminView"></div>
             <div id="AdminView" className="row col-9 offset-3 g-5">
                 <div id="AdminViewLeft" className="col-6">
@@ -90,13 +110,11 @@ const AdminView = () => {
                 </div>
 
                 <div id="doctorsPanel">
-                    <p id={"doctorsPanelTitle"}> Staff <span id={"doctorsNo"}>55</span> </p>
+                    <p id={"doctorsPanelTitle"}> Staff <span id={"doctorsNo"}>{staff.length}</span> </p>
                     <div id={"doctorCards"}>
-                        <Card data={["Miguel", "O'Hara", "22", "Doctor"]}/>
-                        <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
-                        <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
-                        <Card data={["Miguel", "O'Hara", "22", "Doctor"]}/>
-                        <Card data={["Miguel", "O'Hara", "22", "Nurse"]}/>
+                    {staff.map((data, index) => (
+                    <Card key={index} data={data} />
+                     ))}
 
                         {
                             //Stay in end !!!!DONT TOUCH
