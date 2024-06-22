@@ -154,6 +154,8 @@ def admit_update_patient():
                 InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
                 AdmittingDoctorID, ReferralDep)
             cursor.execute(query_encounter, params_encounter)
+            return jsonify({"message": "Patient successfully Admitted"}), 400
+
 
         else:
             query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
@@ -165,6 +167,8 @@ def admit_update_patient():
                 InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
                 AdmittingDoctorID, ReferralDep)
             cursor.execute(query_encounter, params_encounter)
+            return jsonify({"message": "Patient successfully Admitted"}), 400
+
 
     database_session.commit()
 
