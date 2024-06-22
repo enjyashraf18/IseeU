@@ -15,6 +15,7 @@ export {default as AdminView} from "./AdminView/AdminView"
 export {default as AllPatients} from "./allpatients/AllPatients"
 export {default as Equipments} from "./equipments/Equipments"
 export {default as Investigations} from "./investigations/Investigations"
+export {default as Reports} from "./reports/Reports"
 
 export{default as AdmitPatient} from "./AdmitPatient/AdmitPatient"
 export{default as PatientProfile} from "./Patient_profile/Patient_profile";

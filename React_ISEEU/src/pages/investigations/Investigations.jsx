@@ -35,12 +35,16 @@ const Investigations = () => {
   const role=user.role;
   const label="Add";
   const flag=false;
-  const columns=["Name","Encounter","Result","Odered By","Notes"]
+  const columns=["Name","Encounter","Result","Notes","Reviewed By"]
   const handleDataChange = (newData) => {
     setInvestigations(newData);
   };
 
-
+  function isNull(date) {
+    console.log(date)
+    if(date === `null`)    return 'Not Reviewed';
+    else return `${date}`
+  }
   useEffect(() => {
     // Define an async function inside the useEffect
     const fetchData = async () => {
@@ -51,13 +55,13 @@ const Investigations = () => {
           })
         console.log("investigations", responseInvestigations.data.doctor_investigations)
         
-        const rawInv = responseInvestigations.data.active_encounters
+        const rawInv = responseInvestigations.data.doctor_investigations
         const displayedInv = rawInv.map(encounter => [
-          encounter[24], // Profile Picture of the patient
-          `${encounter[20]} ${encounter[21]}`, // First name and last name
-          encounter[9], // Bed No of the encounter
-          encounter[3], // The status
-          encounter[22], // Gender of the patient
+          encounter[1], // Profile Picture of the patient
+          encounter[5], // Bed No of the encounter
+          encounter[2], // The status
+          encounter[4], // Gender of the patient
+          isNull(`${encounter[8]}`),
         ]);
 
 

@@ -31,54 +31,61 @@ const PatientAnalysis = () => {
   const [Reports, setReports] = useState(initialPatientData);  
   const [loading, setLoading] = useState(true);
   const user = JSON.parse(localStorage.getItem('user'));
+  const userID =  user.NID
 
   const role=user.role;
   const label="Add";
-  const flag=false;
-  const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
+  const flag= true;
+  const columns=["Paient","Bed_No","Notes","Date(D-M)","Time","Report ID"]
   const handleDataChange = (newData) => {
-  setPatientAnalysisData(newData);
+  setReports(newData);
   };
-  function calculateDays(date) {
-    const thedate = new Date(date);
-    const today = new Date();
-    const timeDifference = today - thedate;
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-    return days;
+  function formatDateTime(dateTimeString) {
+    // Create a new Date object from the input string
+    const date = new Date(dateTimeString);
+  
+    // Extract day and month
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth() returns 0-based month
+  
+    // Extract hours and minutes
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+  
+    // Format the date and time
+    const formattedDate = `${day} - ${month}`;
+    const formattedTime = `${hours} : ${minutes}`;
+  
+    return [formattedDate, formattedTime];
   }
-  function calculateAge(dateOfBirth) {
-    const birthDate = new Date(dateOfBirth);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  }
+  
+  // Example usage
+  
   useEffect(() => {
     // Define an async function inside the useEffect
     const fetchData = async () => {
         // Perform the axios GET request
-        const responseEncounter = await axios.get('http://localhost:5000/doctor/current_encounters', {
+        const body = {DID : userID}
+
+        const responseReports = await axios.post('http://localhost:5000/doctor/doctor_reports', body,{
             headers: { 'Content-Type': 'application/json' }
           })
-        console.log("encounters", responseEncounter.data.active_encounters)
+        console.log("reports", responseReports.data.doctor_reports)
         
-        const encounters = responseEncounter.data.active_encounters
-        const encountersData = encounters.map(encounter => [
-          encounter[24], // Profile Picture of the patient
-          `${encounter[20]} ${encounter[21]}`, // First name and last name
-          encounter[9], // Bed No of the encounter
-          encounter[3], // The status
-          encounter[22], // Gender of the patient
-          calculateAge(encounter[25]), // Age
-          calculateDays(encounter[7]), // Days since encounter
+        const rawReports = responseReports.data.doctor_reports
+        const displayedReports = rawReports.map(encounter => [
+          encounter[0], // Profile Picture of the patient
+          `${encounter[1]} ${encounter[2]}`, // First name and last name
+          encounter[3], // Bed No of the encounter
+          encounter[5], // The status
+          formatDateTime(encounter[10])[0], // Gender of the patient
+          formatDateTime(encounter[10])[1], // Gender of the patient
+
         ]);
 
 
-        console.log(encountersData)  
-        setEncounters(encountersData)
+        console.log(displayedReports)  
+        setReports(displayedReports)
 
       
       console.log("fetched ....")
@@ -98,7 +105,7 @@ const PatientAnalysis = () => {
       <div className="row ">
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
-            <Table_patients data={encounters} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
+            <Table_patients data={Reports} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
 
           </div>
         </div>

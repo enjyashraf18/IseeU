@@ -291,7 +291,8 @@ const handle_parent_modal_close=()=>{
       investigations: transformInvestigations(reportData.investigations),
       report:{
         notes:reportData.notes,
-        reportdoc:docID
+        reportdoc:docID,
+        reportDateTime: getDate()
       },
       currentTime: reportData.currentTime
     }
