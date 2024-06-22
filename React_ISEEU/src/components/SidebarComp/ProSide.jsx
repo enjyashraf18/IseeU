@@ -9,7 +9,7 @@ const ProSide = (prop) => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
     console.log(user)
-    const role = user.role ; // This should ideally come from props or context
+    const role = "Admin" ;// This should ideally come from props or context
 
     const [activeItem, setActiveItem] = useState(null);
 
@@ -30,20 +30,25 @@ const ProSide = (prop) => {
         { id: 4, label: 'All Patients', icon: 'fa-solid fa-envelope',link:'' },
         { id: 4, label: 'Devices', icon: 'fa-solid fa-envelope',link:'' },
 
+
     ];
 
     const docSidebarItems = [
         { id: 1, label: 'Doctor View', icon: 'fa-solid fa-user-md' },
-        { id: 2, label: 'Patient Analysis', icon: 'fa-solid fa-chart-line' },    
+        { id: 2, label: 'Patient Analysis', icon: 'fa-solid fa-chart-line' },
+
+        { id: 5, label: 'Logout', icon: '',link:'' }
     ];
 
     const nurseSidebarItems = [
         { id: 1, label: 'Login', icon: 'fa-solid fa-sign-in-alt' },
         { id: 2, label: 'Register', icon: 'fa-solid fa-user-plus' },
+
     ];
 
     const patientSidebarItems = [
         { id: 1, label: 'Login', icon: 'fa-solid fa-sign-in-alt' },
+
     ];
 
     const sidebarItems = role === "Admin"
@@ -73,6 +78,16 @@ const ProSide = (prop) => {
                             </label>
                         </li>
                     ))}
+                    <li
+                        key="logout"
+                        className="sidebar-element"
+                        onClick={() => handleItemClick({label: 'Logout'})}
+                    >
+                        <label className="sidebar-link">
+                            <i className="fa-solid fa-sign-out-alt"></i>
+                            <span className="sidebar-label">Logout</span>
+                        </label>
+                    </li>
                 </ul>
             </div>
             <div className="content">
@@ -82,12 +97,12 @@ const ProSide = (prop) => {
                     </div>
                 ) : (
                     <div>
-                        
+
                     </div>
                 )}
             </div>
         </div>
-        </Col>
+      </Col>
     );
 };
 
