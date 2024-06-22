@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import "./AdminView.css";
 import { Card, Chart, ProSide } from '../../components'; // Adjust import statement based on actual component paths
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 const AdminView = () => {
+    const navigate = useNavigate(); // Get the navigate function from useNavigate
     const [bedsData, setBedsData] = useState([20, 15]); // Assuming 55 beds available, 22 taken
     const [patientsNumber, setPatientsNum] = useState(20);
     const [staff, setStaff] = useState([]);
@@ -47,14 +49,13 @@ const AdminView = () => {
         fetchData();
     }, []);
 
-
     return (
         <div id="adminCont" className="container-fluid">
             <div className="row">
-                 <div id={"SideBarAdmin"} className={"col-2"}>
+                <div id={"SideBarAdmin"} className={"col-2"}>
                     <ProSide />
-                 </div>
-                <div id="AdminView" className="col-10"> {/* Changed from col-10 to col-9 to account for the margin */}
+                </div>
+                <div id="AdminView" className="col-10">
                     <div className="row g-5">
                         <div id="AdminViewLeft" className="col-6">
                             <div id="bedCap" className="row">
@@ -85,7 +86,7 @@ const AdminView = () => {
                                 </div>
                                 <div id="admit_Discharge" className="col-6">
                                     <div id="admit" className="row">
-                                        <button id="admitButton">Admit</button>
+                                        <button id="admitButton" type={"button"} onClick={() => navigate('/admitpatient')}>Admit</button>
                                     </div>
                                     <div id="discharge" className="row">
                                         <button id="dischargeButton">Discharge</button>
@@ -100,6 +101,7 @@ const AdminView = () => {
                             {staff.map((data, index) => (
                                 <Card key={index} data={data} />
                             ))}
+                            {/* Assuming Card component uses 'onClick' prop for handling clicks */}
                             <Card typeAdd={true} onClick={() => { console.log("I have been clicked") }} />
                         </div>
                     </div>
