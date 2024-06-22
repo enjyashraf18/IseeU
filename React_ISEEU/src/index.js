@@ -5,7 +5,7 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-import {DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,TestComponent,PatientProfile,NurseProfile, AdminView, Loading } from "./pages";
+import {DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,PatientProfile,NurseProfile, AdminView, Loading } from "./pages";
 
 import{
     createBrowserRouter,
@@ -23,7 +23,7 @@ import { Register2 } from "./pages";
       element: <AdminView/>
     },
     {
-      path: "/doctorsdata",
+      path: "/admin/doctorsdata",
       element: <DoctorsAnalysis/>
     },
     {
@@ -63,14 +63,11 @@ import { Register2 } from "./pages";
       },
 
 
-      {
-        path: "/test",
-          element:<TestComponent />      
-        },
-        {
-          path: "/test",
-            element:<TestComponent />      
-          }, 
+      // {
+      //   path: "/test",
+      //     element:<TestComponent />      
+      //   },
+
       {
         path: "/Doctor_View",
         element: <Doctor_View/>
