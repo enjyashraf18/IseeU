@@ -11,9 +11,82 @@ const AddReport = (prop) => {
    
   const initialMedication=[["Devil Breath (500gm)","5  /day","5 weeks"],] /**here i take the intial medication from database */
   const medication_header=["    ","  "," "," "]
-  const initialtestsCheckups1=[["cbc","checked"],["db","unchecked"],["cbcc","checked"]]; /**take  the tests from database */
+    const initialtestsCheckups1 = [
+        ["Blood Test", "unchecked"],
+        ["CBC", "unchecked"],
+        ["CMP", "unchecked"],
+        ["Liver Panel", "unchecked"],
+        ["Renal Panel", "unchecked"],
+        ["Lipid Panel", "unchecked"],
+        ["Thyroid Panel", "unchecked"],
+        ["Coagulation Panel", "unchecked"],
+        ["ABG", "unchecked"],
+        ["Blood Culture", "checked"],
+        ["Urine Test", "unchecked"],
+        ["Urinalysis", "unchecked"],
+        ["Urine Culture", "unchecked"],
+        ["Stool Test", "unchecked"],
+        ["Stool Culture", "unchecked"],
+        ["Sputum Culture", "unchecked"],
+        ["Wound Culture", "unchecked"],
+        ["EKG", "checked"],
+        ["Echocardiogram", "unchecked"],
+        ["Stress Test", "unchecked"],
+        ["Pulmonary Function Test", "unchecked"],
+        ["Spirometry", "unchecked"],
+        ["Peak Flow", "unchecked"],
+        ["Allergy Test", "unchecked"],
+        ["Skin Test", "unchecked"],
+        ["Bone Marrow Biopsy", "unchecked"],
+        ["Lumbar Puncture", "unchecked"],
+        ["Endoscopy", "checked"],
+        ["Colonoscopy", "unchecked"],
+        ["Biopsy", "unchecked"],
+        ["Genetic Test", "unchecked"],
+        ["HIV Test", "unchecked"],
+        ["STD Test", "unchecked"],
+        ["COVID-19 Test", "unchecked"],
+        ["Influenza Test", "unchecked"],
+        ["RSV Test", "checked"]
+    ];
+    /**take  the tests from database */
+
   const columns_tests_checkups1=["A"," "];
-  const initialscansCheckups=[["Chest","checked"],["Brain MRI","unchecked"],["X-Ray","checked"]]; /**take the scans from database */
+    const initialscansCheckups = [
+        ["CT Scan", "unchecked"],
+        ["Head CT", "unchecked"],
+        ["Chest CT", "checked"],
+        ["Abd CT", "unchecked"],
+        ["MRI", "unchecked"],
+        ["Brain MRI", "checked"],
+        ["Spinal MRI", "unchecked"],
+        ["Cardiac MRI", "unchecked"],
+        ["X-ray", "unchecked"],
+        ["Chest X-ray", "unchecked"],
+        ["Abd X-ray", "unchecked"],
+        ["Skeletal X-ray", "unchecked"],
+        ["Ultrasound", "unchecked"],
+        ["Abd US", "unchecked"],
+        ["Cardiac US", "unchecked"],
+        ["Doppler US", "unchecked"],
+        ["PET Scan", "unchecked"],
+        ["Nuclear Scan", "unchecked"],
+        ["V/Q Scan", "unchecked"],
+        ["Bone Scan", "unchecked"],
+        ["Fluoroscopy", "unchecked"],
+        ["Barium Swallow", "unchecked"],
+        ["Angiography", "unchecked"],
+        ["IR Scan", "checked"],
+        ["CT Biopsy", "unchecked"],
+        ["US Thoracentesis", "unchecked"],
+        ["Portable Scan", "unchecked"],
+        ["Portable X-ray", "checked"],
+        ["Portable US", "unchecked"],
+        ["Transcranial Doppler", "unchecked"],
+        ["Endoscopic US", "unchecked"],
+        ["EEG", "unchecked"]
+    ];
+    ; /**take the scans from database */
   const columns_scans_checkups=["B"," "];
   const options = ['day', 'week', 'month'];
   const options_duartion = ['days', 'weeks', 'months'];
