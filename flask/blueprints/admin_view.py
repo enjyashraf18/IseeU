@@ -261,7 +261,7 @@ def available_evening_nurses():
 #check if there's available beds of a certain type
 def available_beds_fn(bed_type):
     avaialable_beds_query = """
-        SELECT *
+        SELECT bedid
         FROM bed
         WHERE bedtype = %s AND isoccupied IS NOT TRUE
     """
