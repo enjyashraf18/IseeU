@@ -9,10 +9,7 @@ CORS(admin_view, resources={
 # Allow CORS for the login blueprint (Cross-Origin Resource Sharing)
 
 
-<<<<<<< HEAD
-# route to retrieve nurse data based on NID
-=======
->>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
+
 @admin_view.route('/admin/nurses', methods=['POST'])
 def admin_nurses():
     data = request.json
@@ -49,32 +46,15 @@ def admin_employees():
     return jsonify({"admin_employee": admin_employee})
 
 
-<<<<<<< HEAD
-# Route to check whether a specific patient exists
+
 @admin_view.route('/check_patient', methods=['POST'])
 def check_patient():
-    # checks whether a specific patient exists
-=======
-@admin_view.route('/check_patient', methods=['POST'])
-def check_patient():
->>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
     data = request.json
     print(data)
     NID = data.get('NID')
 
-<<<<<<< HEAD
-    # Check if patient exists
-    cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
-    patient_exists = cursor.fetchone()
 
-    if patient_exists:
-        # Fetch patient data
-        cursor.execute("""
-                               SELECT *
-                               FROM patients
-                               WHERE nid = %s 
-                           """, (NID,))
-=======
+
     cursor.execute("SELECT nid FROM patients WHERE nid = %s", (NID,))
     patient_exists = cursor.fetchone()
 
@@ -84,16 +64,12 @@ def check_patient():
                            FROM patients
                            WHERE nid = %s 
                        """, (NID,))
->>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 
         patient_data = cursor.fetchall()
         return jsonify({"admin_employee": patient_data})
     else:  # patient does not exist in the db
-<<<<<<< HEAD
-        return jsonify({"message": "patient does not exist"}), 400
-=======
+
         return jsonify({"message": "User does not exist"}), 400
->>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 
 
 # Route to admit/update patient data
@@ -192,11 +168,7 @@ def admit_update_patient():
 
     database_session.commit()
 
-<<<<<<< HEAD
-# route to add an employee (doctor / nurse)
-=======
 
->>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 @admin_view.route('/admin/add_employee', methods=['POST'])
 def add_employee():
     #fetch employee data
@@ -295,11 +267,7 @@ def available_beds_fn(bed_type):
     else:
         return jsonify({"error": "No available beds of this type"}), 400
 
-<<<<<<< HEAD
-# route to fetch all the doctors
-=======
 
->>>>>>> db12ba09a606113fc51e2042474e3feee946ea50
 @admin_view.route('/admin/doctors', methods=['GET'])
 def all_doctors():
     # return all the doctors
