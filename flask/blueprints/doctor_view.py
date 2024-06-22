@@ -135,9 +135,10 @@ def doctor_reports():
     print(data)
     DID = data.get('DID')
     cursor.execute("""
-        SELECT * 
-        FROM reports
-        WHERE reportdoctorid = %s
+        SELECT p.fname, p.lname, e.bedid, r.*
+        FROM reports r JOIN encounters e on e.encounterid = r.encounter
+        JOIN patients p ON p.nid = e.patientid
+        WHERE r.reportdoctorid = %s
     """, (DID,))
     reports = cursor.fetchall()
     return jsonify({"doctor_reports": reports})
