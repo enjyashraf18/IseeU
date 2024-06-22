@@ -60,7 +60,7 @@ def check_patient():
 
 
 @admin_view.route('/admin/admitPatient', methods=['POST'])
-def admit_patient():
+def admit_update_patient():
     data = request.json
     print(data)
     updateFlag = data.get('updateFlag')
@@ -185,7 +185,36 @@ def add_employee():
 
         return execute_query(query, params)
 
+#get the nurses that have less than 5 patients (one morning shift and another night shift)
+def available_morning_nurses():
+    cursor.execute("""
+        SELECT *
+        FROM employee
+        WHERE role = 'Nurse' AND dateleft IS NULL AND shift = 'Day'
+        AND nid NOT IN(
+            SELECT morningnurseid
+            FROM encounters
+            WHERE dischargedatetime IS NULL
+            GROUP BY morningnurseid
+            HAVING count(morningnurseid) >= 5
+        )
+    """)
+    return cursor.fetchall()
 
+def available_evening_nurses():
+    cursor.execute("""
+        SELECT *
+        FROM employee
+        WHERE role = 'Nurse' AND dateleft IS NULL AND shift = 'Night'
+        AND nid NOT IN (
+            SELECT eveningnurseid
+            FROM encounters
+            WHERE dischargedatetime IS NULL
+            GROUP BY eveningnurseid
+            HAVING count(eveningnurseid) >= 5
+        )
+    """)
+    return cursor.fetchall()
 
 
 
