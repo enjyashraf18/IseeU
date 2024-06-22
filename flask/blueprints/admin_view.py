@@ -232,7 +232,7 @@ def available_beds(bed_type):
 
 @admin_view.route('/admin/doctors', methods=['GET'])
 def all_doctors():
-    
+
     # return all the doctors
     cursor.execute("""
            SELECT *
