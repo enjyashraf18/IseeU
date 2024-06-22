@@ -10,9 +10,7 @@ const NurseProfile = () => {
     const intialMedication=[["Devil Breath (500mg)","15A","Miguel O’Hara","Now","unchecked"],["Devil Breath (500mg)","15A","Miguel O’Hara","Now","unchecked"],
     ["Devil Breath (500mg)","15A","Miguel O’Hara","22:11 am","unchecked"],["Devil Breath (500mg)","15A","Miguel O’Hara","22:11 am","unchecked"]]
     const displayMedications=[]
-    const meddata = {
 
-    }
     const displayedPatients = []
     const patient_nurse=[["Icons-Land-Medical-People-Patient-Female.ico","shahd","15A","Coma"],
     ["Icons-Land-Medical-People-Patient-Female.ico","Enjy","15A","Coma"],
@@ -21,93 +19,157 @@ const NurseProfile = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","nouran","15A","Coma"],
     ["Icons-Land-Medical-People-Patient-Female.ico","yasmeen","15A","Coma"]];
     const nurse_staff=[["Miguel", "O'Hara", "22", "Male"],["Miguel", "O'Hara", "22", "Male"],["Miguel", "O'Hara", "22", "Male"]]
+    const data_doctor_Available=[
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+  ]
+  const data_doctor_unAvailable=[
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
+      ["download.jfif","DR. Otto Octavius","morning shift"],
     
-    
-    const [medication,setmedication]= useState(intialMedication);
+      ]
+    const meddata = []
+    const [medication,setmedication]= useState();
     const [loading, setLoading] = useState(true);
+    const [encounters, setEncounters] = useState();
+    const [doctors , setdoctors] = useState(data_doctor_unAvailable, data_doctor_Available)
 
 
     const medication_header=["","Medication","Bed No.","Patient","Time"];
     const patient_header=["Name","Bed_No","Statue"]
     const role="user";
     const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
-    setmedication(newData);
+    // setmedication(newData);
   };
 
-  const data_doctor_Available=[
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-]
-const data_doctor_unAvailable=[
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-    ["download.jfif","DR. Otto Octavius","morning shift"],
-  
-    ]
+
     const flag_Doctors =true;
 const column__doctor_av=["Available"," "];
 const column_doctor_un=["unAvailable"," "];
-  useMemo(
-    ()=>{
-        const fetchData = async () => {
-            const body = {
-                NId: nurseId
+function calcNextDose(lastDoseTime, freqPerDay) {
+  // Parse the lastDoseTime to a Date object
+  const lastDoseDate = new Date(lastDoseTime);
+
+  // Transform freqPerDay to number of hours
+  const hoursBetweenDoses = 24 / freqPerDay;
+
+  // Calculate the next dose time
+  const nextDoseDate = new Date(lastDoseDate.getTime() + hoursBetweenDoses * 60 * 60 * 1000);
+
+  // Get the current time
+  const now = new Date();
+
+  // Compare the next dose time with the current time
+  if (now >= nextDoseDate) {
+    return 'now';
+  } else {
+    // Format the nextDoseDate as HH:MM
+    const hours = String(nextDoseDate.getHours()).padStart(2, '0');
+    const minutes = String(nextDoseDate.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+}
+function currentShift() {
+  const currentHour = new Date().getHours();
+  // Assuming day shift is from 6 AM to 6 PM
+  
+  if (currentHour >= 6 && currentHour < 18) {
+    return "Day";
+  } else {
+    return "Night";
+  }
+}
+useEffect(  
+  ()=>{
+      const fetchData = async () => {
+          const body = {
+              NID: 'N001'
+          }
+          // Perform the axios GET request
+          const response = await axios.post('http://localhost:5000//NurseProfile', body,{
+                  headers: { 'Content-Type': 'application/json' }
+                })                  
+             
+
+          const responseData = response.data
+          const rawdoc = response.data.nurse_data.doctors
+          const rawpat = response.data.nurse_data.patients
+          const rawmed = response.data.nurse_data.medications
+          const displayMedications = []      
+          console.log(responseData)
+          for(let i=0;i<rawmed.length; i++ ){
+              const key = rawmed[i][9]
+              meddata[key] = rawmed[i][30];
+               displayMedications.push(
+                 [
+                   `${rawmed[i][38]} (${rawmed[i][35]}gm)`,
+                   rawmed[i][9],
+                   `${rawmed[i][20]} ${rawmed[i][21]}`,
+                   calcNextDose(rawmed[i][33], rawmed[i][35])
+                 ]
+               )
             }
-            // Perform the axios GET request
-            const [responseMed,responsePatients, responseDoctors] = await Promise.all([
-                axios.post('http://localhost:5000/nurse/medications', body,{
-                    headers: { 'Content-Type': 'application/json' }
-                  }),                    
-                axios.get('http://localhost:5000/nurse/patients', body, {
-                    headers: { 'Content-Type': 'application/json' }
-                }),
-                axios.get('http://localhost:5000/doctor/current_employees', {
-                    headers: { 'Content-Type': 'application/json' }
-                })
-            ]);
 
-            const rawpatients = responsePatients.data
-            const rawmed = responseMed.data
+          console.log(displayMedications)
+          setmedication(displayMedications)
 
-            for(let i=0;i<rawmed.length; i++ ){
-                const key = rawmed[i].bedid
-                meddata[key] = rawmed[i].medid;
-                displayMedications.push(
-                  [
-                    concNameDose(rawmed[i].name, rawmed[i].dose),
-                    rawmed[i].bedid,
-                    concfullname(rawmed[i].fname, rawmed[i].lname),
-                    calcNextDose(rawmed[i].lastdosetime, rawmed[i].fequencyperday)
-                  ]
-                )
+          for(let i=0;i<rawpat.length; i++ ){
+            displayedPatients.push([
+              rawpat[i][24], // Profile Picture of the patient
+              `${rawpat[i][20]} ${rawpat[i][21]}`, // First name and last name
+              rawpat[i][9], // Bed No of the encounter
+              rawpat[i][3]
+            ])
+          }
+          console.log(displayedPatients)
+          setEncounters(displayedPatients)
+          for(let i=0;i<rawdoc.length; i++ ){
+            displayedPatients.push([
+              rawpat[i][24], // Profile Picture of the patient
+              `${rawpat[i][20]} ${rawpat[i][21]}`, // First name and last name
+              rawpat[i][9], // Bed No of the encounter
+              rawpat[i][3]
+            ])
+          }
+                  // Process staff
+    const doc = rawdoc.map(employee => [
+      employee[7], // ProfilePic
+      `DR ${employee[3]} ${employee[4]}`, // FullName
+      employee[14], // Shift
+    ]);
 
-            }
+    const docAvailable = [];
+    const docUnavailable = [];
 
-            for(let i=0;i<rawpatients.length; i++ ){
-              displayedPatients.push([
-                rawpatients[i].ppic, // Profile Picture of the patient
-                `${rawpatients[i].fname} ${rawpatients[i].lname}`, // First name and last name
-                rawpatients[i].bedid, // Bed No of the encounter
-                rawpatients[i].status
-              ])
-            }
-
-      
-
-           setLoading(false);
-    
+    for (let i = 0; i < doc.length; i++) {
+      if (doc[i][2] === currentShift()) {
+        docAvailable.push(doc[i]);
+      } else {
+        docUnavailable.push(doc[i]);
       }
-    
-        // Call the async function to fetch data
-        fetchData();
 
     }
-)
+
+    // console.log(currentShift())
+    console.log(docAvailable)
+    console.log(docUnavailable)
+    setdoctors([docAvailable, docUnavailable])
+
+    setLoading(false)
+
+  
+    }
+  
+      // Call the async function to fetch data
+    fetchData();
+
+  },[])
 
 
 if (loading) return <p>Loading...</p>;
@@ -147,10 +209,10 @@ return (
               <div className='patient_nurse'>
           
                 <div className='Number'>
-                  <span>{patient_nurse.length}</span>
+                  <span>{encounters.length}</span>
                 </div>
                 <Table_patients
-                  data={patient_nurse}
+                  data={encounters}
                   headers={patient_header}
                   flag={true}
                   anotherProp={role}
@@ -168,7 +230,7 @@ return (
              
                   <div className='available_doctors'>
                     <Table_patients
-                      data={data_doctor_Available}
+                      data={doctors[0]}
                       anotherProp={role}
                       headers={column__doctor_av}
                       flag={flag_Doctors}
@@ -177,7 +239,7 @@ return (
                   </div>
                   <div className='unavailable_doctors'>
                     <Table_patients
-                      data={data_doctor_unAvailable}
+                      data={doctors[1]}
                       anotherProp={role}
                       headers={column_doctor_un}
                       flag={flag_Doctors}
