@@ -16,7 +16,7 @@ export {default as AllPatients} from "./allpatients/AllPatients"
 export {default as Equipments} from "./equipments/Equipments"
 export {default as Investigations} from "./investigations/Investigations"
 export {default as Reports} from "./reports/Reports"
-
+export {default as Info } from "./Info/Info";
 export{default as AdmitPatient} from "./AdmitPatient/AdmitPatient"
 export{default as PatientProfile} from "./Patient_profile/Patient_profile";
 export {default as NurseProfile} from "./nurseProfile/NurseProfile";

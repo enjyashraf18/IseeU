@@ -25,30 +25,30 @@ const ProSide = (prop) => {
 
     const adminSidebarItems = [
         { id: 1, label: 'Admin Dashboard', icon: 'fa-solid fa-user-shield' ,link:'/admindashboard' },
-        { id: 2, label: 'Doctors', icon: 'fa-solid fa-users',link:'/doctorsdata'  },
-        { id: 3, label: 'Nurses', icon: 'fa-solid fa-users',link:'/nursesdata'  },
-        { id: 4, label: 'Current Encounters', icon: 'fa-solid fa-chart-line',link:'/currentencounters'  },
+        { id: 2, label: 'Doctors', icon: 'fa-solid fa-users',link:"/admin/doctorsdata"  },
+        { id: 3, label: 'Nurses', icon: 'fa-solid fa-users',link:"/admin/nursesdata"  },
+        { id: 4, label: 'Current Encounters', icon: 'fa-solid fa-chart-line',link:"/currentencounters"  },
         { id: 5, label: 'Encounters History', icon: 'fa-solid fa-chart-line',link:'/allencounters'  },
-        { id: 6, label: 'All Patients', icon: 'fa-solid fa-envelope',link:'/patients' },
-        { id: 7, label: 'Equipments', icon: 'fa-solid fa-envelope',link:'/Equipments' },
-        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:'/profile'  },
+        { id: 6, label: 'All Patients', icon: 'fa-solid fa-envelope',link:"/admin/patients" },
+        { id: 7, label: 'Equipments', icon: 'fa-solid fa-envelope',link:'/admin/equips' },
+        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:"/profile"  },
 
 
     ];
 
     const docSidebarItems = [
-        { id: 1, label: 'Doctor Dashboard', icon: 'fa-solid fa-user-md', link: '/doctordashboard' },
-        { id: 2, label: 'Current Encounters', icon: 'fa-solid fa-chart-line', link: '/currentencounters' },
-        { id: 3, label: 'Reports History', icon: 'fa-solid fa-chart-line',link:'/reports'  },
-        { id: 3, label: 'Investigations Tracking', icon: 'fa-solid fa-chart-line',link:'/investigations'  },
-        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:'/profile'  },
+        { id: 1, label: 'Doctor Dashboard', icon: 'fa-solid fa-user-md', link:"/doctordashboard" },
+        { id: 2, label: 'Current Encounters', icon: 'fa-solid fa-chart-line', link: "/currentencounters" },
+        { id: 3, label: 'Reports History', icon: 'fa-solid fa-chart-line',link:"/doctor/reports"  },
+        { id: 3, label: 'Investigations Tracking', icon: 'fa-solid fa-chart-line',link:"/doctor/investigations"  },
+        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:"/profile"  },
 
     ];
 
     const nurseSidebarItems = [
-        { id: 1, label: 'Nurse Dashboard', icon: 'fa-solid fa-sign-in-alt',link: '/nursedashboard' },
+        { id: 1, label: 'Nurse Dashboard', icon: 'fa-solid fa-sign-in-alt',link: "/nursedashboard" },
         { id: 2, label: 'Current Encounters', icon: 'fa-solid fa-chart-line', link: '/currentencounters' },
-        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:'/profile'  },
+        { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:"/profile"  },
 
     ];
 
