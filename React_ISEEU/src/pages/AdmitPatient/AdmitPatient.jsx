@@ -262,7 +262,8 @@ const AdmitPatient = () => {
 
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob}
                                                onChange={handleInputChange}/>
-                                    <OR/>
+                                    
+                                    <OR formData={formData} onChange={setFormData}/>
                                     
                                     <UserText1 label="Address" type="text" name="address" value={formData.address}
                                                onChange={handleInputChange}/>
