@@ -66,7 +66,7 @@ def check_patient():
                        """, (NID,))
 
         patient_data = cursor.fetchall()
-        patient_data = dict(patient_data)
+        patient_data = dict(patient_data[0])
         return jsonify({"admin_employee": patient_data})
     else:  # patient does not exist in the db
 
