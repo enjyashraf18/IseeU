@@ -37,7 +37,7 @@ const NursesAnalysis = () => {
   const flag=true;
   const columns=["ID","Name","Shift","Gender","Date Hired", "Still Working"]
   const handleDataChange = (newData) => {
-  setPatientAnalysisData(newData);
+    setNurses(newData);
   };
   function getyearmonth(date) {
     const hireDate = new Date(date);

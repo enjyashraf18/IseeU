@@ -42,7 +42,7 @@ import { Register2 } from "./pages";
 
       {
 
-      path: "/patient_table",
+      path: "/currentencounters",
         element:<Patient_Analysis />      
       },
        
