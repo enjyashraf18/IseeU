@@ -190,6 +190,22 @@ def add_employee():
 
 
 #get the nurses that have less than 5 patients (one morning shift and another night shift)
+@admin_view.route('/admin/available_nurses', methods=['GET'])
+def available_nurses():
+    morning_nurses = available_morning_nurses()
+    evening_nurses = available_evening_nurses()
+
+    return jsonify({"morning_nurses": morning_nurses, "evening_nurses": evening_nurses})
+
+
+#check if there's available beds of a certain type
+@admin_view.route('/admin/available_beds', methods=['POST'])
+def available_beds():
+    bed_type = request.json.get('bedtype')
+    beds = available_beds_fn(bed_type)
+    return jsonify({"available_beds": beds})
+
+
 def available_morning_nurses():
     cursor.execute("""
         SELECT *
@@ -223,11 +239,11 @@ def available_evening_nurses():
 
 
 #check if there's available beds of a certain type
-def available_beds(bed_type):
+def available_beds_fn(bed_type):
     avaialable_beds_query = """
         SELECT *
         FROM bed
-        WHERE bedtype = 'Standard' AND isoccupied IS NOT TRUE
+        WHERE bedtype = %s AND isoccupied IS NOT TRUE
     """
     cursor.execute(avaialable_beds_query, (bed_type,))
     beds = cursor.fetchall()
