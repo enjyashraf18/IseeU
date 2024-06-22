@@ -28,61 +28,58 @@ const NursesAnalysis = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","zeina","32A","Coma","Female",20,"5 days ago "],
 
   ];
-  const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
-  const [encounters, setEncounters] = useState(patientAnalysisData);
+
+  const [nurses, setNurses] = useState(initialPatientData);  
   const [loading, setLoading] = useState(true);
 
   const role="Admin";
   const label="Add";
   const flag=true;
-  const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
+  const columns=["ID","Name","Shift","Gender","Date Hired", "Still Working"]
   const handleDataChange = (newData) => {
-  setPatientAnalysisData(newData);
+    setNurses(newData);
   };
-  function calculateDays(date) {
-    const thedate = new Date(date);
-    const today = new Date();
-    const timeDifference = today - thedate;
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-    return days;
+  function getyearmonth(date) {
+    const hireDate = new Date(date);
+    const year = hireDate.getFullYear();
+    const month =  hireDate.getMonth();
+   
+    return `${year} - ${month}`;
   }
-  function calculateAge(dateOfBirth) {
-    const birthDate = new Date(dateOfBirth);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
+
+  function isworking(date) {
+    console.log(date)
+    if(date === `null`)    return `Yes`;
+    else return `No`
   }
   useEffect(() => {
     // Define an async function inside the useEffect
     const fetchData = async () => {
         // Perform the axios GET request
-        const responseDoctors = await axios.get('http://localhost:5000/doctor/current_encounters', {
-            headers: { 'Content-Type': 'application/json' }
-          })
-        console.log("encounters", responseEncounter.data.active_encounters)
-        
-        const encounters = responseEncounter.data.active_encounters
-        const encountersData = encounters.map(encounter => [
-          encounter[24], // Profile Picture of the patient
-          `${encounter[20]} ${encounter[21]}`, // First name and last name
-          encounter[9], // Bed No of the encounter
-          encounter[3], // The status
-          encounter[22], // Gender of the patient
-          calculateAge(encounter[25]), // Age
-          calculateDays(encounter[7]), // Days since encounter
-        ]);
-
-
-        console.log(encountersData)  
-        setEncounters(encountersData)
-
+        const responseNurses = await axios.get('http://localhost:5000/admin/nurses', {
+          headers: { 'Content-Type': 'application/json' }
+        })
+      console.log("Nurses", responseNurses.data.all_nurses)
       
-      console.log("fetched ....")
-      setLoading(false);
+      const rawNurse = responseNurses.data.all_nurses
+      const displayedNurse = rawNurse.map(encounter => [
+        encounter[7], // Profile Picture of the patient
+        encounter[0],
+        `${encounter[3]}  ${encounter[4]}`, // First name and last name
+        encounter[14], // The status
+        encounter[5], // Gender of the patient
+         // Age
+        getyearmonth(encounter[12],), // Days since encounter
+        isworking(`${encounter[13]}`)
+      ]);
+
+
+      console.log(displayedNurse)  
+      setNurses(displayedNurse)
+
+    
+    console.log("fetched ....")
+    setLoading(false);
 
     }
 
@@ -98,7 +95,7 @@ const NursesAnalysis = () => {
       <div className="row ">
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
-            <Table_patients data={encounters} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
+            <Table_patients data={nurses} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
 
           </div>
         </div>
