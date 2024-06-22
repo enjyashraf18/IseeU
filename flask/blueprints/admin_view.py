@@ -230,9 +230,9 @@ def available_beds(bed_type):
     else:
         return jsonify({"error": "No available beds of this type"}), 400
 
-@admin_view.route('/admin/doctors', methods=['POST'])
+@admin_view.route('/admin/doctors', methods=['GET'])
 def all_doctors():
-    
+
     # return all the doctors
     cursor.execute("""
            SELECT *
@@ -244,7 +244,7 @@ def all_doctors():
     return jsonify({"all_doctors": doctors})
 
 
-@admin_view.route('/admin/nurses', methods=['POST'])
+@admin_view.route('/admin/nurses', methods=['GET'])
 def all_nurses():
 
     # return all the nurses
