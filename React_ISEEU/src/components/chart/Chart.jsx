@@ -1,9 +1,9 @@
 import React from 'react';
 import "./chart.css";
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Chart = (props) => {
     const data = {
@@ -38,11 +38,10 @@ const Chart = (props) => {
         responsive: true,
         plugins: {
             legend: {
-                display: true,
+                display: props.type === 'doughnut',  // Conditionally display the legend
                 position: "bottom",
                 labels: {
-                        color: '#f5f5f5' // Change label color here
-
+                    color: '#f5f5f5' // Change label color here
                 }
             },
             tooltip: {
@@ -62,7 +61,13 @@ const Chart = (props) => {
 
     return (
         <div style={{ height: '25vh' }}>
-            <Doughnut data={data} options={options} />
+            {props.type === 'doughnut' ? (
+                <Doughnut data={data} options={options} />
+            ) : props.type === 'bar' ? (
+                <Bar data={data} options={options} />
+            ) : (
+                <div>No chart type specified</div>
+            )}
         </div>
     );
 };
