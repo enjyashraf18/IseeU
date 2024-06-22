@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import "./patientAnalysis.css";
-import styles from './patientAnalysis.css';
+import "./Reports.css";
+import styles from './Reports.css';
 import { Table_patients,Btn } from '../../components';
 import axios from 'axios'
 
@@ -28,14 +28,13 @@ const PatientAnalysis = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","zeina","32A","Coma","Female",20,"5 days ago "],
 
   ];
-  const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
-  const [encounters, setEncounters] = useState(patientAnalysisData);
+  const [Reports, setReports] = useState(initialPatientData);  
   const [loading, setLoading] = useState(true);
-   const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const role=user.role;
   const label="Add";
-  const flag=true;
+  const flag=false;
   const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
   const handleDataChange = (newData) => {
   setPatientAnalysisData(newData);
