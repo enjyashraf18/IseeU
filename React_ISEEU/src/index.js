@@ -27,6 +27,10 @@ import { Register2 } from "./pages";
       element: <DoctorsAnalysis/>
     },
     {
+      path: "/admin/nursesdata",
+      element: <NursesAnalysis/>
+    },
+    {
       path: "/admitpatient",
       element: <AdmitPatient/>
     },

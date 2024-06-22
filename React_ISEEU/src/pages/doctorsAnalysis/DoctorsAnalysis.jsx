@@ -28,8 +28,7 @@ const DoctorsAnalysis = () => {
     ["Icons-Land-Medical-People-Patient-Female.ico","zeina","32A","Coma","Female",20,"5 days ago "],
 
   ];
-  const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
-  const [doctors, setdoctors] = useState(patientAnalysisData);
+  const [doctors, setdoctors] = useState();
   const [loading, setLoading] = useState(true);
 
   const role="Admin";
@@ -39,13 +38,6 @@ const DoctorsAnalysis = () => {
   const handleDataChange = (newData) => {
   setPatientAnalysisData(newData);
   };
-  function calculateDays(date) {
-    const thedate = new Date(date);
-    const today = new Date();
-    const timeDifference = today - thedate;
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-    return days;
-  }
   function getyearmonth(date) {
     const hireDate = new Date(date);
     const year = hireDate.getFullYear();
@@ -71,8 +63,8 @@ const DoctorsAnalysis = () => {
         const rawdoc = responseDoctors.data.all_doctors
         const displayedDoc = rawdoc.map(encounter => [
           encounter[7], // Profile Picture of the patient
+          encounter[0],
           `${encounter[3]} ${encounter[4]}`, // First name and last name
-          encounter[9], // Bed No of the encounter
           encounter[14], // The status
           encounter[5], // Gender of the patient
            // Age
