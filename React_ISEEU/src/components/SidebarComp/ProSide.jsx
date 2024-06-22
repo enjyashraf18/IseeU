@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
 import { useNavigate, Link } from 'react-router-dom';
 import './SidebarComp.css'; // Import CSS for styles
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 const ProSide = (prop) => {
     const navigate = useNavigate();
-    const role = prop.data; // This should ideally come from props or context
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
+    const role = user.role ; // This should ideally come from props or context
 
     const [activeItem, setActiveItem] = useState(null);
 
     const handleItemClick = (item) => {
-        setActiveItem(item);
         console.log(item.label);
-        navigate(`/${item.label}`);
+        navigate(`${item.link}`,{replace: true});
+        setActiveItem(item);
+
+
     };
 
     const adminSidebarItems = [
-        { id: 1, label: 'Admin View', icon: 'fa-solid fa-user-shield' ,link:'' },
-        { id: 2, label: 'Staff', icon: 'fa-solid fa-users',link:''  },
-        { id: 3, label: 'Patient Analysis', icon: 'fa-solid fa-chart-line',link:''  },
-        { id: 4, label: 'Contact', icon: 'fa-solid fa-envelope',link:'' },
+        { id: 1, label: 'Admin Dashboard', icon: 'fa-solid fa-user-shield' ,link:'/admindashboard' },
+        { id: 2, label: 'Doctors', icon: 'fa-solid fa-users',link:'/doctorsdata'  },
+        { id: 2, label: 'Nurses', icon: 'fa-solid fa-users',link:'/nursesdata'  },
+        { id: 3, label: 'Current Encounters', icon: 'fa-solid fa-chart-line',link:'/currentencounters'  },
+        { id: 3, label: 'Encounters History', icon: 'fa-solid fa-chart-line',link:''  },
+        { id: 4, label: 'All Patients', icon: 'fa-solid fa-envelope',link:'' },
+        { id: 4, label: 'Devices', icon: 'fa-solid fa-envelope',link:'' },
+
     ];
 
     const docSidebarItems = [
@@ -36,7 +46,7 @@ const ProSide = (prop) => {
         { id: 1, label: 'Login', icon: 'fa-solid fa-sign-in-alt' },
     ];
 
-    const sidebarItems = role === "admin"
+    const sidebarItems = role === "Admin"
         ? adminSidebarItems
         : role === "doctor"
             ? docSidebarItems

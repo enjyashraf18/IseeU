@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import axios from 'axios'
+import { ProSide } from './components';
+import { UserContext } from './LoginPage/UserProvider';
+
 function TestComponent() {
   
   const displayMedications =[]
@@ -53,57 +56,14 @@ function TestComponent() {
   const [patientsNumber, setPatientsNum] = useState(20);
   const [staff , setStaff] = useState([], [])
 
-  useEffect(() => {
-    const fetchData = async () => {
-        // const [responseEncounters, responseStaff] = await Promise.all([
-        //     axios.get('http://localhost:5000/doctor/current_encounters', {
-        //         headers: { 'Content-Type': 'application/json' }
-        //     }),
-        //     axios.get('http://localhost:5000/doctor/current_employees', {
-        //         headers: { 'Content-Type': 'application/json' }
-        //     })
-        // ]);
-        const responseEncounters = await axios.get('http://localhost:5000/doctor/current_encounters', {
-          headers: { 'Content-Type': 'application/json' }
-        });
-
-        const encounters = responseEncounters.data.active_encounters
-        console.log(encounters)
-        setPatientsNum(encounters.length)
-        setBedsData([20, encounters.length])
-        console.log(patientsNumber)
-        console.log(bedsData)
-
-        const responseStaff = await axios.get('http://localhost:5000/doctor/current_employees', {
-          headers: { 'Content-Type': 'application/json' }
-        });
-
-
-        const employeeData = responseStaff.data.active_employees
-        const employeesData = employeeData.map(employee => [
-            employee[7], // ProfilePic
-            `${employee[3]} ${employee[4]}`, // FullName
-            employee[14], // Shift
-            employee[11],  // Role
-            calculateAge(employee[8])
-        ]);
-        setStaff(employeeData)
-        console.log(employeesData)
-
-          
-    }
-    fetchData()
-
-},[])
+ 
+  const { user, setUser } = useContext(UserContext);
 
 
  // Empty array means this effect runs once when the component mounts
 
   return (
-    <div>
- 
-
-    </div>
+    <ProSide role = {user.role}/>  
   );
 }
 

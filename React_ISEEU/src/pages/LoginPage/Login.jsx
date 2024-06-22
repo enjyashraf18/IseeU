@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import './Login.css'; // Assuming you have some custom CSS here
 import { useForm } from 'react-hook-form';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
@@ -10,7 +10,8 @@ import { ProSide } from '../../components';
 function Login() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const [role, setRole] = useState("Admin")
+
+  const { user, setsser } = useState();
 
   const onSubmit = (data) => {
     const body = {
@@ -25,11 +26,14 @@ function Login() {
     })
 
     .then(response => {
+      
       console.log(response.data);
       if (response.data.message === "Login successful") {
         // Redirect to another route, e.g., /dashboard
-        setRole(data.role)
-        navigate('/');
+        const user = response.data.user
+        localStorage.setItem('user', JSON.stringify(user));
+
+        navigate('/',{replace: true},{state: user});
       } else {
         // Handle login failure, show error message etc.
         console.log('Login failed');
@@ -44,7 +48,6 @@ function Login() {
 
     reset();
   };
-  const [activeContent, setActiveContent] = useState('Home'); // Default content
 
   // const handleSidebarItemClick = (content) => {
   //   setActiveContent(content);
@@ -107,6 +110,7 @@ function Login() {
 
 
   return (
+
     <Container fluid id='fullPage'>
       <Row>
    
@@ -185,6 +189,7 @@ function Login() {
         </Col>
         </Row>
     </Container>
+
   );
 }
 

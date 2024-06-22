@@ -1,4 +1,6 @@
 export {default as Patient_Analysis} from "./patientsAnalysis/PatientAnalysis"
+export {default as DoctorsAnalysis} from "./doctorsAnalysis/DoctorsAnalysis"
+export {default as NursesAnalysis} from "./nursesAnalysis/NursesAnalysis"
 export {default as Doctor_View} from"./doctorView/DoctorView";
 
 export {default as Report} from "./addReport/AddReport";
@@ -14,4 +16,5 @@ export {default as AdminView} from "./AdminView/AdminView"
 export{default as AdmitPatient} from "./AdmitPatient/AdmitPatient"
 export{default as PatientProfile} from "./Patient_profile/Patient_profile";
 export {default as NurseProfile} from "./nurseProfile/NurseProfile";
+export {default as Loading} from "./loadingPage/Loading";
 
