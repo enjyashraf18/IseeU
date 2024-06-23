@@ -16,9 +16,15 @@ const ProSide = (prop) => {
     const handleItemClick = (item) => {
 
         console.log(item.label);
-        if(item.label === 'logout') {localStorage.clear();}
+        if(item.label === 'Logout') {
+          localStorage.clear();
+          navigate(`/login`);
+
+        }
+        else{
+
         setActiveItem(item);
-        navigate(`${item.link}`,{replace: true});
+        navigate(`${item.link}`);}
 
 
     };
@@ -28,7 +34,6 @@ const ProSide = (prop) => {
         { id: 2, label: 'Doctors', icon: 'fa-solid fa-users',link:"/admin/doctorsdata"  },
         { id: 3, label: 'Nurses', icon: 'fa-solid fa-users',link:"/admin/nursesdata"  },
         { id: 4, label: 'Current Encounters', icon: 'fa-solid fa-chart-line',link:"/currentencounters"  },
-        { id: 5, label: 'Encounters History', icon: 'fa-solid fa-chart-line',link:'/allencounters'  },
         { id: 6, label: 'All Patients', icon: 'fa-solid fa-envelope',link:"/admin/patients" },
         { id: 7, label: 'Equipments', icon: 'fa-solid fa-envelope',link:'/admin/equips' },
         { id: 3, label: 'My Profile', icon: 'fa-solid fa-chart-line',link:"/profile"  },
@@ -87,7 +92,7 @@ const ProSide = (prop) => {
                     <li
                         key="logout"
                         className="sidebar-element"
-                        onClick={() => handleItemClick({label: 'Logout'})}
+                        onClick={() => handleItemClick({label: 'Logout', link: 'login'})}
                     >
                         <label className="sidebar-link">
                             <i className="fa-solid fa-sign-out-alt"></i>

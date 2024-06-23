@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import "./NursesAnalysis.css";
 import styles from './NursesAnalysis.css';
-import { Table_patients,Btn } from '../../components';
+import { Table_patients,Btn,ProSide } from '../../components';
 import axios from 'axios'
 
 
@@ -93,6 +93,9 @@ const NursesAnalysis = () => {
   <div className='panalysis'>
     <div className="container-fluid ">
       <div className="row ">
+      <div id={"SideBarAdmin"} className={"col-2"}>
+                    <ProSide />
+                </div>
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
             <Table_patients data={nurses} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>

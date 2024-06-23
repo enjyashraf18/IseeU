@@ -84,6 +84,9 @@ const Investigations = () => {
   <div className='panalysis'>
     <div className="container-fluid ">
       <div className="row ">
+      <div id={"SideBarAdmin"} className={"col-2"}>
+                    <ProSide />
+                </div>
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
             <Table_patients data={Investigations} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
