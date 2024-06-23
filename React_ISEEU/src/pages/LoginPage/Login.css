@@ -15,14 +15,30 @@
     color: #258176;
 
 
+}/* Login.css */
+#LoginCont {
+    display: flex;
+    align-items: center; /* Vertical center alignment */
+    justify-content: center; /* Horizontal center alignment */ /* Ensure it takes full height of parent */
+
+background-color: #549991;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: #e0e0e0;
+    border-width: 0.5em;
+
+    min-height: 100vh;
 }
+
+#InputContainer {
+    text-align: center; /* Center align content inside InputContainer */
+}
+
   
 #left {
     flex: 1;
-    background-color: #549991; /* Optional background color for the left section */
-    padding: 1rem;
+    background-color: #549991;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 10px;
     text-align: center;
     border-color: #e0e0e0;
@@ -31,12 +47,13 @@
   }
   
 #right {
-    flex: 2;
-    background-color: #e0e0e0; /* Optional background color for the right section */
-    padding: 1rem;
+    background-color: #F5F5F5; /* Optional background color for the right section */
+    min-height:100vh ;
+    padding: 4vh;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: -10px 4px 8px rgba(0, 0, 0, 0.1);
     margin: 10px;
+    text-align: center;
   }
 
 /* #left-section, #right-section {
@@ -59,9 +76,9 @@ form .form-group {
 }
 
 form .form-group label {
-    color: #333;
     margin-bottom: 0.5rem;
     font-weight: bold;
+    color: #258176;
 }
 
 form .form-group input {
@@ -102,6 +119,7 @@ form .form-group p {
     font-size: 18px;
     cursor: pointer;
     margin-top: 1rem;
+    display: block;
 }
 
 button[type="submit"]:hover {
@@ -118,4 +136,22 @@ button[type="submit"]:hover {
 
 #right-section a:hover {
     text-decoration: underline;
+}
+/* Login.css */
+#LoginCont {
+    display: flex;
+    align-items: center; /* Vertical center alignment */
+    justify-content: center; /* Horizontal center alignment */
+    height: 100vh; /* Full viewport height */
+}
+
+#right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertical center alignment */
+}
+
+#InputContainer {
+    text-align: center;/* Example: Set a max width for better presentation */
+    padding: 7vh;
 }

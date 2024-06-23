@@ -112,44 +112,38 @@ function Login() {
   return (
 
     <Container fluid id='fullPage'>
-      <Row>
+      <div className={"row"} id={"LoginCont"}>
    
-        <div id="left">
-        <Col  xl={6}>
+        <div id="left" className={"col-7"}>
         <div 
         style=
-        {{width: '307px',
-        height: '115px',
+        {{
 
         fontFamily: "'Radio Canada'",
         fontStyle: 'normal',
         fontWeight: 400,
-        fontSize: '95px',
+        fontSize: '180px',
         lineHeight: '120.69%',
         color: '#e0e0e0'}}
         >ISEE<br></br></div>
         <div
           style=
           {{
-          width: '307px',
-          height: '115px',
           marginleft: "5px",
           fontFamily: "'Radio Canada'",
           fontStyle: 'normal',
           fontWeight: 2000,
-          fontSize: '380px',
+          fontSize: '450px',
           lineHeight: '70%',
           color: '#e0e0e0'}}
         >U
         </div>
-        </Col>
         </div>
-        <Col id="right"xl={6}>
-        <div>
-        <h1 style={{
-          width: '307px',
-          height: '115px',
+        <div id="right" className={"col-5"}>
 
+          <div id="InputContainer">
+          <div>
+        <h1 style={{
           fontFamily: "'Radio Canada'",
           fontStyle: 'normal',
           fontWeight: 700,
@@ -186,8 +180,9 @@ function Login() {
             </Button>
           </Form>
           <Link to='/register'>New Admin? Register</Link>
-        </Col>
-        </Row>
+        </div>
+        </div>
+        </div>
     </Container>
 
   );
