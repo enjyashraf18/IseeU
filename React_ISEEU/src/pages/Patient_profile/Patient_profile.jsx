@@ -41,15 +41,78 @@ const Patient_profile = () => {
   const navigate = useNavigate();
   const handle_update_Click=()=>{
 console.log("clicked on update")
+
+  }
+
+  function getDate() { /**function to get the time and date */
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      timeZone: "Africa/Cairo" // Set the time zone to Egypt (Africa/Cairo)
+    };
+  
+    const formatter = new Intl.DateTimeFormat("en-US", options);
+    const now = new Date(); // Get the current date and time dynamically
+    const formattedTime = formatter.format(now);
+  
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    const date = now.getDate();
+  
+    return `${formattedTime} ${date}/${month}/${year}`;
+
   }
   const handle_discharge_Click=()=>{
     console.log("clicked on discharge")
+    const user =JSON.parse(localStorage.getItem('user'))
+    console.log(user.nid)
+    const now = new Date();
+    const body = {
+      doctor_id: user.nid,
+      BID: bedNo,
+      currentTime: now
+    };
+
+    axios.post('http://localhost:5000/doctor/discharge', body, {
+      headers: {      
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      
+      // console.log(response.data.user.role);
+      console.log(response.data.message)
+      if (response.data.message === "discharged successfully") {
+        // Redirect to another route, e.g., /dashboard
+        alert(response.data.message)
+  }}
+)
+.catch(error => {
+  console.log(error);
+});
   }
    /**intillay the report modal is false untill i click on the add report button */
    const [showReportModal, setShowReportModal] = useState(false);
   const handle_add_Report=()=>{
     setShowReportModal(true);
     };
+
+    const onSubmit = (data) => {
+      const user =localStorage.getItem('user')
+      const body = {
+        doctor_id: user.nid,
+        BID: data.password,
+        currentTime: getDate()
+      };
+  
+      axios.post('http://localhost:5000/doctor/discharge', body, {
+        headers: {      
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+  
 
     useEffect(  
       ()=>{
@@ -99,7 +162,10 @@ console.log("clicked on update")
        <a href='show_more'>show more</a>
        </div>
        {role.toLowerCase()==="doctor"&&(
-       <EmerBtn label={"Disharge"} onclick={handle_discharge_Click} className="piegebtn"/>)}
+        <div onClick={handle_discharge_Click}>
+       <EmerBtn label={"Disharge"} onclick={handle_discharge_Click} className="piegebtn"/>
+        </div>
+       )}
       </div>
       <div className='col-7'>
         <div className='pprofile_medication'>

@@ -5,7 +5,7 @@ import { Btn, List, OR, UserText1 } from '../../components';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Info = () => {
-    const viewerRole = "patient"; // WHOSE PROFILE IS THIS
+    const viewerRole = "employee"; // WHOSE PROFILE IS THIS
 
 
     const canEdit = false; // if Admin or the same user
@@ -29,14 +29,14 @@ const Info = () => {
 
     const [profileImg, setProfileImg] = useState("https://placehold.co/500x320");
     const [formData, setFormData] = useState({
-        username: 'TalalE',
-        firstName: 'Talal',
-        lastName: 'klnfasklfs',
-        dob: '',
-        address: 'knafsk',
-        email: 'nafsklna',
-        phone: '56656+5998',
-        NID: '555-6898-564649',
+        username: 'robert.williams',
+        firstName: 'Robert',
+        lastName: 'Williams',
+        dob: '1984-05-30',
+        address: '404 Spruce St, City',
+        email: 'robert.williams@hospital.com',
+        phone: '234-567-8902',
+        NID: 'A002',
         expYrs: '5',
         role: 'doctor',
         gender: "Male",
@@ -148,17 +148,6 @@ const Info = () => {
                                     <UserText1 label="Phone" type="tel" name="phone" value={formData.phone}
                                                hidden={!showArray.phone} disabled={true} />
 
-                                    <UserText1 label="Years of Experience" type="text" name="expYrs"
-                                               value={formData.expYrs + " yrs"} hidden={!showArray.expYrs} disabled={true} />
-
-                                    <UserText1 label="Role" name="role" value={formData.role}
-                                               hidden={!showArray.role} disabled={true} />
-
-                                    <UserText1 label="Height" name="height" value={formData.height + " cm"}
-                                               hidden={!showArray.height} disabled={true} />
-
-                                    <UserText1 label="Weight" name="weight" value={formData.weight + " KG"}
-                                               hidden={!showArray.weight} disabled={true} />
 
                                     <div className={"habitsDiv"} hidden={!showArray.habits}>
                                         <p> Habits</p>

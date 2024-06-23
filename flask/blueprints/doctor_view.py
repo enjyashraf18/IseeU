@@ -151,6 +151,7 @@ def discharge():
     bed_id = data.get('BID')
     curr_time = data.get('currentTime')
     discharge_doc_id = data.get('doctor_id')
+    print(discharge_doc_id)
     cursor.execute("""
         UPDATE encounters
         SET dischargedatetime = %s, dischargedoctorid = %s
