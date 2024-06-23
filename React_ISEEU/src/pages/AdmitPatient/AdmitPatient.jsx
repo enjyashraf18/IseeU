@@ -153,7 +153,7 @@ const AdmitPatient = () => {
         }); 
         
         console.log(doctors)}
-    }
+
         
    
  
@@ -406,6 +406,6 @@ const AdmitPatient = () => {
             </div>
         </div>
     );
-}
+};
 
 export default AdmitPatient;

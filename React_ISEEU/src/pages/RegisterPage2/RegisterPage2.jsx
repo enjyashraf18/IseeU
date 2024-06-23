@@ -5,8 +5,8 @@ import { Btn, UserText1, OR } from '../../components'; // Assuming these are you
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FilePond, registerPlugin } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+// import 'filepond/dist/filepond.min.css';
+// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 const form1data = JSON.parse(localStorage.getItem('formData'));
 

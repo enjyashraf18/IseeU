@@ -46,12 +46,7 @@ const NurseProfile = () => {
     const role="user";
     const [structuredMedications,setstructuredMedications]=useState([[]]);
     const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
-<<<<<<< HEAD
-    setmedication(newData);
 
-  };
-
-=======
       setmedication(newData);
       
       const processMedications = (medicationsList) => {
@@ -68,7 +63,6 @@ const NurseProfile = () => {
    useEffect(() => {
     console.log(structuredMedications);
   }, [structuredMedications]);
->>>>>>> 50d50fdf8321df4a58adf6c052fa792379a76e96
 
     const flag_Doctors =true;
 const column__doctor_av=["Available"," "];
@@ -132,12 +126,9 @@ useEffect(
                    `${rawmed[i][38]} (${rawmed[i][35]}gm)`,
                    rawmed[i][9],
                    `${rawmed[i][20]} ${rawmed[i][21]}`,
-<<<<<<< HEAD
                    calcNextDose(rawmed[i][33], rawmed[i][35]),
                    'unchecked'
-=======
-                   calcNextDose(rawmed[i][33], rawmed[i][35]),"unchecked"
->>>>>>> 50d50fdf8321df4a58adf6c052fa792379a76e96
+
                  ]
                )
             }

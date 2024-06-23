@@ -5,11 +5,7 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-<<<<<<< HEAD
-import {AddStaff,HabitsSelect,Reports,Investigations,Equipments,AllPatients,DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,PatientProfile,NurseProfile, AdminView, Loading } from "./pages";
-=======
-import {Reports,Investigations,Equipments,AllPatients,DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,PatientProfile,NurseProfile, AdminView, Loading,Info } from "./pages";
->>>>>>> 50d50fdf8321df4a58adf6c052fa792379a76e96
+import {Info,AddStaff,HabitsSelect,Reports,Investigations,Equipments,AllPatients,DoctorsAnalysis,NursesAnalysis,Patient_Analysis,Doctor_View,Login,Register,Report,AdmitPatient ,PatientProfile,NurseProfile, AdminView, Loading } from "./pages";
 
 import{
     createBrowserRouter,
@@ -27,13 +23,11 @@ import { Register2 } from "./pages";
       element: <AllPatients/>
     },
     {
-<<<<<<< HEAD
       path: "/addstaff",
       element: <AddStaff/>
-=======
+    },{
       path: "/profile",
       element: <Info/>
->>>>>>> 50d50fdf8321df4a58adf6c052fa792379a76e96
     },
     {
       path: "/doctor/investigations",
