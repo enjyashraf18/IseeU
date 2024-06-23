@@ -50,6 +50,7 @@ const Info = () => {
     const location = useLocation();
 
     useEffect(() => {
+        
         const viewerSet = () => {
             if (viewerRole === "employee") {
                 setShowArray({

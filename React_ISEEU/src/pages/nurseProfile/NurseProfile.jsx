@@ -45,7 +45,8 @@ const NurseProfile = () => {
     const patient_header=["Name","Bed_No","Statue"]
     const role="user";
     const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
-    // setmedication(newData);
+    setmedication(newData);
+
   };
 
 
@@ -111,7 +112,8 @@ useEffect(
                    `${rawmed[i][38]} (${rawmed[i][35]}gm)`,
                    rawmed[i][9],
                    `${rawmed[i][20]} ${rawmed[i][21]}`,
-                   calcNextDose(rawmed[i][33], rawmed[i][35])
+                   calcNextDose(rawmed[i][33], rawmed[i][35]),
+                   'unchecked'
                  ]
                )
             }
