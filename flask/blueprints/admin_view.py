@@ -219,7 +219,7 @@ def available_nurses():
 
 
 #check if there's available beds of a certain type
-@admin_view.route('/admin/available_beds', methods=['POST'])
+@admin_view.route('/admin/available_bed_type', methods=['POST'])
 def available_beds():
     bed_type = request.json.get('bedtype')
     beds = available_beds_fn(bed_type)
@@ -331,3 +331,37 @@ def all_encounters():
     """)
     encounters = cursor.fetchall()
     return jsonify({"encounters": encounters})
+
+#write a query to get all available beds (id) from the same type in a dictionary like this
+# {
+#     "bedtype": "ICU",
+#     "available_beds_ids": [5, 6, 7, 8]
+# }
+# {
+#     "bedtype": "General",
+#     "available_beds_ids": [1, 2, 3, 4]
+# }
+#implement the query in the route below
+@admin_view.route('/admin/all_available_beds', methods=['GET'])
+def all_available_beds():
+    all_available_beds_query = """
+            SELECT bedtype, bedid as available_beds
+            FROM bed
+            WHERE isoccupied IS NOT TRUE 
+            ORDER BY bedtype
+        """
+    cursor.execute(all_available_beds_query)
+    all_avail_bed_ids = cursor.fetchall()
+
+    final_avail_beds = {}
+    for bed in all_avail_bed_ids:
+        b_type = bed['bedtype']
+        b_id = bed['available_beds']
+        if b_type not in final_avail_beds:
+            final_avail_beds[b_type] = [b_id]
+        else:
+            final_avail_beds[b_type].append(b_id)
+    return jsonify(final_avail_beds)
+
+
+
