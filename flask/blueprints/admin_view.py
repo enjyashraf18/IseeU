@@ -191,6 +191,8 @@ def add_employee():
     phone = data.get('phone')
     datehired = data.get('dateHired')
     role = data.get('role')
+    shift = data.get('shift')
+    profile_pic = data.get('profilepic')
 
     # checks if the employee already exists
     cursor.execute("SELECT nid FROM employee WHERE nid = %s", (NID,))
@@ -198,13 +200,13 @@ def add_employee():
     if user_exists:
         return jsonify({"error": "User already exists"}), 400
     else:
-        query = """INSERT INTO employee (nid, role, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired, role)
-                                       VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        query = """INSERT INTO employee (nid, username, password, firstname, lastname, dateofbirth, address, gender, emailaddress, phonenumber, datehired, role, shift, profilepic)
+                                       VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                                        """
 
         params = (
-            NID, role, username, password, firstname, lastname, dateofbirth, address, gender, email, phone,
-            datehired, role)
+            NID, username, password, firstname, lastname, dateofbirth, address, gender, email, phone,
+            datehired, role, shift, profile_pic)
 
         return execute_query(query, params)
 
@@ -261,9 +263,9 @@ def available_evening_nurses():
 #check if there's available beds of a certain type
 def available_beds_fn(bed_type):
     avaialable_beds_query = """
-        SELECT bedid
+        SELECT bed.bedid
         FROM bed
-        WHERE bedtype = %s AND isoccupied IS NOT TRUE
+        WHERE bedtype =%s AND isoccupied IS NOT TRUE
     """
     cursor.execute(avaialable_beds_query, (bed_type,))
     beds = cursor.fetchall()
