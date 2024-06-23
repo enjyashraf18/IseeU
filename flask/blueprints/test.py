@@ -12,25 +12,13 @@ from database import cursor, database_session, execute_query
 # }
 #implement the query in the function below
 
-all_available_beds_query = """
-        SELECT bedtype, bedid as available_beds
-        FROM bed
-        WHERE isoccupied IS NOT TRUE 
-        ORDER BY bedtype
-    """
-cursor.execute(all_available_beds_query)
-all_avail_bed_ids = cursor.fetchall()
+cursor.execute("""
+        SELECT * FROM employee
+        WHERE employee.dateleft IS NULL AND (employee.role = 'Doctor' :: ROLE OR employee.role = 'Nurse' :: ROLE)
+    """)
+active_employees = cursor.fetchall()
 
-final_avail_beds = {}
-for bed in all_avail_bed_ids:
-    b_type = bed['bedtype']
-    b_id = bed['available_beds']
-    if b_type not in final_avail_beds:
-        final_avail_beds[b_type] = [b_id]
-    else:
-        final_avail_beds[b_type].append(b_id)
-
-print(final_avail_beds)
+print(active_employees)
 
 
 # @admin_view.route('/admin/all_available_beds', methods=['GET'])
