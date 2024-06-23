@@ -423,6 +423,7 @@ const handle_parent_modal_close=()=>{
                 <div className='row' id="submit-btn-report">
                  <div className='col-5 offset-7 '>
                   <div onClick={handle_parent_modal_submit}>
+                    
                  <Btn label={"Submit"}  onClick={handlesubmit}/>
                  </div>
                  </div>
