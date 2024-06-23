@@ -157,4 +157,4 @@ def discharge():
         WHERE bedid = %s AND dischargedatetime IS NULL
     """, (curr_time, discharge_doc_id, bed_id))
     database_session.commit()
-    return jsonify({"message": "Patient discharged successfully"}), 200
+    return jsonify({"message": "discharged successfully"}), 200
