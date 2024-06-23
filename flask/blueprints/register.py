@@ -1,5 +1,9 @@
+import os
+
 from flask import request, jsonify, Blueprint
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
+
 from database import cursor, database_session as conn, execute_query
 
 register = Blueprint("register", __name__, static_folder="static", template_folder="templates")
@@ -58,7 +62,23 @@ def Register_2():
         return execute_query(query, params)
 
 
-
+#
+# try:
+#     os.makedirs(app.instance_path)
+# except OSError:
+#     pass
+#
+# @app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return 'No file part'
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file'
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(register.instance_path, 'static/images', filename))
+        return 'File saved successfully'
 
 
 

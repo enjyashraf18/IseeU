@@ -59,8 +59,12 @@ const Chart = (props) => {
         },
     };
 
+    const containerStyle = {
+        height: props.type === 'doughnut' ? '25vh' : props.type === 'bar' ? '15vh' : 'auto'
+    };
+
     return (
-        <div style={{ height: '25vh' }}>
+        <div style={containerStyle}>
             {props.type === 'doughnut' ? (
                 <Doughnut data={data} options={options} />
             ) : props.type === 'bar' ? (

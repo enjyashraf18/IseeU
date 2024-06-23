@@ -18,7 +18,7 @@ const App = (props) => {
 
   const handleButton1 = () => {
     // Navigate to the desired page
-    navigate('/patient_table');
+    navigate("/currentencounters");
   };
 
   const handleButton2 = () => {
@@ -36,7 +36,7 @@ const App = (props) => {
   };
   const handleButton5 = () => {
     // Navigate to the desired page
-    navigate('/NurseProfile');
+    navigate("/nursedashboard");
   };
   const handleButton6 = () => {
     // Navigate to the desired page
