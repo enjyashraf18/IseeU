@@ -32,7 +32,7 @@ const NursesAnalysis = () => {
   const [nurses, setNurses] = useState(initialPatientData);  
   const [loading, setLoading] = useState(true);
 
-  const role="Admin";
+  const role="nurse";
   const label="Add";
   const flag=true;
   const columns=["ID","Name","Shift","Gender","Date Hired", "Still Working"]
