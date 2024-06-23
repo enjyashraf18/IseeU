@@ -16,7 +16,13 @@ export {default as AllPatients} from "./allpatients/AllPatients"
 export {default as Equipments} from "./equipments/Equipments"
 export {default as Investigations} from "./investigations/Investigations"
 export {default as Reports} from "./reports/Reports"
+<<<<<<< HEAD
+export{default as HabitsSelect} from "./HabitsSelect/HabitsSelect"
+export{default as AddStaff} from "./AddStaff/AddStaff"
+
+=======
 export {default as Info } from "./Info/Info";
+>>>>>>> 50d50fdf8321df4a58adf6c052fa792379a76e96
 export{default as AdmitPatient} from "./AdmitPatient/AdmitPatient"
 export{default as PatientProfile} from "./Patient_profile/Patient_profile";
 export {default as NurseProfile} from "./nurseProfile/NurseProfile";

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./AddStaff.css";
 import {Btn, List, OR, UserText1} from '../../components';
 import {useLocation, useNavigate} from 'react-router-dom';
+import axios from 'axios'
 
 const AddStaff = () => {
     const [profileImg, setProfileImg] = useState("https://placehold.co/500x320");
@@ -17,10 +18,25 @@ const AddStaff = () => {
         email: '',
         phone: '',
         NID: '',
-        expYrs: '',
+        dateHired: '',
         role: '',
         gender: "",
+        shift: ""
     });
+    /**
+     * NID = data.get('NID')
+    username = data.get('username')
+    password = data.get('password')
+    firstname = data.get('firstName')
+    lastname = data.get('lastName')
+    dateofbirth = data.get('dob')
+    address = data.get('address')
+    gender = data.get('gender')
+    email = data.get('email')
+    phone = data.get('phone')
+    datehired = data.get('dateHired')
+    role = data.get('role')
+     */
 
 
 
@@ -59,7 +75,7 @@ const AddStaff = () => {
             ...formData,
             [name]: value
         });
-        console.log(formData)
+        console.log(value)
     };
 
     const handleSubmit = (e) => {
@@ -68,24 +84,30 @@ const AddStaff = () => {
             alert("Passwords do not match");
             return;
         }
-        console.log("FormData to be sent:", formData); // Debug statement
 
-        fetch('/Register', {
-            method: 'POST',
+
+
+        console.log("FormData to be sent:", formData);  // Debug statement
+
+        axios.post('http://localhost:5000/admin/add_employee', formData, {
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
+            }
         })
-            .then(res => res.json())
-            .then(data => {
-                navigate('/success'); // navigate to a success page or another route
+            .then(response => {
+                console.log(response.data);
+
+                // setServerResponse(response.data.message);
+                // setShow(true);
             })
+            // Save form data to localStorage
+            // navigate('/success'); // navigate to a success page or another route if needed
+
             .catch(error => {
-                console.error('Error during registration:', error);
-                alert('Registration failed: ' + error.message);
+                console.log(error);
             });
     };
+
 
 
     return (
@@ -119,7 +141,7 @@ const AddStaff = () => {
 
                                     <UserText1 label="Date of birth" type="date" name="dob" value={formData.dob}
                                                onChange={handleInputChange}/>
-                                    <OR/>
+                                    <OR formData={formData} name = 'gender'/>
                                     <UserText1 label="Address" type="text" name="address" value={formData.address}
                                                onChange={handleInputChange}/>
                                     <UserText1 label="Email" type="email" name="email" value={formData.email}
@@ -127,24 +149,27 @@ const AddStaff = () => {
                                     <UserText1 label="Phone" type="tel" name="phone" value={formData.phone}
                                                onChange={handleInputChange}/>
 
-                                    <UserText1 label="Years of Experience" type="number" name="expYrs" value={formData.expYrs}
+                                    <UserText1 label="Hiring Date" type="date" name="dateHired" value={formData.dateHired}
+                                                                                onChange={handleInputChange}/>
+                                    
+                                    <UserText1 label="Username" type="text" name="username" value={formData.username} hidden={cameForEdit}
                                                onChange={handleInputChange}/>
+<UserText1 label="Password" type="password" name="password" value= {formData.password} onChange={handleInputChange} hidden={cameForEdit}/>
+<UserText1 label="Password Confirm" type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleInputChange} hidden={cameForEdit} />
+<List label="Shift" options={["Day", "Night"]} name="shift" value={formData.shift}
+                                               onChange={handleInputChange}/>
+
                                     <List label="Role" options={roles} name="role" value={formData.role}
                                                onChange={handleInputChange}/>
 
 
-                                    <UserText1 label="Username" type="text" name="username" value={formData.username} hidden={!cameForEdit}
-                                               onChange={handleInputChange}/>
-
-                                    <UserText1 label="Password" type="password" name="Password" value={formData.password} hidden={!cameForEdit}
-                                               onChange={handleInputChange}/>
 
 
                                     <div className="row" id={"footer"}>
                                         <div className="col-3">
                                             <Btn label="Back"/>
                                         </div>
-                                        <div className="col-3 offset-6">
+                                        <div className="col-3 offset-6" onClick={handleSubmit}>
                                             <Btn label="Next"/>
                                         </div>
                                     </div>
