@@ -44,10 +44,24 @@ const NurseProfile = () => {
     const medication_header=["","Medication","Bed No.","Patient","Time"];
     const patient_header=["Name","Bed_No","Statue"]
     const role="user";
+    const [structuredMedications,setstructuredMedications]=useState([[]]);
     const handleMedicationChange = (newData) => { // here i change the data of the patient if checked or not " toggle first value"
-    // setmedication(newData);
-  };
-
+      setmedication(newData);
+      
+      const processMedications = (medicationsList) => {
+       return medicationsList.map(med => {
+         const nameDosage = med[0];
+         const [name, dosage] = nameDosage.split('(');
+         return [name.trim(),med[4]]
+       });
+     };
+     setstructuredMedications( processMedications(newData));  
+ 
+   };
+ 
+   useEffect(() => {
+    console.log(structuredMedications);
+  }, [structuredMedications]);
 
     const flag_Doctors =true;
 const column__doctor_av=["Available"," "];
@@ -111,7 +125,7 @@ useEffect(
                    `${rawmed[i][38]} (${rawmed[i][35]}gm)`,
                    rawmed[i][9],
                    `${rawmed[i][20]} ${rawmed[i][21]}`,
-                   calcNextDose(rawmed[i][33], rawmed[i][35])
+                   calcNextDose(rawmed[i][33], rawmed[i][35]),"unchecked"
                  ]
                )
             }

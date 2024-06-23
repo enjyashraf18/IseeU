@@ -3,6 +3,7 @@ import "./patientAnalysis.css";
 import styles from './patientAnalysis.css';
 import { Table_patients,Btn } from '../../components';
 import axios from 'axios'
+import { height } from '@fortawesome/free-solid-svg-icons/fa0';
 
 
 const PatientAnalysis = () => {
@@ -111,8 +112,11 @@ const PatientAnalysis = () => {
             </div>
           </div>
         )}
+      
       </div>
+      <div className='row' style={{height:"400px"}}></div> 
     </div>
+
     </div>
   );
 }
