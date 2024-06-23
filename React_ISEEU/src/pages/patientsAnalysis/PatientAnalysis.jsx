@@ -100,8 +100,8 @@ const PatientAnalysis = () => {
       <div id={"SideBarAdmin"} className={"col-2"}>
                     <ProSide />
                 </div>
-        <div className="col-10 col-md-4 ">
-          <div className="patientanalysis-table">
+        <div className="col-8 ">
+          <div  id ="pana"className="patientanalysis-table">
             <Table_patients data={encounters} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
 
           </div>

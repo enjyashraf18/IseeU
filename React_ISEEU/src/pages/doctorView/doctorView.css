@@ -1,5 +1,5 @@
 .DoctorView{
-  background-color: var(--color-background-table);
+  background-color: var(--color-background-table) !important;
   justify-content: center;
   height:703px;
 /*  display: flex;
@@ -7,6 +7,7 @@
 
 
 }
+
 .Doctor_table_patients{
   
   width: 100%;
@@ -21,7 +22,7 @@
   margin-left: 30px;
 }
 .Doctor_table_patients .table-responsive{
-  max-height: 200px;
+  height: 250px;
   
 }
 

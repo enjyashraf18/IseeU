@@ -38,10 +38,11 @@ const AdminView = () => {
 
             const employeeData = responseStaff.data.active_employees;
             const employeesData = employeeData.map(employee => [
-                `${employee[3]} ${employee[4]}`, // FullName
-                employee[14], // Shift
-                employee[11], // Role
-                calculateAge(employee[8])
+                employee[3] ,employee[4], // FullName
+               // employee[14], // Shift
+               calculateAge(employee[8]), 
+               employee[11], // Role
+                
             ]);
             setStaff(employeesData);
             setLoading(false);
@@ -106,12 +107,12 @@ const AdminView = () => {
                         </div>
                     </div>
                     <div id="statsPanel" className="row">
-                        <p id={"doctorsPanelTitle"}>Patients Analysis</p>
+                        <p id={"doctorsPanelTitle"}>Beds Types</p>
                         <Chart
                             id="bedCapChart"
                             type={"bar"}
-                            data={[10, 2, 55, 3]}
-                            labels={["Available", "Taken", "A", "B"]}
+                            data={[10, 10, 5, 9]}
+                            labels={["Standard", "CriticalCare", "Bariatric", "Air Fluidized"]}
                             options={{
                                 maintainAspectRatio: false,
                                 responsive: true

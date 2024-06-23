@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import {Table_patients,ProSide} from '../../components';
 import axios from 'axios'
+import { height } from "@fortawesome/free-solid-svg-icons/fa0";
 
 
 
@@ -105,10 +106,10 @@ const data_doctor_unAvailable=[
  */
 
 const flag_Doctors =true;
-const column__doctor_av=["Available"," "];
-const column_doctor_un=["unAvailable"," "];
+const column__doctor_av=["Available"," "," "];
+const column_doctor_un=["unAvailable"," "," "];
 const columns_patient=["Name","Bed_No","Statue","Gender","Age","Admitted","Refell Department"];
-const columns_checkups=[" ","Name","Bed_No"," "];
+const columns_checkups=[" ","Name","Bed_No"," "," "];
 const role="user";
 
   const [dataCheckups, setDataCheckups] = useState(initialDataCheckups);
@@ -228,7 +229,7 @@ return (
             <Table_patients data={encounters} anotherProp={role} headers={columns_patient} flag={flag_patient} showSearch={true} buttonpic={2} />
           </div>
         </div>
-
+<div className="row" style={{height:"1px"}}></div>
         <div className='flow_row_nurse'>
           <div className='row'>
             <div className='col-7'>
@@ -263,10 +264,13 @@ return (
               </div>
             </div>
           </div>
+         
         </div>
-
+      
       </div>
+    
     </div>
+    <div className="row" style={{height:"500px"}}></div>
 </div>
 );
 };

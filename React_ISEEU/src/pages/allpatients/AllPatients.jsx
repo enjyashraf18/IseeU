@@ -61,7 +61,7 @@ const AllPatients = () => {
         
         const rawAllPatients = responseAllPatients.data.patients
         const patientsData = rawAllPatients.map(encounter => [
-          encounter[5], // Profile Picture of the patient
+          // Profile Picture of the patient
           encounter[0], 
           `${encounter[1]} ${encounter[2]}`, // First name and last name
           encounter[3], // Bed No of the encounter
@@ -92,7 +92,7 @@ const AllPatients = () => {
       <div className="row ">
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
-            <Table_patients data={allpatients} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
+            <Table_patients data={allpatients} anotherProp={role} headers={columns} flag={false}  showSearch={true} onDataChange={handleDataChange} />
 
           </div>
         </div>
