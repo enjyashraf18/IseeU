@@ -9,13 +9,13 @@ import { Button } from 'react-bootstrap';
 const initialform = {
     fname: 'A',
     lname: '',
-    brithd: '',
+    dob: '',
     address: '',
     email: '',
     phone: '',
     NID: '',
     gender:'',
-    hightcm: '',
+    heightcm: '',
     weightkg:'',
     //Stay data
 }
@@ -24,7 +24,7 @@ const initialform = {
    const encounter = {
     InformedConsent: '',
     Complaint: '',
-    APACHE:'',
+    APACHE:'10',
     GCS: '',
     bedID: '',
     MorningNurseID: '',
@@ -396,8 +396,8 @@ const AdmitPatient = () => {
                                                        onChange={handleInputEncounterChange}/>
                                         </div>
                                         <div className="col-6">
-                                            <UserText1 label="Apache" type="number" name="apache"
-                                                       value={encounterData.apache}
+                                            <UserText1 label="Apache" type="number" name="APACHE"
+                                                       value={encounterData.APACHE}
                                                        onChange={handleInputEncounterChange}/>
                                         </div>
                                     </div>

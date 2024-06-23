@@ -84,27 +84,31 @@ def admit_update_patient():
     encounter = data.get('encounter')
 
     NID = patient.get('NID')
-    FName = patient.get('FName')
-    LName = patient.get('LName')
-    Gender = patient.get('Gender')
-    Email = patient.get('Email')
+    FName = patient.get('fname')
+    LName = patient.get('lname')
+    Gender = patient.get('gender')
+    Email = patient.get('email')
     PPic = patient.get('PPic')
-    BrithD = patient.get('BrithD')
-    Address = patient.get('Address')
-    WeightKg = patient.get('weightkg')
-    HightCm = patient.get('hightcm')
+    BrithD = patient.get('dob')
+    Address = patient.get('address')
+    WeightKg = encounter.get('weightkg')
+    HightCm = encounter.get('heightcm')
 
     InformedConsent = encounter.get('InformedConsent')
-    Complaint = encounter.get('Complaint')
+    Complaint = encounter.get('complaint')
     DocNotes = encounter.get('DocNotes')
     APACHE = encounter.get('APACHE')
     GCS = encounter.get('GCS')
-    AdmitDateTime = encounter.get('AdmitDateTime')
+    AdmitDateTime = encounter.get('admittingTIme')
     bedID = encounter.get('bedID')
-    MorningNurseID = encounter.get('MorningNurseID')
-    EveningNurseID = encounter.get('EveningNurseID')
+    MorningNurseID = encounter.get('morningNurse')
+    MorningNurseID = MorningNurseID[:4]
+    # print(MorningNurseID)
+    EveningNurseID = encounter.get('eveningNurse')
+    EveningNurseID = EveningNurseID[:4]
     AdmittingDoctorID = encounter.get('AdmittingDoctorID')
-    ReferralDep = encounter.get('ReferralDep')
+    AdmittingDoctorID = AdmittingDoctorID[:4]
+    ReferralDep = encounter.get('refDepart')
 
     # check if the patient exists still in the db (encounters)
     cursor.execute("SELECT patientid FROM encounters WHERE patientid = %s AND dischargedatetime IS NULL", (NID,))
@@ -123,6 +127,7 @@ def admit_update_patient():
             InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
             AdmittingDoctorID, ReferralDep, NID)
         cursor.execute(update_encounter_query, update_encounter_params)
+        database_session.commit()
 
         #update patients table
         update_patient_query = """
@@ -134,6 +139,7 @@ def admit_update_patient():
         update_patient_params = (FName, LName, Gender, Email, PPic, BrithD, Address,
                                  WeightKg, HightCm, NID)
         cursor.execute(update_patient_query, update_patient_params)
+        database_session.commit()
 
         return jsonify({"message": "Patient successfully updated"}), 400
     else:  # patient does not exist in the db (insert the patient and the encounter)
@@ -145,33 +151,36 @@ def admit_update_patient():
             params_patient = (
                 NID, FName, LName, Gender, Email, PPic, BrithD, Address, WeightKg, HightCm)
             cursor.execute(query_patient, params_patient)
+            database_session.commit()
 
-            query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+            query_encounter = """INSERT INTO encounters (patientid, InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
              morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
-                                                           VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                           VALUES (%s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
                                                            """
 
             params_encounter = (
-                InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+                NID, InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
                 AdmittingDoctorID, ReferralDep)
             cursor.execute(query_encounter, params_encounter)
+            database_session.commit()
             return jsonify({"message": "Patient successfully Admitted"}), 400
 
 
         else:
-            query_encounter = """INSERT INTO encounters (InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
+            query_encounter = """INSERT INTO encounters (patientid, InformedConsent, Complaint, docnotes, apache, gcs, admitdatetime, bedid,
              morningnurseid, eveningnurseid, admittingdoctorid, referraldep)
-                                                           VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                                           VALUES (%s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s)
                                                            """
 
             params_encounter = (
-                InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
+                NID, InformedConsent, Complaint, DocNotes, APACHE, GCS, AdmitDateTime, bedID, MorningNurseID, EveningNurseID,
                 AdmittingDoctorID, ReferralDep)
             cursor.execute(query_encounter, params_encounter)
+            database_session.commit()
             return jsonify({"message": "Patient successfully Admitted"}), 400
 
 
-    database_session.commit()
+
 
 
 @admin_view.route('/admin/add_employee', methods=['POST'])
