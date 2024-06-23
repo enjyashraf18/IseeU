@@ -9,7 +9,7 @@ const ProSide = (prop) => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
     console.log(user)
-    const role = "Admin" ;// This should ideally come from props or context
+    const role = user.role ;// This should ideally come from props or context
 
     const [activeItem, setActiveItem] = useState(null);
 
@@ -64,9 +64,9 @@ const ProSide = (prop) => {
 
     const sidebarItems = role === "Admin"
         ? adminSidebarItems
-        : role === "doctor"
+        : role === "Doctor"
             ? docSidebarItems
-            : role === "nurse"
+            : role === "Nurse"
                 ? nurseSidebarItems
                 : role === "patient"
                     ? patientSidebarItems
@@ -101,17 +101,7 @@ const ProSide = (prop) => {
                     </li>
                 </ul>
             </div>
-            <div className="content">
-                {activeItem ? (
-                    <div>
-                        <h2>{activeItem.label}</h2>
-                    </div>
-                ) : (
-                    <div>
-
-                    </div>
-                )}
-            </div>
+      
         </div>
       </Col>
     );

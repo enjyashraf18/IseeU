@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import "./Reports.css";
 import styles from './Reports.css';
-import { Table_patients,Btn } from '../../components';
+import { Table_patients,Btn,ProSide } from '../../components';
 import axios from 'axios'
 
 
@@ -31,9 +31,9 @@ const PatientAnalysis = () => {
   const [Reports, setReports] = useState(initialPatientData);  
   const [loading, setLoading] = useState(true);
   const user = JSON.parse(localStorage.getItem('user'));
-  const userID =  user.NID
+  const userID =  user.nid
 
-  const role=user.role;
+  const role='Doctor';
   const label="Add";
   const flag= true;
   const columns=["Paient","Bed_No","Notes","Date(D-M)","Time","Report ID"]
@@ -42,6 +42,7 @@ const PatientAnalysis = () => {
   };
   function formatDateTime(dateTimeString) {
     // Create a new Date object from the input string
+  if(dateTimeString !== null){
     const date = new Date(dateTimeString);
   
     // Extract day and month
@@ -56,7 +57,7 @@ const PatientAnalysis = () => {
     const formattedDate = `${day} - ${month}`;
     const formattedTime = `${hours} : ${minutes}`;
   
-    return [formattedDate, formattedTime];
+    return [formattedDate, formattedTime];}
   }
   
   // Example usage
@@ -65,6 +66,7 @@ const PatientAnalysis = () => {
     // Define an async function inside the useEffect
     const fetchData = async () => {
         // Perform the axios GET request
+        console.log(userID)
         const body = {DID : userID}
 
         const responseReports = await axios.post('http://localhost:5000/doctor/doctor_reports', body,{
@@ -103,6 +105,9 @@ const PatientAnalysis = () => {
   <div className='panalysis'>
     <div className="container-fluid ">
       <div className="row ">
+      <div id={"SideBarAdmin"} className={"col-2"}>
+                    <ProSide />
+                </div>
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
             <Table_patients data={Reports} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
