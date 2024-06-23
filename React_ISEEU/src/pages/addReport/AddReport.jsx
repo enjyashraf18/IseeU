@@ -23,7 +23,7 @@ const AddReport = (prop) => {
     ];
     /**take  the tests from database */
 
-  const columns_tests_checkups1=["A"," "];
+  const columns_tests_checkups1=[""," "];
     const initialscansCheckups = [
         ["CT Scan", "unchecked"],
         ["Head CT", "unchecked"],
@@ -37,7 +37,7 @@ const AddReport = (prop) => {
         ["Chest X-ray", "unchecked"]
     ];
     ; /**take the scans from database */
-  const columns_scans_checkups=["B"," "];
+  const columns_scans_checkups=[""," "];
   const options = ['day', 'week', 'month'];
   const options_duartion = ['days', 'weeks', 'months'];
 

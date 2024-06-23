@@ -47,7 +47,7 @@ const Table_Patient = (props) => {
 const handleCheckboxChange = (index,flag=false) => {
  if( check_rep && flag===true || check_rep===undefined){
   const newData = [...data];
-  newData[index][idx_checked] = newData[index][idx_checked] === 'unchecked' ? 'checked' : 'checked';// here if box is checked and you click toggle the state and change the data
+  newData[index][idx_checked] = newData[index][idx_checked] === 'unchecked' ? 'checked' : 'unchecked';// here if box is checked and you click toggle the state and change the data
   onDataChange(newData);}
 
 }; 

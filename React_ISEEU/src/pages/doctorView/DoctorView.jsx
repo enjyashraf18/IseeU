@@ -143,7 +143,7 @@ const role="user";
           checkup[24], // Profile Picture of the patient
           `${checkup[20]} ${checkup[21]}`, // First name and last name
           checkup[9], // Bed No of the encounter
-          calculateHours(checkup[14])
+          //calculateHours(checkup[14])
 
         ])
         console.log("encounters", responseEncounters.data.active_encounters)

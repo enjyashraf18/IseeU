@@ -89,9 +89,6 @@ const AdminView = () => {
                                     <div id="admit" className="row">
                                         <button id="admitButton" type={"button"} onClick={() => navigate('/admitpatient')}>Admit</button>
                                     </div>
-                                    <div id="discharge" className="row">
-                                        <button id="dischargeButton">Discharge</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
