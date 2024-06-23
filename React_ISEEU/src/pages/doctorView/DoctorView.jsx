@@ -166,21 +166,22 @@ const role="user";
  
               // Process staff
       const employeesDataFilter = []
-      for(let i =0 ; i<)employeeData.map(employee => [
-        employee[8], // ProfilePic
-        `${employee[4]} ${employee[5]}`, // FullName
-        employee[15], // Shift
-        employee[12]  // Role
-      ]);
+      for(let i =0 ; i<employeeData.length;i++){employeesDataFilter.push([
+        employeeData[i][7], // ProfilePic
+        `${employeeData[i][3]} ${employeeData[i][4]}`, // FullName
+        employeeData[i][14], // Shift
+        employeeData[i][11]  // Role
+      ]);}
+      console.log("fetched employeesDataFilter ....",employeesDataFilter)
 
       const employeesAvailable = [];
       const employeesUnavailable = [];
 
-      for (let i = 0; i < employeesData.length; i++) {
-        if (employeesData[i][2] === currentShift()) {
-          employeesAvailable.push(employeesData[i]);
+      for (let i = 0; i < employeeData.length; i++) {
+        if (employeesDataFilter[i][2] === currentShift()) {
+          employeesAvailable.push(employeesDataFilter[i]);
         } else {
-          employeesUnavailable.push(employeesData[i]);
+          employeesUnavailable.push(employeesDataFilter[i]);
         }
 
       }
