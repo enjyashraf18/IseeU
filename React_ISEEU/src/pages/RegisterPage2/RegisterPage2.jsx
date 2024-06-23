@@ -25,6 +25,11 @@ const Register2 = () => {
         email: '',
         gender: 'male',
         phone: '',
+        NID: firstForm.NID,
+        dateHired: '',
+        username: firstForm.username,
+        password: firstForm.password,
+        passwordConfirm: firstForm.passwordConfirm
     });
 
     // Handle file upload with FilePond
@@ -109,12 +114,22 @@ const Register2 = () => {
                                     <UserText1 label="Address" type="text" name="address" value={formData.address} onChange={handleInputChange} />
                                     <UserText1 label="Email" type="email" name="email" value={formData.email} onChange={handleInputChange} />
                                     <UserText1 label="Phone" type="number" name="phone" value={formData.phone} onChange={handleInputChange} />
+                                    <UserText1 label="National ID" type="text" name="NID" value={firstForm.NID} onChange={handleInputChange}/>
+                                    <UserText1 label="Hired since" type="date" name="dateHired" value={formData.dateHired} onChange={handleInputChange}/>
+
+                                <UserText1 label="Username" type="text" name="username" value={firstForm.username}
+                                           onChange={handleInputChange}/>
+                                <UserText1 label="Password" type="password" name="password" value={firstForm.password}
+                                           onChange={handleInputChange}/>
+                                <UserText1 label="Password Confirm" type="password" name="passwordConfirm"
+                                           value={firstForm.passwordConfirm} onChange={handleInputChange}/>
+
                                     <div className="row">
-                                        <div className="col-1">
+                                        <div className="col-2">
                                             <Btn label="Back" />
                                         </div>
-                                        <div className="col-1 offset-8">
-                                            <button id="nxtBtn" type="submit">Next</button>
+                                        <div className="col-2 offset-8">
+                                            <Btn id="nxtBtn" label ="Next" type="submit" />
                                         </div>
                                     </div>
                                 </div>

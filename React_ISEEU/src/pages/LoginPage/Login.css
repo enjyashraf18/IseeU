@@ -92,7 +92,7 @@ form .form-group p {
     margin-top: 0.5rem;
 }
 
-button[type="submit"] {
+#submitBtn {
     width: 100%;
     padding: 10px;
     background-color: #549991;
