@@ -12,7 +12,7 @@ function Login() {
   const navigate = useNavigate();
 
   const { user, setsser } = useState();
-
+  localStorage.clear()
   const onSubmit = (data) => {
     const body = {
       email: data.email,
@@ -27,13 +27,22 @@ function Login() {
 
     .then(response => {
       
-      console.log(response.data);
+      console.log(response.data.user.role);
       if (response.data.message === "Login successful") {
         // Redirect to another route, e.g., /dashboard
-        const user = response.data.user
-        localStorage.setItem('user', JSON.stringify(user));
+        const userdata = response.data.user
+        localStorage.clear()
+        localStorage.setItem('user', JSON.stringify(userdata));
+        console.log(localStorage.getItem('user'))
 
-        navigate('/',{replace: true},{state: user});
+        if(response.data.user.role === 'Admin'){
+        navigate('/admindashboard')
+        console.log(user)
+        ;}
+        if(response.data.user.role=== "Doctor"){
+          navigate('/doctordashboard');}
+          else if(response.data.user.role === 'Nurse'){
+            navigate('/nursedashboard',{replace: true},{state: user});}
       } else {
         // Handle login failure, show error message etc.
         console.log('Login failed');

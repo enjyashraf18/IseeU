@@ -115,23 +115,16 @@ const role="user";
   const [encounters, setEncounters] = useState(data_patient_table);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [staff , setStaff] = useState(data_doctor_unAvailable, data_doctor_Available)
+  const [staff , setStaff] = useState([data_doctor_unAvailable, data_doctor_Available])
 
   useEffect(() => {
     // Define an async function inside the useEffect
     const fetchData = async () => {
         // Perform the axios GET request
-        const [responseEncounters, responseStaff] = await Promise.all([
-          axios.get('http://localhost:5000/doctor/current_encounters', {
-            headers: { 'Content-Type': 'application/json' }
-          }),
-          axios.get('http://localhost:5000/doctor/current_employees', {
-            headers: { 'Content-Type': 'application/json' }
-          })
-        ]);
+        const responseEncounters = await axios.get('http://localhost:5000/doctor/current_encounters', {
+          headers: { 'Content-Type': 'application/json' }
+        })  
         console.log("encounters", responseEncounters.data.active_encounters)
-        console.log("staff", responseStaff.data['active_employees'] )
-        const employeeData = responseStaff.data['active_employees']
         const encounters = responseEncounters.data.active_encounters
         const checkupInitial = responseEncounters.data.active_encounters
         const encountersData = encounters.map(encounter => [
@@ -152,30 +145,43 @@ const role="user";
           calculateHours(checkup[14])
 
         ])
+        console.log("encounters", responseEncounters.data.active_encounters)
 
         console.log('check up data',checkupsData)
-        console.log(encountersData)  
-        setDataCheckups(checkupsData)
+        console.log("encounters", encountersData)
         setEncounters(encountersData)
+  
+        setDataCheckups(checkupsData)
+
+        const responseStaff = await axios.get('http://localhost:5000/doctor/current_employees', {
+            headers: { 'Content-Type': 'application/json' }
+          })
+ 
+        console.log("staff", responseStaff.data.active_employees)
+        const employeeData = responseStaff.data.active_employees
+
+
 
         console.log("fetched emnployees ....",employeeData)
  
               // Process staff
-      const employeesData = employeeData.map(employee => [
-        employee[8], // ProfilePic
-        `${employee[4]} ${employee[5]}`, // FullName
-        employee[15], // Shift
-        employee[12]  // Role
-      ]);
+      const employeesDataFilter = []
+      for(let i =0 ; i<employeeData.length;i++){employeesDataFilter.push([
+        employeeData[i][7], // ProfilePic
+        `${employeeData[i][3]} ${employeeData[i][4]}`, // FullName
+        employeeData[i][14], // Shift
+        employeeData[i][11]  // Role
+      ]);}
+      console.log("fetched employeesDataFilter ....",employeesDataFilter)
 
       const employeesAvailable = [];
       const employeesUnavailable = [];
 
-      for (let i = 0; i < employeesData.length; i++) {
-        if (employeesData[i][2] === currentShift()) {
-          employeesAvailable.push(employeesData[i]);
+      for (let i = 0; i < employeeData.length; i++) {
+        if (employeesDataFilter[i][2] === currentShift()) {
+          employeesAvailable.push(employeesDataFilter[i]);
         } else {
-          employeesUnavailable.push(employeesData[i]);
+          employeesUnavailable.push(employeesDataFilter[i]);
         }
 
       }
@@ -219,7 +225,7 @@ return (
             <h12>{data_patient_table.length}</h12>
           </div>
           <div className='Doctor_table_patients'>
-            <Table_patients data={data_patient_table} anotherProp={role} headers={columns_patient} flag={flag_patient} showSearch={true} buttonpic={2} />
+            <Table_patients data={encounters} anotherProp={role} headers={columns_patient} flag={flag_patient} showSearch={true} buttonpic={2} />
           </div>
         </div>
 
@@ -248,10 +254,10 @@ return (
               <h2>Staff</h2>
               <div className='Doctor_table_staff'>
                 <div className='available_doctors'>
-                  <Table_patients data={data_doctor_Available} anotherProp={role} headers={column__doctor_av} flag={true} showSearch={true} />
+                  <Table_patients data={staff[0]} anotherProp={role} headers={column__doctor_av} flag={true} showSearch={true} />
                 </div>
                 <div className='unavailable_doctors'>
-                  <Table_patients data={data_doctor_unAvailable} anotherProp={role} headers={column_doctor_un} flag={true} showSearch={false} />
+                  <Table_patients data={staff[1]} anotherProp={role} headers={column_doctor_un} flag={true} showSearch={false} />
                 </div>
               </div>
               </div>

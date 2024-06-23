@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import "./patientAnalysis.css";
 import styles from './patientAnalysis.css';
-import { Table_patients,Btn } from '../../components';
+import { Table_patients,Btn,ProSide } from '../../components';
 import axios from 'axios'
 import { height } from '@fortawesome/free-solid-svg-icons/fa0';
 
@@ -32,9 +32,8 @@ const PatientAnalysis = () => {
   const [patientAnalysisData, setPatientAnalysisData] = useState(initialPatientData);  
   const [encounters, setEncounters] = useState(patientAnalysisData);
   const [loading, setLoading] = useState(true);
-   const user = JSON.parse(localStorage.getItem('user'));
-
-  const role=user.role;
+  const user = JSON.parse(localStorage.getItem('user'));
+ const role='Doctor';
   const label="Add";
   const flag=true;
   const columns=["Name","Bed_No","Statue","Gender","Age","Admitted"]
@@ -98,6 +97,9 @@ const PatientAnalysis = () => {
   <div className='panalysis'>
     <div className="container-fluid ">
       <div className="row ">
+      <div id={"SideBarAdmin"} className={"col-2"}>
+                    <ProSide />
+                </div>
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
             <Table_patients data={encounters} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>

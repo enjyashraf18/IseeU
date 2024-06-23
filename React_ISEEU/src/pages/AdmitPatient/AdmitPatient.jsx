@@ -7,15 +7,15 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
 const initialform = {
-    fname: '',
+    fname: 'A',
     lname: '',
-    brithd: '',
+    dob: '',
     address: '',
     email: '',
     phone: '',
     NID: '',
     gender:'',
-    hightcm: '',
+    heightcm: '',
     weightkg:'',
     //Stay data
 }
@@ -24,7 +24,7 @@ const initialform = {
    const encounter = {
     InformedConsent: '',
     Complaint: '',
-    APACHE:'',
+    APACHE:'10',
     GCS: '',
     bedID: '',
     MorningNurseID: '',
@@ -42,10 +42,11 @@ const AdmitPatient = () => {
 
     const [patientData, setPatientData] = useState(initialform);
     const [encounterData, setencounterData] = useState(encounter);
+    const [allAvBeds,setAllAvBeds] = useState()
     const [beds ,  setBeds] = useState(bedIDs)
     const [isPatientFound, setIsPatientFound] = useState(false); // New state for button status
     const NID = ''
-    const refDepart = ["Aaaa", "Baaaa"]; // should get all available depart
+    const refDepart = ['Surgery', 'ED', 'Cardiology', 'Other']; // should get all available depart
     const doctorsNames = ["A", "B"]; // should get all available doctors
     const [doctors , setDoctors] = useState(doctorsNames)
     const doctorsdata = {};
@@ -91,6 +92,13 @@ const AdmitPatient = () => {
         const doc = extractIdsAndNames(avDoc);
         setDoctors(doc)
         console.log("doctors", doc)
+        const avilableBeds = await axios.get('http://localhost:5000/admin/all_available_beds', {
+            headers: { 'Content-Type': 'application/json' }
+          })
+        console.log("beds", avilableBeds.data)
+        
+        setAllAvBeds(avilableBeds.data)
+  
 
 
 
@@ -108,51 +116,58 @@ const AdmitPatient = () => {
     }, []);
     const handleInputPatientChange = (e) => {
         const { name, value } = e.target; 
+        if(name === 'NID'){
+             console.log(`Input changed: ${value} `);
+            const body = {
+                NID: value
+              };
+              console.log(body)
+              axios.post('http://localhost:5000/check_patient', body, {
+                headers: {      
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(
+                response => {
+                    if(response.data.message !== "User does not exist"){
+                        const patient = response.data.admin_employee
+                        console.log(patientData)
+    
+                        setPatientData(patient)
+                        setIsPatientFound(true);
+                        console.log("patient",patientData)
+    
+                    }
+                
+                }
+              )
+              .catch(error => {
+                console.log(error);
+              });
+              console.log(patientData)
+        } 
+        
         setPatientData({
             ...patientData,
             [name]: value
-        });  
-    if(name === 'NID'){
+        }); 
 
-        console.log(`Input changed: ${patientData.NID} `);
-        const body = {
-            NID: patientData.NID
-          };
-          console.log(patientData.NID)
-          axios.post('http://localhost:5000/check_patient', body, {
-            headers: {      
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(
-            response => {
-                if(response.data.message !== "User does not exist"){
-                    const patient = response.data.admin_employee
-                    console.log(patientData)
-
-                    setPatientData(patient)
-                    setIsPatientFound(true);
-                    console.log("patient",patientData)
-
-                }
-            
-            }
-          )
-          .catch(error => {
-            console.log(error);
-          });
-          console.log(patientData)
-    }
 
     };
     const handleInputEncounterChange = (e) => {
         const { name, value } = e.target; 
+
+        if(name  === 'bedtype'){
+            console.log(allAvBeds[value])
+            setBeds(allAvBeds[value])
+        }
         setencounterData({
             ...encounterData,
             [name]: value
         }); 
         
-        console.log(doctors)}
+        console.log(value)
+    }
 
         
    
@@ -174,14 +189,14 @@ const AdmitPatient = () => {
     
 
     const handleSubmit = (e) => {
-      
+      e.preventDefault()
         console.log("FormData to be sent:", patientData); // Debug statement
         const requestData = {
             updateFlag : !isPatientFound,
             patient :patientData,
             encounter:encounterData
         }
-        axios.post('http://localhost:5000/admit_patient', requestData, {
+        axios.post('http://localhost:5000/admin/admitPatient', requestData, {
             headers: {      
               'Content-Type': 'application/json'
             }
@@ -258,7 +273,7 @@ const AdmitPatient = () => {
                                             <UserText1 label="National ID" type="text" name="NID" value={patientData.NID}
                                                        onChange={handleInputPatientChange}/>
                                         </div>
-
+                                
                                     </div>
                                     {isPatientFound ? (
   <span id="label">Patient found</span>
@@ -269,7 +284,7 @@ const AdmitPatient = () => {
         <UserText1 
           label="First name" 
           type="text" 
-          name="firstName"
+          name="fname"
           value={patientData.fname} 
           onChange={handleInputPatientChange}
         />
@@ -278,7 +293,7 @@ const AdmitPatient = () => {
         <UserText1 
           label="Last name" 
           type="text" 
-          name="lastName"
+          name="lname"
           value={patientData.lname} 
           onChange={handleInputPatientChange}
         />
@@ -381,8 +396,8 @@ const AdmitPatient = () => {
                                                        onChange={handleInputEncounterChange}/>
                                         </div>
                                         <div className="col-6">
-                                            <UserText1 label="Apache" type="number" name="apache"
-                                                       value={encounterData.apache}
+                                            <UserText1 label="Apache" type="number" name="APACHE"
+                                                       value={encounterData.APACHE}
                                                        onChange={handleInputEncounterChange}/>
                                         </div>
                                     </div>
@@ -395,7 +410,16 @@ const AdmitPatient = () => {
                                             <Btn label="Back"/>
                                         </div>
                                         <div className="col-3 offset-6">
-                                            <Btn label="Next"/>
+
+                                        {isPatientFound ? (    
+                                            <div onClick ={handleSubmit}>
+                                            <Btn type='Button' label="Admit" onClick ={handleSubmit}/>
+                                            </div>
+                                        ) : (
+                                            <div onClick ={handleSubmit}>
+                                            <Btn type='Button' label="Next" onClick ={handleSubmit}/>
+                                            </div>                                        )}
+                                        
                                         </div>
                                     </div>
                                 </div>

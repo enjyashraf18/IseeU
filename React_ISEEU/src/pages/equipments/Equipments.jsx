@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import "./Equipments.css";
 import styles from './Equipments.css';
-import { Table_patients,Btn } from '../../components';
+import { Table_patients,Btn , ProSide} from '../../components';
 import axios from 'axios'
 
 
@@ -31,8 +31,7 @@ const Equipments = () => {
   const [equips, setEquips] = useState(initialPatientData);  
   const [loading, setLoading] = useState(true);
    const user = JSON.parse(localStorage.getItem('user'));
-
-  const role=user.role;
+  const role = 'Admin'
   const label="Add";
   const flag=false;
   const columns=["ID","Type","Statue","Bed ID"]
@@ -84,6 +83,9 @@ const Equipments = () => {
   <div className='panalysis'>
     <div className="container-fluid ">
       <div className="row ">
+      <div id={"SideBarAdmin"} className={"col-2"}>
+                    <ProSide />
+                </div>
         <div className="col-10 col-md-4 ">
           <div className="patientanalysis-table">
             <Table_patients data={equips} anotherProp={role} headers={columns} flag={flag}  showSearch={true} onDataChange={handleDataChange} buttonpic={2}/>
