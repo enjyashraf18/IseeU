@@ -11,7 +11,7 @@ app.register_blueprint(register)
 app.register_blueprint(nurse_view)
 app.register_blueprint(doctor_view)
 app.register_blueprint(admin_view)
-CORS(app)
+CORS(app, support_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 
 app.config["SECRET_KEY"] = "SECRET_KEY"

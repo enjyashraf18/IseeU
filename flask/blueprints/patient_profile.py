@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, make_response
 from flask_cors import CORS
 from database import cursor
 
@@ -7,6 +7,12 @@ patient_profile = Blueprint("patient_profile", __name__, static_folder="static",
 CORS(patient_profile, resources={
     r"/*": {"origins": "http://localhost:3000"}})  # Allow CORS for the login blueprint (Cross-Origin Resource Sharing
 
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
+    response.headers.add("Access-Control-Allow-Headers", "*")  # Adjust this to your needs
+    response.headers.add("Access-Control-Allow-Methods", "*")  # Adjust this to your needs
+    return response
 @patient_profile.route('/PatientProfile', methods=['POST'])
 def patient():
     data = request.json

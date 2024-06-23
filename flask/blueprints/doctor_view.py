@@ -142,3 +142,19 @@ def doctor_reports():
     """, (DID,))
     reports = cursor.fetchall()
     return jsonify({"doctor_reports": reports})
+
+#discharge patient
+@doctor_view.route('/doctor/discharge', methods=['POST'])
+def discharge():
+    data = request.json
+    print(data)
+    bed_id = data.get('BID')
+    curr_time = data.get('currentTime')
+    discharge_doc_id = data.get('doctor_id')
+    cursor.execute("""
+        UPDATE encounters
+        SET dischargedatetime = %s, dischargedoctorid = %s
+        WHERE bedid = %s AND dischargedatetime IS NULL
+    """, (curr_time, discharge_doc_id, bed_id))
+    database_session.commit()
+    return jsonify({"message": "Patient discharged successfully"}), 200
