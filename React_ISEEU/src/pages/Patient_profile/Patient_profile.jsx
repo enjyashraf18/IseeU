@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo,useEffect } from 'react';
 import "./patient_profile.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { Table_patients,Btn,EmerBtn} from '../../components';
 import { useLocation } from 'react-router-dom';
 import {Report} from '../../pages';
+
+import axios from 'axios'
+
 const Patient_profile = () => {
   const location = useLocation();
   const bedNo=location.state; /**you should make all the data of the patient having this bed no */
-  console.log(bedNo);
+  console.log('bedid',bedNo);
   const patient=["download_(5).jfif","Miguel O’Hara","15A","5 days ",20,158,60]
   const intial_medication=[["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],
   ["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],["Devil Breath ","5  /day","5 weeks","500gm","unchecked"],
@@ -47,7 +50,32 @@ console.log("clicked on update")
   const handle_add_Report=()=>{
     setShowReportModal(true);
     };
+
+    useEffect(  
+      ()=>{
+          const fetchData = async () => {
+              const body = {
+                BID : bedNo
+              }
+              // Perform the axios GET request
+              const response = await axios.post('http://localhost:5000/PatientProfile', body,{
+                      headers: { 'Content-Type': 'application/json' }
+                    })                  
+                 
     
+              const responseData = response.data
+              console.log("....................",responseData)
+    
+      
+        }
+      
+          // Call the async function to fetch data
+        fetchData();
+    
+      },[])
+    
+
+
  
   return (
     <div className='pprofile container-fluid '> 
