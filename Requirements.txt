@@ -1,0 +1,10 @@
+Flask
+psycopg2-binary
+numpy
+pandas
+scipy
+pyqt5
+pyqtgraph
+matplotlib
+react
+axios
