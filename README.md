@@ -1,4 +1,4 @@
-# ISEEU: ICU Management System
+# IseeU: ICU Management System
 
 ![Application Overview](assets/app.png "Overview of the ISEEU ICU Management System")
 
