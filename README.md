@@ -48,6 +48,32 @@ ISEEU is an intuitive hospital management system designed specifically for ICU o
   ![Admin Dashboard](assets/add_admin.gif "Real-time ICU visualization")
 ---
 
+### **Database Design**
+
+The ISEEU ICU Management System leverages a **PostgreSQL** database to efficiently manage critical hospital operations. The database is designed to handle patient records, staff details, bed allocations, and medication tracking while ensuring data consistency and security.
+
+#### **Key Tables**
+- **Patients**: Stores patient demographics, admission status, and medical history.
+- **Employee**: Maintains staff information, including doctors and nurses.
+- **Encounters**: Tracks patient visits, including admission and discharge details.
+- **Medications**: Records prescribed medications and administration logs.
+- **Beds**: Manages ICU bed occupancy and availability.
+- **Reports**: Stores medical reports generated during patient care.
+- **Emergency Contacts**: Contains patient-specific emergency contact details.
+- **Vital Signs**: Logs real-time monitoring data like heart rate and blood pressure.
+
+#### **Relationships**
+- **Patients ↔ Encounters**: Links patient data with their admission and discharge details.
+- **Employee ↔ Encounters**: Tracks doctor and nurse involvement for each patient.
+- **Beds ↔ Patients**: Reflects real-time bed occupancy status.
+
+---
+
+### **Database Schema Visualization**
+
+![Database Design Placeholder](assets/db.png "Database schema showing the relationships between key tables.")
+
+---
 ## Getting Started
 
 ### Setup Instructions
